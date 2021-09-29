@@ -131,21 +131,6 @@ def main():
     #proxy = protocol.proxy('localhost',4304)
     OWDevice.connect('localhost',4304)
 
-    # # CONNECT TO OWFS INSTANCE
-    # timeout_time = time.time() + TIMEOUT
-    # while time.time() < timeout_time:
-    #     try:
-    #         proxy = protocol.proxy('localhost',4304)
-    #     except protocol.ConnError:
-    #         time.sleep(1)
-    #     else:
-    #         break
-    # else:
-    #     # Error! creation of owp has timed out
-    #     sys.exit('Unable to open connection to owserver')
-    # # Success! we have a connection to owserver
-    # assert proxy.present('/')
-
     testboard = DS2408Board(adrOut='A00837000000',adrIn='980837000000')
     
     cnt = 0
@@ -161,37 +146,6 @@ def main():
             tStart = tEnd
             cnt = 0
         time.sleep(0.05)
-
-
-    # #print(proxy.dir())
-    # print(proxy.dir('/29.980837000000/'))
-    # while (True):
-    #     # Aktuellen Status auslesen
-    #     state = proxy.read('/29.A00837000000/PIO.BYTE',3,9)
-    #     state = state.decode("utf-8")
-    #     state = int(state.strip())
-    #     # Input auslesen
-    #     inp = proxy.read('/29.980837000000/latch.BYTE',3,9)
-    #     inp = inp.decode("utf-8")
-    #     inp = int(inp.strip())
-    #     print(f"state: {state:08b} IN: {inp:08b}")
-    #     # Input sind Taster, sie fuehren zur Statusaenderung
-    #     if isBitSet(inp,0):
-    #         state = toggleBit(state,0)
-    #         proxy.write('/29.A00837000000/PIO.BYTE', bytes("%s" % state, encoding="utf-8"))
-    #         #proxy.write('/29.A00837000000/PIO.0',bytes(b'1'))
-    #     #if inp:
-    #     #    proxy.write('/29.A00837000000/PIO.0',bytes(b'1'))
-    #     #print(inp[-1])
-    #     #proxy.write('/29.980837000000/alias',b'ABC')
-    #     # Latch-Register zuruecksetzen TODO: Gleich nach Auslesen von latch!
-    #     try:
-    #         proxy.write('/29.980837000000/latch.BYTE',bytes(b'255'))
-    #     except err:
-    #         print(err)
-    #         pass
-    #     time.sleep(0.05)
-
 
 if __name__ == '__main__':
     main()
