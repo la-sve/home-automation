@@ -1,0 +1,5 @@
+nachtlichter:
+  name: Nachtlichter
+  entities:
+    - switch.29_ae571a000000_pio_0
+    - switch.29_ae571a000000_pio_3

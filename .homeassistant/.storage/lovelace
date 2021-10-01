@@ -1,0 +1,150 @@
+{
+    "version": 1,
+    "key": "lovelace",
+    "data": {
+        "config": {
+            "views": [
+                {
+                    "title": "Heizen EG",
+                    "path": "heizen-eg",
+                    "badges": [
+                        {
+                            "entity": "sensor.28_ff9a3a501603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff380fb41603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ffcbed531604_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff5304511603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ffa9edb31605_temperature"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.wohnzimmer"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.wceg"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.handtucheg"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.arbeitszimmer"
+                        }
+                    ]
+                },
+                {
+                    "title": "Heizen OG",
+                    "path": "heizen-og",
+                    "badges": [
+                        {
+                            "entity": "sensor.28_ff3b2a511603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff0f3e541604_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ffe302511603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ffc27cb41603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff0dcf501603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff3bc3471603_temperature"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.wcog"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.sina"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.malte"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.handtuchog"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.bibo"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.ankleide"
+                        }
+                    ]
+                },
+                {
+                    "title": "Heizen DG",
+                    "path": "heizen-dg",
+                    "badges": [
+                        {
+                            "entity": "sensor.28_ff4777b41603_temperature"
+                        },
+                        {
+                            "entity": "sensor.28_ff5ad9501603_temperature"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.studio"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.galerie"
+                        }
+                    ]
+                },
+                {
+                    "title": "Lichter",
+                    "path": "lichter",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "group.nachtlichter"
+                            ]
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "switch.29_ae571a000000_pio_3"
+                                },
+                                {
+                                    "entity": "switch.29_ae571a000000_pio_0"
+                                }
+                            ],
+                            "header": {
+                                "type": "buttons",
+                                "entities": []
+                            },
+                            "title": "Nachtlichter"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

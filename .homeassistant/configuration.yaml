@@ -2,9 +2,54 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Test generic thermostat
+climate: !include climate.yaml
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
 # Convert auto generated 1-Wire device ids into friendly names 
 homeassistant:
   customize:
+    switch.29_ae571a000000_pio_0:
+      friendly_name: Erz_Arbeiten
+    switch.29_ae571a000000_pio_1:
+      friendly_name: Erz_Wohnen_Ecke
+    switch.29_ae571a000000_pio_2:
+      friendly_name: Erz_Kueche
+    switch.29_ae571a000000_pio_3:
+      friendly_name: Erz_Bibo
+    switch.29_ae571a000000_pio_4:
+      friendly_name: Erz_Schlafen
+    switch.29_ae571a000000_pio_5:
+      friendly_name: Erz_Galerie
+    switch.29_ae571a000000_pio_6:
+      friendly_name: Erz_Studio
+    switch.29_330214000000_pio_0:
+      friendly_name: FBH_ANKL
+    switch.29_330214000000_pio_1:
+      friendly_name: FBH_KID2
+    switch.29_330214000000_pio_2:
+      friendly_name: FBH_KID1
+    switch.29_330214000000_pio_3:
+      friendly_name: FBH_SCHL
+    switch.29_330214000000_pio_4:
+      friendly_name: FBH_STUD
+    switch.29_330214000000_pio_5:
+      friendly_name: FBH_GALE
+    switch.29_330214000000_pio_6:
+      friendly_name: FBH_WCEG_H
+    switch.29_330214000000_pio_7:
+      friendly_name: FBH_WCOG_H  
     sensor.28_ffc27cb41603_temperature:
       friendly_name: WCOG
     sensor.28_ff0dcf501603_temperature:
@@ -31,20 +76,3 @@ homeassistant:
       friendly_name: SCHL
     sensor.28_ff0f3e541604_temperature:
       friendly_name: KID2
-
-# Text to speech
-tts:
-  - platform: google_translate
-
-# Test generic thermostat
-climate: !include climate.yaml
-
-sensor:
-  - platform: onewire
-    names:
-      28-ffc27cb41603: FRIENDLY_NAME1
-
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-scene: !include scenes.yaml

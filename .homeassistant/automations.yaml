@@ -1,0 +1,46 @@
+- id: '1632475417308'
+  alias: TestRelaisAn
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 310980297ff73a0359adba5871a17ba2
+    entity_id: switch.29_980837000000_latch_0
+    domain: switch
+  condition: []
+  action:
+  - type: toggle
+    device_id: 3e40fed9d72f753a451991d678741724
+    entity_id: switch.29_a00837000000_pio_0
+    domain: switch
+  - type: turn_off
+    device_id: 310980297ff73a0359adba5871a17ba2
+    entity_id: switch.29_980837000000_latch_0
+    domain: switch
+  mode: single
+- id: '1633033361264'
+  alias: NachtlichterEIN
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - type: turn_on
+    device_id: d5bc02d0a43a20b694c8cdc67f444626
+    entity_id: switch.29_ae571a000000_pio_3
+    domain: switch
+  mode: single
+- id: '1633033458915'
+  alias: NachtlichterAUS
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:15'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: d5bc02d0a43a20b694c8cdc67f444626
+    entity_id: switch.29_ae571a000000_pio_3
+    domain: switch
+  mode: single
