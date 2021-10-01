@@ -1,0 +1,50 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Convert auto generated 1-Wire device ids into friendly names 
+homeassistant:
+  customize:
+    sensor.28_ffc27cb41603_temperature:
+      friendly_name: WCOG
+    sensor.28_ff0dcf501603_temperature:
+      friendly_name: ANKL
+    sensor.28_ff5ad9501603_temperature:
+      friendly_name: STUD
+    sensor.28_ff4777b41603_temperature:
+      friendly_name: GALE
+    sensor.28_ffe302511603_temperature:
+      friendly_name: BIBO
+    sensor.28_ff380fb41603_temperature:
+      friendly_name: WOHN
+    sensor.28_ff9a3a501603_temperature:
+      friendly_name: ARBE
+    sensor.28_ffa9edb31605_temperature:
+      friendly_name: FLUR
+    sensor.28_ff5304511603_temperature:
+      friendly_name: WCEG
+    sensor.28_ffcbed531604_temperature:
+      friendly_name: KUEC
+    sensor.28_ff3b2a511603_temperature:
+      friendly_name: KID1
+    sensor.28_ff3bc3471603_temperature:
+      friendly_name: SCHL
+    sensor.28_ff0f3e541604_temperature:
+      friendly_name: KID2
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# Test generic thermostat
+climate: !include climate.yaml
+
+sensor:
+  - platform: onewire
+    names:
+      28-ffc27cb41603: FRIENDLY_NAME1
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
