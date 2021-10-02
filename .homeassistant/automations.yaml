@@ -18,29 +18,21 @@
     entity_id: switch.29_980837000000_latch_0
     domain: switch
   mode: single
-- id: '1633033361264'
-  alias: NachtlichterEIN
+- alias: NachtlichterEIN
   description: ''
   trigger:
   - platform: sun
     event: sunset
-  condition: []
   action:
-  - type: turn_on
-    device_id: d5bc02d0a43a20b694c8cdc67f444626
-    entity_id: switch.29_ae571a000000_pio_3
-    domain: switch
+  - service: homeassistant.turn_on
+    entity_id: group.nachtlichter
   mode: single
-- id: '1633033458915'
-  alias: NachtlichterAUS
+- alias: NachtlichterAUS
   description: ''
   trigger:
   - platform: time
     at: '22:15'
-  condition: []
   action:
-  - type: turn_off
-    device_id: d5bc02d0a43a20b694c8cdc67f444626
-    entity_id: switch.29_ae571a000000_pio_3
-    domain: switch
+  - service: homeassistant.turn_off
+    entity_id: group.nachtlichter
   mode: single
