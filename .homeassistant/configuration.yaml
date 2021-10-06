@@ -2,8 +2,6 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-
-
 # Text to speech
 tts:
   - platform: google_translate
@@ -16,6 +14,12 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# Connect to Vitodens 300 with Vitotronic 200 via vicare integration
+vicare:
+  username: !secret vicare_user
+  password: !secret vicare_pass
+  client_id: !secret vicare_id
+  name: ViCare
 
 # Convert auto generated 1-Wire device ids into friendly names 
 homeassistant:

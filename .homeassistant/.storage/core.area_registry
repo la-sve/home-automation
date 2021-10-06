@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "key": "core.area_registry",
+    "data": {
+        "areas": [
+            {
+                "name": "Wohnzimmer",
+                "id": "wohnzimmer"
+            },
+            {
+                "name": "K\u00fcche",
+                "id": "kuche"
+            },
+            {
+                "name": "Schlafzimmer",
+                "id": "schlafzimmer"
+            },
+            {
+                "name": "DG",
+                "id": "dg"
+            },
+            {
+                "name": "Wasser",
+                "id": "wasser"
+            }
+        ]
+    }
+}

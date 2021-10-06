@@ -40,6 +40,10 @@
                         {
                             "type": "thermostat",
                             "entity": "climate.arbeitszimmer"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.kueche"
                         }
                     ]
                 },
@@ -90,6 +94,10 @@
                         {
                             "type": "thermostat",
                             "entity": "climate.ankleide"
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.schlafzimmer"
                         }
                     ]
                 },
@@ -101,7 +109,13 @@
                             "entity": "sensor.28_ff4777b41603_temperature"
                         },
                         {
+                            "entity": "switch.29_330214000000_pio_5"
+                        },
+                        {
                             "entity": "sensor.28_ff5ad9501603_temperature"
+                        },
+                        {
+                            "entity": "switch.29_330214000000_pio_4"
                         }
                     ],
                     "cards": [
@@ -141,6 +155,61 @@
                                 "entities": []
                             },
                             "title": "Nachtlichter"
+                        }
+                    ]
+                },
+                {
+                    "title": "Statistik",
+                    "path": "statistik",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "statistics-graph",
+                            "entities": [
+                                "sensor.28_ff5ad9501603_temperature",
+                                "sensor.28_ff3bc3471603_temperature"
+                            ],
+                            "days_to_show": 30,
+                            "title": "Temperaturtest"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.vicare_outside_temperature",
+                                "sensor.vicare_supply_temperature"
+                            ]
+                        },
+                        {
+                            "type": "thermostat",
+                            "entity": "climate.vicare_heating"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "water_heater.vicare_water"
+                            ]
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.vicare_circulation_pump_active"
+                            ]
+                        },
+                        {
+                            "type": "history-graph",
+                            "entities": [
+                                {
+                                    "entity": "sensor.vicare_outside_temperature"
+                                },
+                                {
+                                    "entity": "water_heater.vicare_water"
+                                },
+                                {
+                                    "entity": "sensor.vicare_supply_temperature"
+                                }
+                            ],
+                            "hours_to_show": 72,
+                            "refresh_interval": 0
                         }
                     ]
                 }
