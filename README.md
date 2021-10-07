@@ -4,6 +4,10 @@ As I don't believe, this project is of much relevance to others, it is described
 
 **Kurzbeschreibung:** Projektdateien zur Automatisierung eines Hauses mittels Home Assistant, RaspPi und diversen Sensoren und Aktoren auf 1-Wire Basis.
 
+## Dokumentation
+Eine [Dokumentation](docs/index.md) findet sich im `docs`-Verzeichnis.
+
+
 ## Systemübersicht
 TODO: Geräte und Verteilung per LAN
 
@@ -62,13 +66,3 @@ _(Anmerkung 1: Diese Integration funktioniert auch ohne OWFS, dann jedoch nur mi
 _(Anmerkung 2: Zur Kommunikation mit OWFS nutzt die Integration ebenfalls die Pyhton Bibliothek "pyownet", wie später dann auch die Softwarekomponente für die Lichtsteuerung.)_
 
 
-
-***
-Markdown Syntax: 
-https://www.markdownguide.org/basic-syntax/ <br>
-Dokumentation mit Markdown-Syntax:
-https://github.com/mkdocs/mkdocs <br>
-Python API-Dokumentation:
-https://github.com/ml-tooling/lazydocs <br>
-Dokumentation veröffentlichen:
-https://github.com/readthedocs/readthedocs.org

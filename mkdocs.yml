@@ -1,0 +1,10 @@
+site_name: home-automation
+theme:
+    name: readthedocs
+    highlightjs: true
+nav:
+  - Home: 'index.md'
+  - 'Hardware':
+    - 'Allgemein': 'hardware/allgemein.md'
+    - 'DS2408 Board': 'hardware/ds2408/index.md'
+    - 'DS2408 Zusatz': 'hardware/ds2408_zusatz/index.md'
