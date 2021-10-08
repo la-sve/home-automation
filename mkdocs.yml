@@ -12,3 +12,5 @@ nav:
     - 'Allgemein': 'software/index.md'
     - 'OneWire': 'software/oneWire.md'
     - 'Home Assistant': 'software/hass.md'
+    - 'Entwicklerwerkzeuge': 'software/development.md'
+    
