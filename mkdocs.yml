@@ -8,3 +8,7 @@ nav:
     - 'Allgemein': 'hardware/allgemein.md'
     - 'DS2408 Board': 'hardware/ds2408/index.md'
     - 'DS2408 Zusatz': 'hardware/ds2408_zusatz/index.md'
+  - 'Software':
+    - 'Allgemein': 'software/index.md'
+    - 'OneWire': 'software/oneWire.md'
+    - 'Home Assistant': 'software/hass.md'
