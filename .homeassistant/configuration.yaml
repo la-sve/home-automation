@@ -21,23 +21,58 @@ vicare:
   client_id: !secret vicare_id
   name: ViCare
 
+# Altes esersa Geraet
+#    switch.29_ae571a000000_pio_0:
+#      friendly_name: Erz_Arbeiten
+#    switch.29_ae571a000000_pio_1:
+#      friendly_name: Erz_Wohnen_Ecke
+#    switch.29_ae571a000000_pio_2:
+#      friendly_name: Erz_Kueche
+#    switch.29_ae571a000000_pio_3:
+#      friendly_name: Erz_Bibo
+#    switch.29_ae571a000000_pio_4:
+#      friendly_name: Erz_Schlafen
+#    switch.29_ae571a000000_pio_5:
+#      friendly_name: Erz_Galerie
+#    switch.29_ae571a000000_pio_6:
+#      friendly_name: Erz_Studio
+
+
 # Convert auto generated 1-Wire device ids into friendly names 
 homeassistant:
   customize:
-    switch.29_ae571a000000_pio_0:
-      friendly_name: Erz_Arbeiten
-    switch.29_ae571a000000_pio_1:
-      friendly_name: Erz_Wohnen_Ecke
-    switch.29_ae571a000000_pio_2:
-      friendly_name: Erz_Kueche
-    switch.29_ae571a000000_pio_3:
-      friendly_name: Erz_Bibo
-    switch.29_ae571a000000_pio_4:
-      friendly_name: Erz_Schlafen
-    switch.29_ae571a000000_pio_5:
-      friendly_name: Erz_Galerie
-    switch.29_ae571a000000_pio_6:
-      friendly_name: Erz_Studio
+    switch.29_ad0837000000_pio_0:
+      friendly_name: "Arbeitszimmer Fenster (11)"
+    switch.29_ad0837000000_pio_1:
+      friendly_name: "Wohnzimmer Ecke (13)"
+    switch.29_ad0837000000_pio_2:
+      friendly_name: "15 oder 16"
+    switch.29_ad0837000000_pio_3:
+      friendly_name: "Küche Terrassentür (18)"
+    switch.29_ad0837000000_pio_4:
+      friendly_name: "Malte Ost (21)"
+    switch.29_ad0837000000_pio_5:
+      friendly_name: "Malte Nord (22)"
+    switch.29_ad0837000000_pio_6:
+      friendly_name: "Bibliothek Fenster (30)"
+    switch.29_ad0837000000_pio_7:
+      friendly_name: "Sina Fenster Bibo (31)"
+    switch.29_b20837000000_pio_0:
+      friendly_name: "Sina Fenster Ecke (32)"
+    switch.29_b20837000000_pio_1:
+      friendly_name: "Schlafzimmer Fenster (33)"
+    switch.29_b20837000000_pio_2:
+      friendly_name: "Schlafzimmer Sven (34)"
+    switch.29_b20837000000_pio_3:
+      friendly_name: "Schlafzimmer Mandy (35)"
+    switch.29_b20837000000_pio_4:
+      friendly_name: "Gallerie Dachfenster (36)"
+    switch.29_b20837000000_pio_5:
+      friendly_name: "Gallerie Fenster (37)"
+    switch.29_b20837000000_pio_6:
+      friendly_name: "Studio Fenster (38)"
+    switch.29_b20837000000_pio_7:
+      friendly_name: "Zirkulationspumpe"
     switch.29_330214000000_pio_0:
       friendly_name: FBH_ANKL
     switch.29_330214000000_pio_1:
