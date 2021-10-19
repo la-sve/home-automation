@@ -144,10 +144,10 @@
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "switch.29_ae571a000000_pio_3"
+                                    "entity": "switch.29_ad0837000000_pio_6"
                                 },
                                 {
-                                    "entity": "switch.29_ae571a000000_pio_0"
+                                    "entity": "switch.29_ad0837000000_pio_0"
                                 }
                             ],
                             "header": {
@@ -206,10 +206,43 @@
                                 },
                                 {
                                     "entity": "sensor.vicare_supply_temperature"
+                                },
+                                {
+                                    "entity": "binary_sensor.vicare_circulation_pump_active"
                                 }
                             ],
-                            "hours_to_show": 72,
+                            "hours_to_show": 24,
                             "refresh_interval": 0
+                        }
+                    ]
+                },
+                {
+                    "title": "Warmwasser",
+                    "path": "warmwasser",
+                    "badges": [
+                        {
+                            "entity": "switch.29_b20837000000_pio_7"
+                        },
+                        {
+                            "entity": "binary_sensor.vicare_circulation_pump_active"
+                        },
+                        {
+                            "entity": "water_heater.vicare_water"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.vicare_supply_temperature",
+                                "water_heater.vicare_water"
+                            ]
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.29_b20837000000_pio_7"
+                            ]
                         }
                     ]
                 }
