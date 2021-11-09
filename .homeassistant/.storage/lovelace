@@ -245,6 +245,24 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "title": "Flask-test",
+                    "path": "flask-test",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "cover.rollo_arbeit"
+                                },
+                                {
+                                    "entity": "cover.fenstertestrollo"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

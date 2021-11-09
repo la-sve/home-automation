@@ -14,6 +14,101 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# https://www.home-assistant.io/integrations/rest_command/
+rest_command:
+  rollosteuerung:
+    method: POST
+    url: http://hwr.local:5000/Shutters
+    payload: '{"cmd": "{{ cmd }}","window": "{{ window }}","time": "{{ time }}"}'
+    content_type: 'application/json; charset=utf-8'
+
+# https://www.home-assistant.io/integrations/cover.template/
+cover:
+  - platform: template
+    covers:
+      rollo_arbeit:
+        friendly_name: "Rollo Arbeitszimmer"
+        position_template: "50"
+        open_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "open"
+            window: 1
+            time: 10
+        close_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "close"
+            window: 1
+            time: 5
+        stop_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "stop"
+            window: 1
+      fenstertestrollo:
+        friendly_name: "Fenster Rollo Test"
+        position_template: "50"
+        open_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "open"
+            window: 12
+            time: 10
+        close_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "close"
+            window: 12
+            time: 5
+        stop_cover:
+          service: rest_command.rollosteuerung
+          data:
+            cmd: "stop"
+            window: 12
+
+# Modul 1
+#  name: ArbeitUp
+#  name: ArbeitDown
+#  name: WohnOstUp
+#  name: WohnOstDown
+#  name: WohnSuedUp
+#  name: WohnSuedDown
+#  name: WohnTuerUp
+#  name: WohnTuerDown
+# Modul 2
+#  name: KuecheTuerUp
+#  name: KuecheTuerDown
+#  name: KuecheSuedUp
+#  name: KuecheSuedDown
+#  name: KuecheWestUp
+#  name: KuecheWestDown
+#  name: WCEGUp
+#  name: WCEGDown
+# Modul 3
+#  name: HWRUp
+#  name: HWRDown
+#  name: TreppeUp
+#  name: TreppeDown
+#  name: MalteNordUp
+#  name: MalteNordDown
+#  name: MalteOstUp
+#  name: MalteOstDown
+# Modul 4
+#  name: SinaOstUp
+#  name: SinaOstDown
+#  name: SinaSuedUp
+#  name: SinaSuedDown
+#  name: BiboUp
+#  name: BiboDown
+#  name: WCOGSuedUp
+#  name: WCOGSuedDown
+# Modul 5
+#  name: WCOGWestUp
+#  name: WCOGWestDown
+#  name: SchlafenUp
+#  name: SchlafenDown
+
 # Connect to Vitodens 300 with Vitotronic 200 via vicare integration
 vicare:
   username: !secret vicare_user
