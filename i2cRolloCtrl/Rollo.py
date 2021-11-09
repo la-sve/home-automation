@@ -2,19 +2,14 @@
 # -*- coding: utf-8 -*-
 import time
 
-WINDOWS = {1:'Arbe',2:'WohnOst',3:'WohnSued'}
-
 class Rollo:
     """ Zustand und Steuerung eines einzelnen Rollos. """
     def __init__(self, num = 0):
         self.num = num   # Nummer des Fensters
-        self.name = ''   # Name des Fensters
         self.timer = 0 # Wie lange ist das Rollo schon aktiv
         self.active = False  # Ist das Rollo gerade an?
         self.dir = 0 # Welche Richtung? (Binärcodiert auf den letzten zwei bit)
         self.lastchange = 0 # Entprellen
-        if self.num > 1:
-            self.name = WINDOWS[self.num]
 
     def update(self, up = False, down = False):
         """ Statusvariablen aktualisieren. Entweder nach Auftreten eines Interrupts oder nach
@@ -66,9 +61,6 @@ class Rollo:
         self.active = False
         self.timer = 0
         return 0
-
-    def test(self):
-        print('Hello')
 
 if __name__ == "__main__":
     r = Rollo()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import smbus
@@ -8,7 +8,18 @@ from RolloModule import RolloModule
 
 import RPi.GPIO as GPIO
 import signal
-import sys
+import sys, os
+
+import json
+
+# Daten per FLASK mit Home Assistant austauschen:
+# https://realpython.com/api-integration-in-python/
+# https://www.home-assistant.io/integrations/switch.rest/
+# https://www.home-assistant.io/integrations/rest_command/
+# https://thingsmatic.com/2017/02/07/home-assistant-integrating-restful-switches/
+
+from flask import Flask, request, jsonify
+app = Flask(__name__)
 
 # MCP23017 Adressen definieren
 #  0 ... entspricht 0x20
@@ -29,6 +40,9 @@ MODULE3ADR = 0x22
 MODULE4ADR = 0x23
 MODULE5ADR = 0x24  # Nur 4 der 8 Input Pins werden verwendet
 
+# Adresse kann bspw. auf Kommandozeile per "i2cdetect 1" herausgefunden werden. 1 steht für I2C Bus Nummer.
+        
+
 # Interrupt-Pin am Raspberry Pi, welcher mit Interrupt-Leitung der Rollo-Module verbunden ist.
 RASPIINTPIN=17
 lock_i2c = threading.Lock()
@@ -37,26 +51,42 @@ def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
+
 class RolloAutomationManager(threading.Thread):
     """ Veraltet die verschiedenen Rollo Module und kommuniziert mit Home Assistant. """
     def __init__(self):
         threading.Thread.__init__(self)
         self.running = True
         self.time = time.time()
-
-        # Adresse kann bspw. auf Kommandozeile per "i2cdetect 1" herausgefunden werden. 1 steht für I2C Bus Nummer.
-        address = 0x21
+        
+        # Einstellungen aus json-Datei laden
+        f = open(os.path.join(sys.path[0],'manager.json'))
+        self.settings = json.load(f)
+        f.close()
 
         # I2C Bus verwenden (1 ist Standard auf Raspi 2 und 3)
         bus = smbus.SMBus(1)
 
-        # Rollo-Module initialisieren
+        # i2c funktionalitäten Verriegeln
         lock_i2c.acquire()
-        self.m1 = RolloModule(bus, address, unusedPins=4)
-        self.m1.addWindow(1)
-        self.m1.addWindow(2)
 
-        self.m1.printProperties()
+        # Rollo-Module initialisieren
+        self.modules = []
+        self.windows = {}
+        for module in self.settings["modules"]:
+            address = int(module["address"], base=16)
+            unused = 8 - len(module["windows"])*2
+            self.modules.append(RolloModule(bus, address, unusedPins=unused))
+            for i, window in enumerate(module["windows"]):
+                self.modules[-1].addWindow(int(window))
+                self.windows[int(window)] = {
+                    "module": len(self.modules)-1,
+                    "rolloIndex": i}
+
+        # Debug
+        self.modules[-1].printProperties()
+        
+        # i2c für andere threads wieder freigeben
         lock_i2c.release()
 
         # Sind wir momentan in der update methode?
@@ -68,8 +98,7 @@ class RolloAutomationManager(threading.Thread):
         Aktualisiert die Rollo-Modul-Ausgänge, falls Zeiten für die Rollo-Bewegung abgelaufen sind.
         """
         while self.running:
-            #self.m1.manualUp(1)   #TEST
-
+            
             # Prüfen, ob wir uns gerade im Update-Zustand befinden. Bspw. weil dieser gerade per Interrupt
             # ausgelöst wurde.
             cnt = 0
@@ -97,6 +126,23 @@ class RolloAutomationManager(threading.Thread):
 
             # TODO: ZUR SICHERHEIT alle 10 Sekunden MAL DEN ZUSTAND DER MCPs AUSLESEN UM INTERRUPT ZU LEEREN
 
+    def activate(self, window, cmd):
+        """ 
+        Für externe Steuerung per REST Interface. 
+        Änderung wird erst in der Hauptschleife (run-Methode) aktiv.
+        - window 1 ... 18 
+        - cmd "open" "close" "stop" 
+        """
+
+        # Modulindex für gefragtes Fenster finden
+        module_index = self.windows[window]["module"]
+        rollo_index = self.windows[window]["rolloIndex"]
+        # Kommando an Modul weiterreichen
+        self.modules[module_index].activate(rollo_index, cmd)
+        # Änderung wird dann in der normalen Update-Schleife gesetzt
+
+        return "true" #TODO
+
     def newInputDetected(self,channel):
         """ 
         Auswerten aller Rollo-Module nach einem erkannten Interrupt.
@@ -115,18 +161,43 @@ class RolloAutomationManager(threading.Thread):
         self.updating = True
         
         if force_all == True:
-            self.m1.update()
+            #self.m1.update()
+            for module in self.modules:
+                module.update()
         else:
-            self.m1.updateOutputOnly()
+            #self.m1.updateOutputOnly()
+            for module in self.modules:
+                module.updateOutputOnly()
 
         # i2c für andere threads wieder freigeben
         self.updating = False
         lock_i2c.release()        
 
+# @app.route("/Shutters/<int:moduleNumber>/<int:pinNumber>", methods=["GET"])
+# def get_shutters(moduleNumber, pinNumber):
+#     #state = manager.state(moduleNumber,pinNumber)
+#     #return ('on' if state else 'off')
+#     return 50
 
+@app.route("/Shutters/<int:moduleNumber>/<int:pinNumber>",methods=["PUT","POST"])
+def update_shutter_state(moduleNumber, pinNumber):
+    state=None
+    print(request)
+    if request.json is not None:
+        window = int(request.json.get("window"))
+        cmd = request.json.get("cmd")
+        print(f"Requested window {window} with command {cmd}")
+        state = manager.activate(window, cmd)
+    else:
+        print("Only json formatted post requests are supported!")
+        state = request.data.decode("utf-8")
+
+    return state
 
 if __name__ == "__main__":
     manager = RolloAutomationManager()
+    app.debug = False
+    app.use_reloader = False
 
     GPIO.setmode(GPIO.BCM)
 
@@ -136,6 +207,7 @@ if __name__ == "__main__":
 
     try:
         manager.start()
+        threading.Thread(target=lambda: app.run(host="0.0.0.0",port=5000)).start()
         while True:
             time.sleep(10)
             print('MainLoop')
@@ -145,5 +217,3 @@ if __name__ == "__main__":
         GPIO.cleanup()
         sys.exit(0)
 
-    # signal.signal(signal.SIGINT, signal_handler)
-    # signal.pause()

@@ -45,7 +45,28 @@ class RolloModule(mcp23017.MCP23017):
         self.rollos = []
 
     def addWindow(self,num):
+        print(f"Adding window {num} to rollo module with address: 0x{self.address:02x}")
         self.rollos.append(Rollo.Rollo(num))
+
+    def state(self, pin):
+        """ Zurückgeben des Zustands vom gesuchten Pin 1...8 """
+        if pin > 8: pin = 8
+        if pin < 1: pin = 1
+        self.updateOutputOnly()
+        return (True if (self.outputstate & (1 << (pin-1))) else False)
+
+    def activate(self, rollo_index, cmd):
+        if rollo_index < len(self.rollos):
+            if cmd == 'stop': 
+                self.rollos[rollo_index].stop()
+            elif cmd == 'open': 
+                self.rollos[rollo_index].update(True, False)
+            elif cmd == 'close': 
+                self.rollos[rollo_index].update(False, True)
+            else:
+                print('Command %s not valid!' % (cmd))
+        else:
+            return False
 
     def update(self):
         """ Alle Rollo Instanzen durchgehen und entsprechend Ausgabeports setzen. """
@@ -77,6 +98,7 @@ class RolloModule(mcp23017.MCP23017):
         new_state_b = self.calcOutputState(inputstate)
         if new_state_b != self.outputstate:
             self.setGPIOB(new_state_b)
+            self.outputstate = new_state_b
 
     def calcOutputState(self, inputstate):
         """
