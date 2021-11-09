@@ -85,6 +85,7 @@ class RolloAutomationManager(threading.Thread):
 
         # Debug
         self.modules[-1].printProperties()
+        self.activate(1, "open")
         
         # i2c für andere threads wieder freigeben
         lock_i2c.release()
@@ -126,7 +127,7 @@ class RolloAutomationManager(threading.Thread):
 
             # TODO: ZUR SICHERHEIT alle 10 Sekunden MAL DEN ZUSTAND DER MCPs AUSLESEN UM INTERRUPT ZU LEEREN
 
-    def activate(self, window, cmd):
+    def activate(self, window, cmd, time = None):
         """ 
         Für externe Steuerung per REST Interface. 
         Änderung wird erst in der Hauptschleife (run-Methode) aktiv.
@@ -138,7 +139,7 @@ class RolloAutomationManager(threading.Thread):
         module_index = self.windows[window]["module"]
         rollo_index = self.windows[window]["rolloIndex"]
         # Kommando an Modul weiterreichen
-        self.modules[module_index].activate(rollo_index, cmd)
+        self.modules[module_index].activate(rollo_index, cmd, time)
         # Änderung wird dann in der normalen Update-Schleife gesetzt
 
         return "true" #TODO
@@ -179,20 +180,26 @@ class RolloAutomationManager(threading.Thread):
 #     #return ('on' if state else 'off')
 #     return 50
 
-@app.route("/Shutters/<int:moduleNumber>/<int:pinNumber>",methods=["PUT","POST"])
-def update_shutter_state(moduleNumber, pinNumber):
+@app.route("/Shutters",methods=["PUT","POST"])
+def update_shutter_state():
     state=None
     print(request)
     if request.json is not None:
         window = int(request.json.get("window"))
         cmd = request.json.get("cmd")
-        print(f"Requested window {window} with command {cmd}")
-        state = manager.activate(window, cmd)
+        print(request.json)
+        if ('time' in request.json) and request.json.get("time"):
+            time = int(request.json.get("time"))
+            print(f"Requested window {window} with command {cmd} and time {time}")
+            state = manager.activate(window, cmd, time)
+        else:
+            print(f"Requested window {window} with command {cmd}")
+            state = manager.activate(window, cmd)
     else:
         print("Only json formatted post requests are supported!")
         state = request.data.decode("utf-8")
 
-    return state
+    return state, 201
 
 if __name__ == "__main__":
     manager = RolloAutomationManager()

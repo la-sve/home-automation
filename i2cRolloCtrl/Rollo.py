@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 import time
 
+# Standard-Laufzeit für Motor #34
+DEFAULTDELAY = 10
+
 class Rollo:
     """ Zustand und Steuerung eines einzelnen Rollos. """
     def __init__(self, num = 0):
@@ -10,6 +13,7 @@ class Rollo:
         self.active = False  # Ist das Rollo gerade an?
         self.dir = 0 # Welche Richtung? (Binärcodiert auf den letzten zwei bit)
         self.lastchange = 0 # Entprellen
+        self.delay = DEFAULTDELAY # Standard-Laufzeit
 
     def update(self, up = False, down = False):
         """ Statusvariablen aktualisieren. Entweder nach Auftreten eines Interrupts oder nach
@@ -49,7 +53,7 @@ class Rollo:
             self.dir = dir_new
             
         # Wenn Zeit abgelaufen ist
-        if (time.time() - self.timer) > 5:  #34
+        if (time.time() - self.timer) > self.delay:  
             print('rollo for window %i stops because time is over' % (self.num))
             return self.stop()
 
@@ -60,6 +64,7 @@ class Rollo:
     def stop(self):
         self.active = False
         self.timer = 0
+        self.delay = DEFAULTDELAY  # Laufzeit wieder auf Standard zurücksetzen
         return 0
 
 if __name__ == "__main__":

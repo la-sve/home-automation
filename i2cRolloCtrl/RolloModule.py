@@ -55,8 +55,10 @@ class RolloModule(mcp23017.MCP23017):
         self.updateOutputOnly()
         return (True if (self.outputstate & (1 << (pin-1))) else False)
 
-    def activate(self, rollo_index, cmd):
+    def activate(self, rollo_index, cmd, time = None):
         if rollo_index < len(self.rollos):
+            if time is not None:
+                self.rollos[rollo_index].delay = time
             if cmd == 'stop': 
                 self.rollos[rollo_index].stop()
             elif cmd == 'open': 
