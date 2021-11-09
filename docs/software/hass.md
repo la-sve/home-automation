@@ -71,4 +71,26 @@ https://www.home-assistant.io/integrations/onewire/ <br>
 _(Anmerkung 1: Diese Integration funktioniert auch ohne OWFS, dann jedoch nur mit Temperatursensoren)_<br>
 _(Anmerkung 2: Zur Kommunikation mit OWFS nutzt die Integration ebenfalls die Pyhton Bibliothek "pyownet", wie später dann auch die Softwarekomponente für die Lichtsteuerung.)_
 
+## viCare Integration
+Die [viCare Integration](https://www.home-assistant.io/integrations/vicare) ist standardmäßig in Home Assistant vorhanden und dient hier zum Einbinden einer **Viessmann Brennwerttherme** Vitodens 300-W mit LAN-Modul. 
+
+Meine Erfahrungen bei der Inbetriebnahme: Der Anleitung kann gut gefolgt werden, jedoch verblieben zwei Probleme.
+
+1. Folgende Abhängigkeit musste im venv noch installiert werden: `pip install pkce`
+2. Die Integration funktionierte erst, nachdem einmalig die ViCare APP auf dem Smartphone genutzt wurde. Vorher hat die Integration kein Gerät gefunden.
+
+Nachdem die Probleme gelöst sind, sollten neue Entitäten mit dem Namen vicare verfügbar sein.
+
+### Hintergrundinfos
+Es ist auch eine neuere Komponente in Bearbeitung, siehe, [https://github.com/oischinger/ha_vicare/tree/config_flow](https://github.com/oischinger/ha_vicare/tree/config_flow).
+Um diese auszuprobieren, wird sie ausgecheckt und in `.homeassistant/custom_components` verlinkt, wie nachfolgend beschrieben:
+
+* `su_hass`
+* `cd ~`
+* `mkdir hass_custom; cd hass_custom`
+* `git clone --branch config_flow https://github.com/oischinger/ha_vicare.git`
+* `cd ~; cd .homeassistant; mkdir custom_components`
+* `ln -s ../../hass_custom/ha_vicare/custom_components/vicare`
+
+Die vicare Integration setzt übrigens auf das Paket [PyViCare](https://github.com/somm15/PyViCare). Falls also mal etwas nicht so funktioniert, wie gedacht, kann das Paket auch unabhängig verwendet werden, um Fehler zu finden.
 
