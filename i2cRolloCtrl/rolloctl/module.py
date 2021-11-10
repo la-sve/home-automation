@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import mcp23017
-import Rollo
+from rolloctl import mcp23017
+from rolloctl.rollo import Rollo
 
 class RolloModule(mcp23017.MCP23017):
     def __init__(self, bus, address, unusedPins=0):
@@ -46,7 +46,7 @@ class RolloModule(mcp23017.MCP23017):
 
     def addWindow(self,num):
         print(f"Adding window {num} to rollo module with address: 0x{self.address:02x}")
-        self.rollos.append(Rollo.Rollo(num))
+        self.rollos.append(Rollo(num))
 
     def state(self, pin):
         """ Zurückgeben des Zustands vom gesuchten Pin 1...8 """

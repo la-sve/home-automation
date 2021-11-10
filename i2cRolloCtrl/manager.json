@@ -1,8 +1,24 @@
 {
     "modules" : [
         {
+            "address" : "0x20",
+            "windows" : [1,2,3,4]
+        },
+        {
             "address" : "0x21",
-            "windows" : [1,12]
+            "windows" : [5,6,7,8]
+        },
+        {
+            "address" : "0x22",
+            "windows" : [9,10,11,12]
+        },
+        {
+            "address" : "0x23",
+            "windows" : [13,14,15,16]
+        },
+        {
+            "address" : "0x24",
+            "windows" : [17,18]
         }
     ]
 }

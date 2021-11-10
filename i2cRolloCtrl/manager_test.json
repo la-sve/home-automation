@@ -1,0 +1,9 @@
+{
+    "_comment" : "Einstellungsdatei ist für Testumgebung gedacht.",
+    "modules" : [
+        {
+            "address" : "0x21",
+            "windows" : [1,12]
+        }
+    ]
+}

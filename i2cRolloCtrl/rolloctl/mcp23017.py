@@ -8,6 +8,22 @@
 # https://stackoverflow.com/questions/41266273/getting-the-info-from-mcp23017-with-python
 # https://roboticsbackend.com/raspberry-pi-gpio-interrupts-tutorial/
 
+# MCP23017 Adressen definieren
+#  0 ... entspricht 0x20
+#  1 ... entspricht 0x21
+#    ...
+#  A0  A1  A2  Adresse
+#   0   0   0   0x20
+#   1   0   0   0x21
+#   0   1   0   0x22
+#   1   1   0   0x23
+#   0   0   1   0x24
+#   1   0   1   0x25
+#   0   1   1   0x26
+#   1   1   1   0x27
+
+# Adresse kann bspw. auf Kommandozeile per "i2cdetect 1" herausgefunden werden. 1 steht für I2C Bus Nummer.
+
 IODIRA   = 0x00  # IO direction A - 1= input 0 = output
 IODIRB   = 0x01  # IO direction B - 1= input 0 = output
 IPOLA    = 0x02  # Input polarity A
