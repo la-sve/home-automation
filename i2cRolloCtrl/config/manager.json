@@ -20,5 +20,6 @@
             "address" : "0x24",
             "windows" : [17,18]
         }
-    ]
+    ],
+    "interrupt_gpio" : 17
 }

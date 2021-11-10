@@ -41,8 +41,8 @@ class RolloAutomationManager(threading.Thread):
                     "rolloIndex": i}
 
         # Debug
-        self.modules[-1].printProperties()
-        self.activate(1, "open")
+        #self.modules[-1].printProperties()
+        #self.activate(1, "open")
         
         # i2c für andere threads wieder freigeben
         lock_i2c.release()

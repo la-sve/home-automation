@@ -23,8 +23,7 @@ import json
 from flask import Flask, request, jsonify
 app = Flask(__name__)
         
-# Interrupt-Pin am Raspberry Pi, welcher mit Interrupt-Leitung der Rollo-Module verbunden ist.
-RASPIINTPIN=17
+
 
 def signal_handler(sig, frame):
     GPIO.cleanup()
@@ -62,18 +61,21 @@ if __name__ == "__main__":
     # TODO: Einstellungsdatei per command line argument!
 
     # Einstellungen aus json-Datei laden
-    f = open(os.path.join(sys.path[0],'manager_test.json'))
+    f = open(os.path.join(sys.path[0],'config','manager_test.json'))
     settings = json.load(f)
     f.close()
 
-    manager = RolloAutomationManager(settings["modules"], interrupt_gpio = RASPIINTPIN)
+    # Interrupt-Pin am Raspberry Pi, welcher mit Interrupt-Leitung der Rollo-Module verbunden ist.
+    interrupt_gpio = settings["interrupt_gpio"]
+
+    manager = RolloAutomationManager(settings["modules"], interrupt_gpio = interrupt_gpio)
     app.debug = False
     app.use_reloader = False
 
     GPIO.setmode(GPIO.BCM)
 
-    GPIO.setup(RASPIINTPIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(RASPIINTPIN, GPIO.FALLING, 
+    GPIO.setup(interrupt_gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(interrupt_gpio, GPIO.FALLING, 
             callback=manager.newInputDetected)  #, bouncetime=10
 
     try:
