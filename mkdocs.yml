@@ -8,9 +8,11 @@ nav:
     - 'Allgemein': 'hardware/allgemein.md'
     - 'DS2408 Board': 'hardware/ds2408/index.md'
     - 'DS2408 Zusatz': 'hardware/ds2408_zusatz/index.md'
+    - 'MCP23017 Board': 'hardware/mcp23017/index.md'
   - 'Software':
     - 'Allgemein': 'software/index.md'
     - 'OneWire': 'software/oneWire.md'
+    - 'i2c': 'software/i2c.md'
     - 'Home Assistant': 'software/hass.md'
     - 'Entwicklerwerkzeuge': 'software/development.md'
     
