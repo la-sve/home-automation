@@ -263,6 +263,95 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "title": "Rollos EG",
+                    "path": "rollos-eg",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "cover.rollo_arbeit"
+                                },
+                                {
+                                    "entity": "cover.rollo_wohn_o"
+                                },
+                                {
+                                    "entity": "cover.rollo_wohn_s"
+                                },
+                                {
+                                    "entity": "cover.rollo_wohn_t"
+                                },
+                                {
+                                    "entity": "cover.rollo_kuec_t"
+                                },
+                                {
+                                    "entity": "cover.rollo_kuec_s"
+                                },
+                                {
+                                    "entity": "cover.rollo_kuec_w"
+                                },
+                                {
+                                    "entity": "cover.rollo_wceg"
+                                },
+                                {
+                                    "entity": "cover.rollo_hwr"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "script.rollos_eg_down"
+                                },
+                                {
+                                    "entity": "script.rollos_eg_up"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Rollos OG",
+                    "path": "rollos-og",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "cover.rollo_trep"
+                                },
+                                {
+                                    "entity": "cover.rollo_kid1_n"
+                                },
+                                {
+                                    "entity": "cover.rollo_kid1_o"
+                                },
+                                {
+                                    "entity": "cover.rollo_kid2_o"
+                                },
+                                {
+                                    "entity": "cover.rollo_kid2_s"
+                                },
+                                {
+                                    "entity": "cover.rollo_bibo"
+                                },
+                                {
+                                    "entity": "cover.rollo_wcog_s"
+                                },
+                                {
+                                    "entity": "cover.rollo_wcog_w"
+                                },
+                                {
+                                    "entity": "cover.rollo_schl"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

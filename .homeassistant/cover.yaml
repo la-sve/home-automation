@@ -1,0 +1,382 @@
+- platform: template
+  covers:
+    rollo_arbeit:
+      friendly_name: "Rollo Arbeitszimmer"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 1
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 1
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 1
+    rollo_wohn_o:
+      friendly_name: "Rollo Wohnzimmer Ost"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 2
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 2
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 2
+    rollo_wohn_s:
+      friendly_name: "Rollo Wohnzimmer Süd"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 3
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 3
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 3
+    rollo_wohn_t:
+      friendly_name: "Rollo Wohnzimmer Tür"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 4
+          time: 30
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 4
+          time: 30
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 4
+    rollo_kuec_t:
+      friendly_name: "Rollo Küche Tür"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 5
+          time: 30
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 5
+          time: 30
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 5
+    rollo_kuec_s:
+      friendly_name: "Rollo Küche Süd"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 6
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 6
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 6
+    rollo_kuec_w:
+      friendly_name: "Rollo Küche West"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 7
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 7
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 7
+    rollo_wceg:
+      friendly_name: "Rollo WC EG"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 8
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 8
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 8
+    rollo_hwr:
+      friendly_name: "Rollo HWR"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 9
+          time: 20
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 9
+          time: 20
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 9
+    rollo_trep:
+      friendly_name: "Rollo Treppe"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 10
+          time: 30
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 10
+          time: 30
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 10
+    rollo_kid1_n:
+      friendly_name: "Rollo Malte Nord"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 11
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 11
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 11
+    rollo_kid1_o:
+      friendly_name: "Rollo Malte Ost"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 12
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 12
+          time: 16
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 12
+    rollo_kid2_o:
+      friendly_name: "Rollo Sina Ost"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 13
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 13
+          time: 16
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 13
+    rollo_kid2_s:
+      friendly_name: "Rollo Sina Süd"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 14
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 14
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 14
+    rollo_bibo:
+      friendly_name: "Rollo Bibliothek"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 15
+          time: 30
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 15
+          time: 30
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 15
+    rollo_wcog_s:
+      friendly_name: "Rollo WC OG Süd"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 16
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 16
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 16
+    rollo_wcog_w:
+      friendly_name: "Rollo WC OG West"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 17
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 17
+          time: 25
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 17
+    rollo_schl:
+      friendly_name: "Rollo Schlafzimmer"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "open"
+          window: 18
+          time: 25
+      close_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "close"
+          window: 18
+          time: 17
+      stop_cover:
+        service: rest_command.rollosteuerung
+        data:
+          cmd: "stop"
+          window: 18
+    fenstertestrollo:
+      friendly_name: "Fenster Rollo Test"
+      position_template: "50"
+      open_cover:
+        service: rest_command.rollosteuerungtest
+        data:
+          cmd: "open"
+          window: 12
+          time: 10
+      close_cover:
+        service: rest_command.rollosteuerungtest
+        data:
+          cmd: "close"
+          window: 12
+          time: 5
+      stop_cover:
+        service: rest_command.rollosteuerungtest
+        data:
+          cmd: "stop"
+          window: 12
