@@ -350,6 +350,13 @@
                                     "entity": "cover.rollo_schl"
                                 }
                             ]
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "script.rollos_og_down",
+                                "script.rollos_og_up"
+                            ]
                         }
                     ]
                 }
