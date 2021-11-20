@@ -43,7 +43,11 @@ In der Standardkonfiguration läuft nur ein simulierter (Fake) Sensor. Wir müss
 Nun den OWFS Service neu starten:<br>
 `> sudo systemctl restart owserver`
 
+Ggf. OWFS Webserver neu starten:<br>
+`> sudo systemctl restart owhttpd.service`
+
 > _Einige Debugging Befehle:_<br>
   `> systemctl status owfs.service`<br>
+  `> systemctl status owhttpd.service`<br>
   `> systemctl cat owfs.service`<br>
   `> journalctl -f`<br>
