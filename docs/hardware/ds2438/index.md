@@ -49,10 +49,8 @@ Entsprechend umgestellt kann nun der Feuchtewert in einen Spannungswert (einzig 
 
 Da der DHT22 mittlerweile in die Jahre gekommen ist und das Auslesen des Sensors nur sehr langsam erfolgt, kann auch über eine Alternative nachgedacht werden. Die zweite Version des Feuchtesensors nutzt einen GY-21 Breakout Board von AZ-Delivery mit einem HTU21 Feuchtesensor. Das Breakout-Board ist bereits mit 10k Pull-Ups ausgestattet und kann direkt an den Mikrocontroller angeschlossen werden (Ebenfalls ist ein Spannungswandler verbaut, damit als VIN auch 5V verwendet werden kann).
 
-https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library  
-https://github.com/adafruit/Adafruit_HTU21DF_Library
-https://github.com/devxplained/HTU21D-Sensor-Library
+Folgende Bibliothek kann als Startpunkt verwendet werden: [SparkFun_HTU21D_Breakout_Arduino_Library](https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library).
+Leider wartet die Bibliothek aktiv zwischen Messanforderung und Auslesen des Sensorwerts um die 50ms. Dies könnte für die OneWire Emulation problematisch werden. Entsprechend wurde die Bibliothek geringfügig modifiziert, um die aktive Wartezeit durch ein Triggern und späteres Auslesen zu ersetzen. Dazwischen können andere Programmteile ausgeführt werden.  
 
-Watchdog, da sonst instabil
-https://spellfoundry.com/2020/06/25/reliable-embedded-systems-using-the-arduino-watchdog/
+Der Experimentalaufbau zeigte eine Instabilität nach einigen Stunden, die sich darin äußerte, dass das Arduino-Programm "hängen" blieb. Mutmaßlich ist die I2C-Bibliothek die Ursache. Ein Ausweg bietet ein Watchdog Timer, wie es bspw. [hier](https://spellfoundry.com/2020/06/25/reliable-embedded-systems-using-the-arduino-watchdog/) beschrieben wird.
 
