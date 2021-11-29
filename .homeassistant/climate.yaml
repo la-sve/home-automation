@@ -1,6 +1,6 @@
 - platform: generic_thermostat
   name: Arbeitszimmer
-  heater: switch.29_430214000000_pio_2
+  heater: switch.29_c10437000000_pio_2
   target_sensor: sensor.28_ff9a3a501603_temperature
   min_temp: 16
   max_temp: 26
@@ -17,7 +17,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Wohnzimmer
-  heater: switch.29_430214000000_pio_3
+  heater: switch.29_c10437000000_pio_3
   target_sensor: sensor.28_ff380fb41603_temperature
   min_temp: 16
   max_temp: 26
@@ -34,7 +34,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Kueche
-  heater: switch.29_430214000000_pio_4
+  heater: switch.29_c10437000000_pio_4
   target_sensor: sensor.28_ffcbed531604_temperature
   min_temp: 16
   max_temp: 26
@@ -51,7 +51,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: WCEG
-  heater: switch.29_430214000000_pio_5
+  heater: switch.29_c10437000000_pio_5
   target_sensor: sensor.28_ff5304511603_temperature
   min_temp: 16
   max_temp: 26
@@ -68,7 +68,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: WCOG
-  heater: switch.29_430214000000_pio_6
+  heater: switch.29_c10437000000_pio_6
   target_sensor: sensor.28_ffc27cb41603_temperature
   min_temp: 16
   max_temp: 26
@@ -85,7 +85,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Bibo
-  heater: switch.29_430214000000_pio_7
+  heater: switch.29_c10437000000_pio_7
   target_sensor: sensor.28_ffe302511603_temperature
   min_temp: 16
   max_temp: 26
@@ -102,7 +102,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Ankleide
-  heater: switch.29_330214000000_pio_0
+  heater: switch.29_b90437000000_pio_0
   target_sensor: sensor.28_ff0dcf501603_temperature
   min_temp: 16
   max_temp: 26
@@ -119,12 +119,12 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Sina
-  heater: switch.29_330214000000_pio_1
+  heater: switch.29_b90437000000_pio_1
   target_sensor: sensor.28_ff0f3e541604_temperature
   min_temp: 16
   max_temp: 26
   ac_mode: false
-  target_temp: 21.0
+  target_temp: 21.5
   cold_tolerance: 0.3
   hot_tolerance: 0
   min_cycle_duration:
@@ -136,12 +136,12 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Malte
-  heater: switch.29_330214000000_pio_2
+  heater: switch.29_b90437000000_pio_2
   target_sensor: sensor.28_ff3b2a511603_temperature
   min_temp: 16
   max_temp: 26
   ac_mode: false
-  target_temp: 20.0
+  target_temp: 22.0
   cold_tolerance: 0.3
   hot_tolerance: 0
   min_cycle_duration:
@@ -153,7 +153,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Schlafzimmer
-  heater: switch.29_330214000000_pio_3
+  heater: switch.29_b90437000000_pio_3
   target_sensor: sensor.28_ff3bc3471603_temperature
   min_temp: 16
   max_temp: 26
@@ -170,7 +170,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Studio
-  heater: switch.29_330214000000_pio_4
+  heater: switch.29_b90437000000_pio_4
   target_sensor: sensor.28_ff5ad9501603_temperature
   min_temp: 16
   max_temp: 26
@@ -187,7 +187,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Galerie
-  heater: switch.29_330214000000_pio_5
+  heater: switch.29_b90437000000_pio_5
   target_sensor: sensor.28_ff4777b41603_temperature
   min_temp: 16
   max_temp: 26
@@ -204,7 +204,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: HandtuchEG
-  heater: switch.29_330214000000_pio_6
+  heater: switch.29_b90437000000_pio_6
   target_sensor: sensor.28_ff5304511603_temperature
   min_temp: 16
   max_temp: 26
@@ -221,7 +221,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: HandtuchOG
-  heater: switch.29_330214000000_pio_7
+  heater: switch.29_b90437000000_pio_7
   target_sensor: sensor.28_ffc27cb41603_temperature
   min_temp: 16
   max_temp: 26

@@ -137,8 +137,17 @@
                         {
                             "type": "entities",
                             "entities": [
-                                "group.nachtlichter"
-                            ]
+                                {
+                                    "entity": "group.nachtlichter"
+                                },
+                                {
+                                    "entity": "group.weihnachteg"
+                                },
+                                {
+                                    "entity": "group.weihnachtenog"
+                                }
+                            ],
+                            "title": "Beleuchtungsgruppen"
                         },
                         {
                             "type": "entities",
@@ -155,6 +164,22 @@
                                 "entities": []
                             },
                             "title": "Nachtlichter"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.29_ad0837000000_pio_3",
+                                "switch.29_b20837000000_pio_4",
+                                "switch.29_b20837000000_pio_5",
+                                "switch.29_ad0837000000_pio_5",
+                                "switch.29_ad0837000000_pio_4",
+                                "switch.29_b20837000000_pio_1",
+                                "switch.29_b20837000000_pio_3",
+                                "switch.29_b20837000000_pio_2",
+                                "switch.29_ad0837000000_pio_7",
+                                "switch.29_b20837000000_pio_0",
+                                "switch.29_b20837000000_pio_6"
+                            ]
                         }
                     ]
                 },

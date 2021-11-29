@@ -132,21 +132,21 @@ homeassistant:
       friendly_name: "Studio Fenster (38)"
     switch.29_b20837000000_pio_7:
       friendly_name: "Zirkulationspumpe"
-    switch.29_330214000000_pio_0:
+    switch.29_b90437000000_pio_0:
       friendly_name: FBH_ANKL
-    switch.29_330214000000_pio_1:
+    switch.29_b90437000000_pio_1:
       friendly_name: FBH_KID2
-    switch.29_330214000000_pio_2:
+    switch.29_b90437000000_pio_2:
       friendly_name: FBH_KID1
-    switch.29_330214000000_pio_3:
+    switch.29_b90437000000_pio_3:
       friendly_name: FBH_SCHL
-    switch.29_330214000000_pio_4:
+    switch.29_b90437000000_pio_4:
       friendly_name: FBH_STUD
-    switch.29_330214000000_pio_5:
+    switch.29_b90437000000_pio_5:
       friendly_name: FBH_GALE
-    switch.29_330214000000_pio_6:
+    switch.29_b90437000000_pio_6:
       friendly_name: FBH_WCEG_H
-    switch.29_330214000000_pio_7:
+    switch.29_b90437000000_pio_7:
       friendly_name: FBH_WCOG_H  
     sensor.28_ffc27cb41603_temperature:
       friendly_name: WCOG

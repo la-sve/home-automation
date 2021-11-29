@@ -64,3 +64,74 @@
     entity_id: switch.29_b20837000000_pio_7
     domain: switch
   mode: single
+- id: '1637702834285'
+  alias: Weihnachtsbeleuchtung EG und OG EIN (Wochentage)
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:50
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: homeassistant.turn_on
+    target:
+      entity_id:
+      - group.weihnachteg
+      - group.weihnachtenog
+  mode: single
+- id: '1637703042825'
+  alias: Weihnachtsbeleuchtung EG AUS
+  description: ''
+  trigger:
+  - platform: time
+    at: '9:00'
+  - platform: time
+    at: '20:30'
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    target:
+      entity_id: group.weihnachteg
+  mode: single
+- id: '1637703122100'
+  alias: Weihnachtsbeleuchtung OG AUS
+  description: ''
+  trigger:
+  - platform: time
+    at: '9:00'
+  - platform: time
+    at: '23:00'
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    target:
+      entity_id: group.weihnachtenog
+  mode: single
+- id: '1637785069143'
+  alias: Weihnachtsbeleuchtung EG und OG EIN (Wochenende)
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:30
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: homeassistant.turn_on
+    target:
+      entity_id:
+      - group.weihnachteg
+      - group.weihnachtenog
+  mode: single
