@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="anschlussplan.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.5554293"
+     inkscape:cx="90.007305"
+     inkscape:cy="186.76516"
+     inkscape:window-width="3368"
+     inkscape:window-height="1376"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';stroke-width:0.264583"
+       x="13.572553"
+       y="71.796143"
+       id="text9448"><tspan
+         sodipodi:role="line"
+         id="tspan9446"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="71.796143">A GND</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="77.087807"
+         id="tspan9450">A 5V</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="82.379471"
+         id="tspan9452">A 1W rück</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="87.671135"
+         id="tspan9454">B 1W zum Sensor</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="92.962799"
+         id="tspan9456">B 1W rück</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="98.254456"
+         id="tspan9458">A 1W zum Sensor</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="103.54612"
+         id="tspan9460">B 5V</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="13.572553"
+         y="108.83778"
+         id="tspan9462">B GND</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';stroke-width:0.264583"
+       x="90.891556"
+       y="15.716459"
+       id="text17657"><tspan
+         sodipodi:role="line"
+         id="tspan17655"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="15.716459">Arduino Nano</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="21.008121"
+         id="tspan17659">GND</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="26.299784"
+         id="tspan17661">VIN</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="31.591446"
+         id="tspan17663">A0</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="36.88311"
+         id="tspan17665">A4</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="90.891556"
+         y="42.17477"
+         id="tspan17667">A5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';stroke-width:0.264583"
+       x="151.51959"
+       y="16.124006"
+       id="text22123"><tspan
+         sodipodi:role="line"
+         id="tspan22121"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="151.51959"
+         y="16.124006">GY-21</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="151.51959"
+         y="21.415668"
+         id="tspan22125">VIN</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="151.51959"
+         y="26.707331"
+         id="tspan22129">GND</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="151.51959"
+         y="31.998993"
+         id="tspan22127">SCL</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="151.51959"
+         y="37.290653"
+         id="tspan22131">SDA</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 29.222308,70.661471 H 145.02383 V 25.219818 h 4.68714"
+       id="path27709" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 90.044129,19.63952 H 75.143311 v 51.175071"
+       id="path27711" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 26.098002,75.750964 H 140.66234 V 20.082781 h 9.39539"
+       id="path27826" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 89.581142,24.680625 H 79.446386 v 51.213251"
+       id="path27828" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 53.755983,97.559637 H 82.312059 V 29.84704 h 7.173463"
+       id="path27943" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 38.808712,91.70037 H 82.302674"
+       id="path27945" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 97.381342,35.492465 H 150.48995"
+       id="path27947" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 150.24952,30.325419 H 110.06081 V 40.728172 H 97.283954"
+       id="path27949" />
+    <circle
+       style="fill:#000000;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none;stop-color:#000000"
+       id="path28099"
+       cx="75.252068"
+       cy="70.488701"
+       r="0.70428377" />
+    <circle
+       style="fill:#000000;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none;stop-color:#000000"
+       id="circle28181"
+       cx="79.300201"
+       cy="75.96106"
+       r="0.70428377" />
+    <circle
+       style="fill:#000000;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none;stop-color:#000000"
+       id="circle28183"
+       cx="82.216652"
+       cy="91.556778"
+       r="0.70428377" />
+  </g>
+</svg>
