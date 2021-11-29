@@ -9,6 +9,7 @@ nav:
     - 'DS2408 Board': 'hardware/ds2408/index.md'
     - 'DS2408 Zusatz': 'hardware/ds2408_zusatz/index.md'
     - 'MCP23017 Board': 'hardware/mcp23017/index.md'
+    - 'DS2438 Feuchte': 'hardware/ds2438/index.md'
   - 'Software':
     - 'Allgemein': 'software/index.md'
     - 'OneWire': 'software/oneWire.md'
