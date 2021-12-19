@@ -16,3 +16,7 @@ alias hass_start='sh ~/hass_autostart.sh'
 # Use git for configuration files within home directory
 # (use sparse checkout and see github documentation of la-sve/home-automation )
 alias githass='git --work-tree=/home/homeassistant --git-dir=/home/homeassistant/.home'
+
+# Rollo Steuerung
+alias rollo_log='journalctl --user-unit rolloctl.service'
+alias rollo_status='systemctl --user status rolloctl.service'
