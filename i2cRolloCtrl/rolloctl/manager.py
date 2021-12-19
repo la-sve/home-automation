@@ -118,14 +118,18 @@ class RolloAutomationManager(threading.Thread):
         lock_i2c.acquire()
         self.updating = True
         
-        if force_all == True:
-            #self.m1.update()
-            for module in self.modules:
-                module.update()
-        else:
-            #self.m1.updateOutputOnly()
-            for module in self.modules:
-                module.updateOutputOnly()
+        try:
+            if force_all == True:
+                #self.m1.update()
+                for module in self.modules:
+                    module.update()
+            else:
+                #self.m1.updateOutputOnly()
+                for module in self.modules:
+                    module.updateOutputOnly()
+        except IOError:
+            print("Error occured while reading/writing to I2C bus! Continuing.")
+
 
         # i2c für andere threads wieder freigeben
         self.updating = False

@@ -1,6 +1,8 @@
 # I2C Rollo Controller
 Hilfsprogramm zum Ansteuern der Rollos über einen MCP23017 Schaltkreis.
 
+Nicht vergessen, das I2C-Interface über `raspi-config` zu aktivieren.
+
 ## Installationsmöglichkeit
 Aus diesem Ordner heraus:
 > `pip3 install -e . --user`

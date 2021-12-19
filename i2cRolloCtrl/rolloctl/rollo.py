@@ -3,7 +3,7 @@
 import time
 
 # Standard-Laufzeit für Motor #34
-DEFAULTDELAY = 10
+DEFAULTDELAY = 30
 
 class Rollo:
     """ Zustand und Steuerung eines einzelnen Rollos. """

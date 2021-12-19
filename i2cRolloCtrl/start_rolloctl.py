@@ -20,7 +20,7 @@ import json
 # Script als systemd Service ausführen, siehe:
 #   https://github.com/torfsen/python-systemd-tutorial
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 app = Flask(__name__)
         
 
@@ -54,14 +54,20 @@ def update_shutter_state():
         print("Only json formatted post requests are supported!")
         state = request.data.decode("utf-8")
 
-    return state, 201
+    data = { "result" : state}
+    json_string = json.dumps(data, ensure_ascii = False)
+    #creating a Response object to set the content type and the encoding
+    response = Response(json_string, content_type="application/json; charset=utf-8" )
+    return response
+
+    #return state, 201
 
 if __name__ == "__main__":
 
     # TODO: Einstellungsdatei per command line argument!
 
     # Einstellungen aus json-Datei laden
-    f = open(os.path.join(sys.path[0],'config','manager_test.json'))
+    f = open(os.path.join(sys.path[0],'config','manager.json'))
     settings = json.load(f)
     f.close()
 
@@ -83,7 +89,7 @@ if __name__ == "__main__":
         threading.Thread(target=lambda: app.run(host="0.0.0.0",port=5000)).start()
         while True:
             time.sleep(10)
-            print('MainLoop')
+            #print('MainLoop')
     except (KeyboardInterrupt, SystemExit):
         manager.running = False
         manager.join()
