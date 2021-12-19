@@ -54,3 +54,10 @@ Leider wartet die Bibliothek aktiv zwischen Messanforderung und Auslesen des Sen
 
 Der Experimentalaufbau zeigte eine Instabilität nach einigen Stunden, die sich darin äußerte, dass das Arduino-Programm "hängen" blieb. Mutmaßlich ist die I2C-Bibliothek die Ursache. Ein Ausweg bietet ein Watchdog Timer, wie es bspw. [hier](https://spellfoundry.com/2020/06/25/reliable-embedded-systems-using-the-arduino-watchdog/) beschrieben wird.
 
+Der Quellcode findet sich im Verzeichnis `DS2438Humidity/GY21`.
+
+## Arduino-HTU21D-Sensor Board
+Da heutzutage die Leiterplattenherstellung nicht mehr so kostspielig ist, kann die Schaltungs-Kombination aus Arduino und HTU21D schnell noch mittels KiCAD für die Fertigung umgesetzt werden. Die Schaltung und das Board-Layout findet sich im Verzeichnis `boards/htu21d_1wire`.
+
+## Hinweise zur Home Assistant Integration
+Falls der Sensor etwas instabil läuft und ggf. durch die Neustarts Ausreißer-Werte im Verlauf der Sensorwerte auftauchen, kann der Einsatz der [Statistik-Integration](https://www.home-assistant.io/integrations/statistics/) (Ab Version 2021.12) unter Zuhilfenahme des Median abhilfe schaffen.

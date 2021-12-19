@@ -31,6 +31,7 @@ HTU21D sensor;
 auto hub    = OneWireHub(pin_onewire);
 auto ds2438 = DS2438( DS2438::family_code, 0x00, 0x00, 0x38, 0x24, 0xDA, 0x00 );    //      - Smart Battery Monitor
 
+bool has_first_measurement = 0;
 
 bool do_htu(void);
 
@@ -57,8 +58,10 @@ void setup(){
   // Setup OneWire
   hub.attach(ds2438);
 
-  ds2438.setTemperature(38.0f);  // can vary from -55 to 125deg
-  ds2438.setVoltage(870); // 10mV-Steps
+  ds2438.setTemperature(20.0f);  // can vary from -55 to 125deg
+  uint16_t volt_10mV;
+  volt_10mV = (uint16_t)((100 + 41.98)/38.92*100.0);
+  ds2438.setVoltage(volt_10mV);  // 10mV-Steps
   ds2438.setCurrent(700);  // hasn't any unit or scale
 
   #ifdef DEBUG
@@ -83,7 +86,8 @@ void setup(){
 void loop(){
   
   // following function must be called periodically
-  hub.poll();
+  if (has_first_measurement)
+    hub.poll();
   
   if (do_htu()) {
     #ifdef DEBUG
@@ -95,7 +99,7 @@ void loop(){
 
 bool do_htu(void)
 {
-  const  uint32_t interval_wait    = 1500;     // interval at which to blink (milliseconds)
+  const  uint32_t interval_wait    = 5000;     // interval between Measurements
   const  uint32_t interval_measure = 100;      // Time for the sensor to have a new measurement
   const  uint32_t interval_next    = 10;       // Minimal time before triggering next value
   static uint32_t nextMillis  = millis();      // will store next time LED will updated
@@ -103,6 +107,9 @@ bool do_htu(void)
   static float t = NAN; 
   static float h = NAN; 
 
+  // Reset the watchdog
+  wdt_reset();
+    
   uint32_t currentMillis = millis();
 
   if (state == HTUTriggerHumidity && currentMillis > nextMillis){
@@ -146,6 +153,8 @@ bool do_htu(void)
       volt_10mV = (uint16_t)((h + 41.98)/38.92*100.0);
       ds2438.setVoltage(volt_10mV);
       ds2438.setTemperature(t);
+
+      has_first_measurement = true;
   
       #ifdef DEBUG
       Serial.print(F("Humidity: "));
@@ -161,9 +170,6 @@ bool do_htu(void)
     if (ledState == LOW)    ledState = HIGH;
     else                    ledState = LOW;
     digitalWrite(pin_led, ledState);
-
-    // Reset the watchdog
-    wdt_reset();
     
     nextMillis = currentMillis + interval_wait;
     state = HTUTriggerHumidity; // Continue with first state

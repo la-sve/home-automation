@@ -6,3 +6,5 @@ As I don't believe, this project is of much relevance to others, it is described
 
 ## Dokumentation
 Eine [Dokumentation](docs/index.md) findet sich im `docs`-Verzeichnis.
+
+Ebenfalls erreichbar über [readthedocs](https://la-sve-home-automation.readthedocs.io/en/latest/).
