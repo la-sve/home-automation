@@ -1,4 +1,4 @@
-update=2019 July 21, Sunday 10:41:03
+update=So 19 Dez 2021 21:31:31 CET
 version=1
 last_client=kicad
 [general]
@@ -18,14 +18,14 @@ PageLayoutDescrFile=default.kicad_wks
 PlotDirectoryName=
 SubpartIdSeparator=0
 SubpartFirstId=65
-NetFmtName=
+NetFmtName=Pcbnew
 SpiceAjustPassiveValues=0
 LabSize=50
 ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=default.kicad_wks
-LastNetListRead=
+LastNetListRead=w1_connectors.net
 CopperLayerCount=2
 BoardThickness=1.6002
 AllowMicroVias=0
@@ -74,7 +74,7 @@ OthersTextUpright=1
 SolderMaskClearance=0
 SolderMaskMinWidth=0.09999999999999999
 SolderPasteClearance=0
-SolderPasteRatio=-0
+SolderPasteRatio=0
 [pcbnew/Layer.F.Cu]
 Name=Front
 Type=0
