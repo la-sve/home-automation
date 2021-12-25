@@ -170,7 +170,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Studio
-  heater: switch.29_b90437000000_pio_4
+  heater: switch.29_b90437000000_pio_5
   target_sensor: sensor.28_ff5ad9501603_temperature
   min_temp: 16
   max_temp: 26
@@ -187,7 +187,7 @@
   precision: 0.1
 - platform: generic_thermostat
   name: Galerie
-  heater: switch.29_b90437000000_pio_5
+  heater: switch.29_b90437000000_pio_4
   target_sensor: sensor.28_ff4777b41603_temperature
   min_temp: 16
   max_temp: 26

@@ -19,6 +19,8 @@ weihnachtenog:
     - switch.29_b20837000000_pio_3
     # Stern Dachbodentreppe
     - switch.29_b20837000000_pio_4
+    # Gallerie Fenster (Weihnachtsbaum-Dreieck)
+    - switch.29_b20837000000_pio_5
     # Malte
     - switch.29_ad0837000000_pio_5
     # Sina

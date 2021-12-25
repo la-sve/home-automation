@@ -2,12 +2,18 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+logger:
+  default: info
+
 # Text to speech
 tts:
   - platform: google_translate
 
 # Test generic thermostat
 climate: !include climate.yaml
+
+# Python Script Integration aktivieren
+python_script:
 
 # https://www.home-assistant.io/integrations/rest_command/
 # Nachfolgend ein Eintrag für die Testumgebung sowie die Produktivumgebung
@@ -96,6 +102,22 @@ vicare:
 #    switch.29_ae571a000000_pio_6:
 #      friendly_name: Erz_Studio
 
+# Sensor mittels Statistik Integration wrappen
+sensor:
+  - platform: statistics
+    name: "Garage Luftfeuchtigkeit"
+    entity_id: sensor.26_00003824da00_humidity_htm1735
+    sampling_size: 50
+    state_characteristic: median
+    max_age:
+      minutes: 10
+  - platform: statistics
+    name: "Garage Temperatur"
+    entity_id: sensor.26_00003824da00_temperature
+    sampling_size: 30
+    state_characteristic: median
+    max_age:
+      minutes: 10
 
 # Convert auto generated 1-Wire device ids into friendly names 
 homeassistant:
@@ -141,9 +163,9 @@ homeassistant:
     switch.29_b90437000000_pio_3:
       friendly_name: FBH_SCHL
     switch.29_b90437000000_pio_4:
-      friendly_name: FBH_STUD
-    switch.29_b90437000000_pio_5:
       friendly_name: FBH_GALE
+    switch.29_b90437000000_pio_5:
+      friendly_name: FBH_STUD
     switch.29_b90437000000_pio_6:
       friendly_name: FBH_WCEG_H
     switch.29_b90437000000_pio_7:
@@ -174,3 +196,5 @@ homeassistant:
       friendly_name: SCHL
     sensor.28_ff0f3e541604_temperature:
       friendly_name: KID2
+    sensor.28_ff80ce501603_temperature:
+      friendly_name: HWRA

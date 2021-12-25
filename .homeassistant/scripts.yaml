@@ -1,228 +1,237 @@
 rollos_eg_down:
-  alias: "Rollos EG DOWN"
+  alias: Rollos EG DOWN
   sequence:
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 1
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 2
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 3
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 4
-        time: 30
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 5
-        time: 30
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 6
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 7
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 8
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 9
-        time: 25
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 1
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 2
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 3
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 4
+      time: 30
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 5
+      time: 30
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 6
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 7
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 8
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 9
+      time: 25
 rollos_eg_up:
-  alias: "Rollos EG UP"
+  alias: Rollos EG UP
   sequence:
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 1
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 2
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 3
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 4
-        time: 30
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 5
-        time: 30
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 6
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 7
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 8
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 9
-        time: 25
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 1
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 2
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 3
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 4
+      time: 30
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 5
+      time: 30
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 6
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 7
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 8
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 9
+      time: 25
 rollos_og_down:
-  alias: "Rollos OG DOWN"
+  alias: Rollos OG DOWN
   sequence:
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 11
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 12
-        time: 16
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 13
-        time: 16
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 14
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 16
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 17
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "close"
-        window: 18
-        time: 17
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 11
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 12
+      time: 16
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 13
+      time: 16
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 14
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 16
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 17
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 18
+      time: 17
 rollos_og_up:
-  alias: "Rollos OG UP"
+  alias: Rollos OG UP
   sequence:
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 11
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 12
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 13
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 14
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 16
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 17
-        time: 25
-    - delay:
-        seconds: 2
-    - service: rest_command.rollosteuerung
-      data:
-        cmd: "open"
-        window: 18
-        time: 25
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 11
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 12
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 13
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 14
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 16
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 17
+      time: 25
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: open
+      window: 18
+      time: 25
+sonos_mdr_jump:
+  sequence:
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.hauptschlafzimmer
+    data:
+      source: MDR Jump
+  mode: single
+  alias: SONOS MDR JUMP
