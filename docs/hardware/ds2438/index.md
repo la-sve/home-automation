@@ -59,5 +59,15 @@ Der Quellcode findet sich im Verzeichnis `DS2438Humidity/GY21`.
 ## Arduino-HTU21D-Sensor Board
 Da heutzutage die Leiterplattenherstellung nicht mehr so kostspielig ist, kann die Schaltungs-Kombination aus Arduino und HTU21D schnell noch mittels KiCAD für die Fertigung umgesetzt werden. Die Schaltung und das Board-Layout findet sich im Verzeichnis `boards/htu21d_1wire`.
 
+## Pegel-Konverter
+Während die Temperatursensoren noch per 3.3V Signalleitung betrieben werden können, ist dies für die DS2438-Arduino-Variante nicht mehr möglich. Folglich wird ein Level-Shifting zwischen 3.3V und 5V notwendig. 
+
+Eine schöne Beschreibung in Bezug auf One-Wire findet sich im *APPLICATION NOTE 7106* mit dem Titel [How to Level Shift 1-Wire Systems]( 
+https://www.maximintegrated.com/en/design/technical-documents/app-notes/7/7106.html).
+
+Mein persönliches Fazit: Es gibt ICs, wie den TXS0108E, die das Level-Shifting integrieren, jedoch kann es aufgrund der Kabellängen problematisch werden, wie bspw. beim genannten Schaltkreis in Bezug auf die One Shot Funktionalität. Liest man in Foren-Beiträgen, geht die Empfehlung eher dahin, sich auf die einfache MOSFET-Variante zu beschränken. 
+
+Um den *Kabelsalat* mehrerer 1-Wire Bus-Leitungen inklusive Level-Shifting und Pull-Up Widerständen zu reduzieren, kann auch hier ein kleines Plattinchen erstellt werden, siehe `boards/w1_connectors`.
+
 ## Hinweise zur Home Assistant Integration
 Falls der Sensor etwas instabil läuft und ggf. durch die Neustarts Ausreißer-Werte im Verlauf der Sensorwerte auftauchen, kann der Einsatz der [Statistik-Integration](https://www.home-assistant.io/integrations/statistics/) (Ab Version 2021.12) unter Zuhilfenahme des Median abhilfe schaffen.

@@ -10,24 +10,39 @@ img[src~="center"] {
 # Hardware
 
 ## Zentrale
-Alle Sensoren und Aktoren sind sternförmig verkabelt. Entsprechend viele Leitungen müssen organisiert werden. Hierzu steht ein Netzwerkschrank zur Verfügung sowie ein Verteilerschrank (rechts oben und rechts unten im Bild).
+Alle Sensoren und Aktoren sind sternförmig verkabelt. Entsprechend viele Leitungen müssen organisiert werden. Hierzu steht ein Netzwerkschrank (oben im Bild) zur Verfügung sowie ein Verteilerschrank (rechts unten im Bild).
 
 ![Sternförmige Verkabelung](img/Rohbau2.JPG)
 
 ## Netzwerkschrank
-Im Netzwerkschrank sind sämtliche im Haus verlegte CAT.7 Netzwerkkabel gebündelt. Die Kabel sind auf Patch-Panels aufgelegt, wobei nur ein Panel mit Netzwerkkabeln belegt ist. Der Rest sind Signalleitungen für Sensoren und Taster.
+Im Netzwerkschrank sind sämtliche im Haus verlegte CAT.7 Netzwerkkabel gebündelt. Die Kabel sind auf Patch-Panels aufgelegt, wobei nur ein Panel mit Netzwerkkabeln belegt ist. Der Rest sind Signalleitungen für Sensoren und Taster. Dabei beinhaltet ein Netzwerkkabel zwei Signalgruppen á 4 Adern mit der Belegung 1-Wire oder Tastersignale. Beim Auflegen auf die Panels erfolgt bereits eine erste Neuordnung, indem Mischformen von 1-Wire und Tastersignalen bereinigt werden. (Bspw.: Kabel 30 hat auf Gruppe A Tastersignale und auf Gruppe B 1-Wire-Signale. Kabel 34 genau umgekehrt. Entsprechend werden die Gruppen auf zwei Ports gemischt, die anschließend nur 1-Wire-Signale oder nur Tastersignale beinhalten.)
 
 ![Netzwerkschrank](img/NWSchrank.jpg)
 
-Im oberen Bereich wird ein Breadboard verwendet, um die einzelnen Pins der für Sensoren und Taster verwendeten Netzwerkkabel neu zu gruppieren bzw. wenn es sich um 1-Wire Geräte handelt. mit einem entsprechenden Bus zu verbinden.
+Im oberen Bereich wird ein Breadboard verwendet, um Tastersignale neu zu gruppieren. Bspw. nur noch Licht-Taster- oder nur noch Rollo-Taster-Signale auf einem Neztwerkkabel mit entsprechender Reihenfolge. 
 
 ## Verteilerschrank
 TODO Momentan noch im Umbau
+
 
 Zur Organisation der schaltbaren Adern werden WAGO-Klemmen verwendet, siehe Bild.
 
 ![Organisation](img/SchaltbareAdern.JPG# halfsize center)
 
+TODO Auf der rechten Seite befinden sich zunächst 36 24V-Relais (Finder Koppelrelais 38.51.7.024.0050), angesteuert über 5 [mcp23017-Module](hardware/../mcp23017/index.md) für die 18 Fenster-Rollos. Je zwei Relais sind entsprechend gegeneinander verriegelt:
+
+![Relais-Verriegelung](img/RelaisVerriegelung.png# halfsize center)<br>
+*Quelle: https://www.mikrocontroller.net/attachment/298190/Jalusie-Relay-Motor.pdf*
+
+Darunter befindet sich ein Raspberry Pi mit einer Erweiterungsplatine, um die Pins auf Schraubklemm-Anschlüsse zu legen. 
+
+TODO Reihenklemmen für 1-Wire und Level-Shifter
+
+TODO esera-Modul
+
+TODO [DS2408-Modul](hardware/../ds2408/index.md) und [DS2408-Zusatz-Modul](hardware/../ds2408_zusatz/index.md)
+
+TODO: Bild mit Markierungen
 
 ## Sensoren
 Jeder Raum im Haus ist mit einem Temperatursensor des Typs DS18S20 ausgestattet. Die Sensoren sind jeweils unterputz über den Raumlichtschaltern angebracht, siehe Bild. Ggf. vorhandene Taster sowie die Sensoren teilen sich ein CAT.7 Netzwerkkabel. Die Pinbelegung ist separat dokumentiert. Der Sensor ist mit 3 Adern verbunden, wird also direkt mit Strom versorgt (nicht parasitär)
@@ -35,6 +50,8 @@ Jeder Raum im Haus ist mit einem Temperatursensor des Typs DS18S20 ausgestattet.
 | Rollo-Taster und Temp.-Sensor  | Temp.-Sensor intern          |
 | ------------------------------ | ---------------------------- |
 | ![Test](img/TasterUndTemp.jpg) | ![Test2](img/TempSensor.jpg) |
+
+Zusätzlich werden außen und in der Garage Feuchtigkeitssensoren verwendet, welche auf einem emulierten [DS2438 basieren](hardware/../ds2438/index.md).
 
 ## Kabelbelegungen
 Netzwerkkabel werden Standard TIA-568A folgend aufgelegt.
