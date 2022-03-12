@@ -1,0 +1,299 @@
+esphome:
+  name: pool
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Pool Fallback Hotspot"
+    password: "q1Qp4S8Kif9f"
+
+captive_portal:
+
+sensor:
+  # YF-DN50 Durschflusssensor
+  - platform: pulse_counter
+    pin: 13
+    name: "Pulse Counter"
+    id: pool_durchfluss
+    update_interval: 5s
+    filters:
+    - lambda: return (x / 27.0) * 60.0;
+    unit_of_measurement: "l/h"
+
+binary_sensor:
+  # Schalter Brunnen
+  - platform: gpio
+    pin:
+      number: 14
+      mode:
+        input: true
+    name: "Brunnen Leer"
+    id: pool_brunnen_leer
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+  # Schalter
+  - platform: gpio
+    pin:
+      number: 32
+      mode:
+        input: true
+        pullup: true
+    name: "Automatikmodus"
+    id: pool_automode
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+  # Button (rot)
+  - platform: gpio
+    pin:
+      number: 33
+      mode:
+        input: true
+        pullup: true
+    name: "Stop angefragt"
+    id: pool_stop
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+    on_release:
+      then:
+        - logger.log: Stop per physischem button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_stop
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  # Button
+  - platform: gpio
+    pin:
+      number: 25
+      mode:
+        input: true
+        pullup: true
+    name: "Geschwindigkeit 1 angefragt"
+    id: pool_speed1
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+    on_release:
+      then:
+        - logger.log: Geschwindigkeit 1 per physischem button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_1
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  # Button
+  - platform: gpio
+    pin:
+      number: 26
+      mode:
+        input: true
+        pullup: true
+    name: "Geschwindigkeit 2 angefragt"
+    id: pool_speed2
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+    on_release:
+      then:
+        - logger.log: Geschwindigkeit 2 per physischem button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_2
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  # Button
+  - platform: gpio
+    pin:
+      number: 27
+      mode:
+        input: true
+        pullup: true
+    name: "Geschwindigkeit 3 angefragt"
+    id: pool_speed3
+    # Debouncing
+    filters:
+      - delayed_on: 10ms
+    on_release:
+      then:
+        - logger.log: Geschwindigkeit 3 per physischem button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_3
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+
+# Die meisten switches sind nur intern und nicht fuer die Steuerung ueber HA gedacht!
+# Für HA werden Buttons eingefuehrt
+switch:
+  # Steuert Relais und LED fuer Pumpe-Stop
+  - platform: gpio
+    name: "Pumpenmodus STOP"
+    id: pumpe_stop_swi
+    pin: 18
+    inverted: false
+    internal: true
+  # Steuert Relais und LED fuer Pumpengeschwindigkeit 1
+  - platform: gpio
+    name: "Pumpenmodus 1"
+    id: pumpe_mode1_swi
+    pin: 5
+    inverted: false
+    internal: true
+  # Steuert Relais und LED fuer Pumpengeschwindigkeit 2
+  - platform: gpio
+    name: "Pumpenmodus 2"
+    id: pumpe_mode2_swi
+    pin: 17
+    inverted: false
+    internal: true
+  # Steuert Relais und LED fuer Pumpengeschwindigkeit 3
+  - platform: gpio
+    name: "Pumpenmodus 3"
+    id: pumpe_mode3_swi
+    pin: 16
+    inverted: false
+    internal: true
+  # Zeit zum Beleuchten
+  - platform: template
+    name: "Nachtmodus"
+    id: pool_nachtmodus_swi
+    turn_on_action:
+      # homeassistant mitteilen, dass der Schalter jetzt an ist.
+      - switch.template.publish:
+          id: pool_nachtmodus_swi
+          state: ON
+    turn_off_action:
+      # homeassistant mitteilen, dass der Schalter jetzt aus ist.
+      - switch.template.publish:
+          id: pool_nachtmodus_swi
+          state: OFF
+      - script.execute: pool_set_mode_stop
+
+# Buttons fuer HA
+button:
+  - platform: template
+    name: "Stoppe Pumpe"
+    id: pool_stop_btn
+    on_press:
+      then:
+        - logger.log: Stoppe Pumpe per HA button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_stop
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  - platform: template
+    name: "Aktiviere Stufe 1"
+    id: pool_mode1_btn
+    on_press:
+      then:
+        - logger.log: Aktiviere Stufe 1 per HA button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_1
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  - platform: template
+    name: "Aktiviere Stufe 2"
+    id: pool_mode2_btn
+    on_press:
+      then:
+        - logger.log: Aktiviere Stufe 2 per HA button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_2
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+  - platform: template
+    name: "Aktiviere Stufe 3"
+    on_press:
+      then:
+        - logger.log: Aktiviere Stufe 3 per HA button angefordert
+        - if:
+            condition:
+              binary_sensor.is_off: pool_automode
+            then:
+              - script.execute: pool_set_mode_3
+            else:
+              - logger.log: Verweigert, Automatikmodus ist aktiv!
+      
+# Wir definieren die verschiedenen Pumpenansteuerungen als Skripte
+script:
+  - id: pool_set_mode_stop
+    then:
+      - switch.turn_off: pumpe_mode1_swi
+      - switch.turn_off: pumpe_mode2_swi
+      - switch.turn_off: pumpe_mode3_swi
+      - switch.turn_on: pumpe_stop_swi
+  - id: pool_set_mode_1
+    then:
+      - switch.turn_off: pumpe_stop_swi
+      - switch.turn_off: pumpe_mode3_swi
+      - switch.turn_off: pumpe_mode2_swi
+      - switch.turn_on: pumpe_mode1_swi
+  - id: pool_set_mode_2
+    then:
+      - switch.turn_off: pumpe_stop_swi
+      - switch.turn_off: pumpe_mode3_swi
+      - switch.turn_off: pumpe_mode1_swi
+      - switch.turn_on: pumpe_mode2_swi
+  - id: pool_set_mode_3
+    then:
+      - switch.turn_off: pumpe_stop_swi
+      - switch.turn_off: pumpe_mode2_swi
+      - switch.turn_off: pumpe_mode1_swi
+      - switch.turn_on: pumpe_mode3_swi
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    on_time:
+      # Nachtmodus aktivieren
+      - seconds: 0
+        minutes: 0
+        hours: 20
+        then:
+          - switch.turn_on: pool_nachtmodus_swi
+      # Nachtmodus deaktivieren
+      - seconds: 0
+        minutes: 0
+        hours: 8
+        then:
+          - switch.turn_off: pool_nachtmodus_swi
+
+      
