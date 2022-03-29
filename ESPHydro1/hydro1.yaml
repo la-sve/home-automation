@@ -33,6 +33,12 @@ i2c:
     sda: 16
     scl: 17
     scan: true
+  # I2C fuer Helligkeitssensor
+  - id: bus_b
+    sda: 33
+    scl: 32
+    frequency: 10000
+    scan: true
 
 switch:
   # Zeit zum Beleuchten
@@ -62,6 +68,15 @@ switch:
     inverted: true
 
 sensor:
+  # Wasserstand
+  - platform: vl53l0x
+    name: "Wasserstand"
+    id: hydro_level
+    address: 0x29
+    update_interval: 10s
+    long_range: false
+    i2c_id: bus_b
+  # Helligkeit
   - platform: bh1750
     name: "BH1750 Illuminance"
     address: 0x23
