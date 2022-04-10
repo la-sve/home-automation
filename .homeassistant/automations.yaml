@@ -28,16 +28,20 @@
     entity_id: group.nachtlichter
   mode: single
   id: 8e4cb118af1e4c88888214b942448e72
-- alias: NachtlichterAUS
+- id: f8ad11e14c304d71add86c68d1baaf07
+  alias: NachtlichterAUS (zeitig)
   description: ''
   trigger:
   - platform: time
-    at: '22:15'
+    at: input_datetime.schlafenszeit_zeitig
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arbeitstag_morgen
+    state: 'on'
   action:
   - service: homeassistant.turn_off
     entity_id: group.nachtlichter
   mode: single
-  id: f8ad11e14c304d71add86c68d1baaf07
 - id: '1634413193653'
   alias: ZirkulationspumpeEIN
   description: ''
@@ -185,4 +189,18 @@
       - climate.malte
       - climate.sina
       - climate.schlafzimmer
+  mode: single
+- id: '1642627506827'
+  alias: NachtlichterAUS (spät)
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.schlafenszeit_spat
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arbeitstag_morgen
+    state: 'off'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: group.nachtlichter
   mode: single

@@ -6,8 +6,67 @@
         "config": {
             "views": [
                 {
+                    "title": "Start",
+                    "path": "start",
+                    "icon": "mdi:home",
+                    "theme": "",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.openweathermap",
+                            "secondary_info_attribute": "humidity"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "script.rollos_eg_up"
+                                },
+                                {
+                                    "entity": "script.rollos_eg_down"
+                                },
+                                {
+                                    "entity": "script.rollos_og_up"
+                                },
+                                {
+                                    "entity": "script.rollos_og_down"
+                                },
+                                {
+                                    "entity": "sensor.garage_luftfeuchtigkeit"
+                                },
+                                {
+                                    "entity": "sensor.garage_temperatur"
+                                },
+                                {
+                                    "entity": "group.nachtlichter"
+                                },
+                                {
+                                    "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "title": "Heizen EG",
                     "path": "heizen-eg",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "sensor.28_ff80ce501603_temperature"
@@ -54,6 +113,14 @@
                 {
                     "title": "Heizen OG",
                     "path": "heizen-og",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "sensor.28_ff3b2a511603_temperature"
@@ -108,6 +175,14 @@
                 {
                     "title": "Heizen DG",
                     "path": "heizen-dg",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "sensor.28_ff4777b41603_temperature"
@@ -136,6 +211,14 @@
                 {
                     "title": "Lichter",
                     "path": "lichter",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -218,6 +301,14 @@
                 {
                     "title": "Rollos EG",
                     "path": "rollos-eg",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -268,6 +359,14 @@
                 {
                     "title": "Rollos OG",
                     "path": "rollos-og",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -314,28 +413,67 @@
                 {
                     "title": "Sonstiges",
                     "path": "sonstiges",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.hauptschlafzimmer"
+                        },
                         {
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "sensor.garage_luftfeuchtigkeit"
+                                    "entity": "binary_sensor.arbeitstag"
                                 },
                                 {
-                                    "entity": "sensor.garage_temperatur"
+                                    "entity": "binary_sensor.arbeitstag_morgen"
+                                },
+                                {
+                                    "entity": "input_datetime.schlafenszeit_zeitig"
+                                },
+                                {
+                                    "entity": "input_datetime.schlafenszeit_spat"
                                 }
                             ]
                         },
                         {
-                            "type": "media-control",
-                            "entity": "media_player.hauptschlafzimmer"
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "switch.pflanz_licht"
+                                },
+                                {
+                                    "entity": "switch.pflanz_pumpe"
+                                },
+                                {
+                                    "entity": "switch.beleuchtungszeit"
+                                },
+                                {
+                                    "entity": "sensor.bh1750_illuminance"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
                     "title": "Statistik",
                     "path": "statistik",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -350,8 +488,12 @@
                         {
                             "type": "entities",
                             "entities": [
-                                "sensor.vicare_outside_temperature",
-                                "sensor.vicare_supply_temperature"
+                                {
+                                    "entity": "sensor.vicare_outside_temperature_2"
+                                },
+                                {
+                                    "entity": "sensor.vicare_supply_temperature_2"
+                                }
                             ]
                         },
                         {
@@ -394,6 +536,14 @@
                 {
                     "title": "Warmwasser",
                     "path": "warmwasser",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "switch.29_b20837000000_pio_7"
@@ -424,6 +574,14 @@
                 {
                     "title": "Flask-test",
                     "path": "flask-test",
+                    "visible": [
+                        {
+                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+                        },
+                        {
+                            "user": "675cd8bf137e4693a41a12558f448a73"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -443,6 +601,31 @@
                                 "sensor.26_00003824da00_humidity_htm1735",
                                 "sensor.26_00003824da00_temperature"
                             ]
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "name": "Garage",
+                            "entities": [
+                                {
+                                    "entity": "sensor.26_00003824da00_humidity_htm1735",
+                                    "name": "Luftfeuchtigkeit",
+                                    "aggregate_func": "median"
+                                },
+                                {
+                                    "entity": "sensor.garage_temperatur",
+                                    "name": "Temperatur",
+                                    "y_axis": "secondary"
+                                }
+                            ],
+                            "upper_bound": 100,
+                            "lower_bound": "~50",
+                            "min_bound_range_secondary": 10,
+                            "hours_to_show": 48,
+                            "hour24": true,
+                            "points_per_hour": 1,
+                            "smoothing": true,
+                            "line_width": 2,
+                            "font_size": 80
                         }
                     ]
                 }

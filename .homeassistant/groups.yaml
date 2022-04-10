@@ -2,7 +2,10 @@ nachtlichter:
   name: Nachtlichter
   entities:
     - switch.29_ad0837000000_pio_0
-    - switch.29_ad0837000000_pio_6
+    # Bibliothek
+    #- switch.29_ad0837000000_pio_6
+    # Stern ueber Treppe und Weihnachtsdorf Schlafzimmer
+    - switch.29_b20837000000_pio_3
 weihnachteg:
   name: Weihnachtsbeleuchtung EG
   entities:
@@ -15,8 +18,6 @@ weihnachteg:
 weihnachtenog:
   name: Weihnachtsbeleuchtung OG
   entities:
-    # Stern ueber Treppe und Weihnachtsdorf Schlafzimmer
-    - switch.29_b20837000000_pio_3
     # Stern Dachbodentreppe
     - switch.29_b20837000000_pio_4
     # Gallerie Fenster (Weihnachtsbaum-Dreieck)

@@ -102,22 +102,64 @@ vicare:
 #    switch.29_ae571a000000_pio_6:
 #      friendly_name: Erz_Studio
 
+# Hilfs-Schalter definieren
+binary_sensor:
+  # Arbeitstag
+  - platform: workday
+    name: "Arbeitstag"
+    country: DE
+    province: SN
+    workdays: [mon, tue, wed, thu, fri]
+    excludes: [sat, sun, holiday]
+    add_holidays:
+      - "2020-02-24"
+      - "2020-04-25"
+  - platform: workday
+    name: "Arbeitstag (morgen)"
+    country: DE
+    province: SN
+    workdays: [mon, tue, wed, thu, fri]
+    excludes: [sat, sun, holiday]
+    days_offset: 1
+    add_holidays: 
+      - "2020-02-24"
+      - "2020-04-25"
+
 # Sensor mittels Statistik Integration wrappen
 sensor:
   - platform: statistics
     name: "Garage Luftfeuchtigkeit"
     entity_id: sensor.26_00003824da00_humidity_htm1735
-    sampling_size: 50
+    sampling_size: 5
     state_characteristic: median
     max_age:
-      minutes: 10
+      minutes: 30
   - platform: statistics
     name: "Garage Temperatur"
     entity_id: sensor.26_00003824da00_temperature
-    sampling_size: 30
+    sampling_size: 5
     state_characteristic: median
     max_age:
-      minutes: 10
+      minutes: 30
+  - platform: filter
+    name: "Garage Gefilterte Luftfeuchtigkeit"
+    entity_id: sensor.26_00003824da00_humidity_htm1735
+    filters:
+      - filter: range
+        lower_bound: 0
+        upper_bound: 100
+      - filter: outlier
+        window_size: 4
+        radius: 8.0
+      - filter: lowpass
+        time_constant: 5
+        precision: 1
+
+# Add "Lovelace Mini Graph Card"
+# https://github.com/kalkih/mini-graph-card
+#resources:
+#  - url: /local/mini-graph-card-bundle.js?v=0.10.0
+#    type: module
 
 # Convert auto generated 1-Wire device ids into friendly names 
 homeassistant:
