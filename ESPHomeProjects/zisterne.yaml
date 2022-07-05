@@ -28,10 +28,16 @@ wifi:
 captive_portal:
 
 i2c:
-  sda: 21
-  scl: 22
-  scan: true
-  id: bus_a
+  - id: bus_a
+    sda: 21
+    scl: 22
+    scan: true
+  # I2C fuer Helligkeitssensor
+  - id: bus_b
+    sda: 25
+    scl: 26
+    frequency: 50000
+    scan: true
   
 switch:
   - platform: gpio
@@ -45,6 +51,7 @@ sensor:
     humidity:
       name: "Outside Humidity"
     update_interval: 20s
+    i2c_id: bus_a
   - platform: ultrasonic
     trigger_pin: GPIO19
     echo_pin: GPIO18
@@ -56,3 +63,12 @@ sensor:
     filters:
     - filter_out: nan
 #    - lambda: return 6.00-x; # 6.00 is the distance between the sensor and the bottom of the tank
+  # Wasserstand
+  - platform: vl53l0x
+    name: "Wasserstand (Laser)"
+    id: hydro_level
+    address: 0x29
+    update_interval: 1s
+    long_range: false
+    timeout: 200ms
+    i2c_id: bus_b

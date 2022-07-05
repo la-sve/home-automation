@@ -134,10 +134,18 @@ time:
         hours: 8
         then:
           - switch.turn_on: beleuchtungszeit_swi
-      # Beleuchtungszeit deaktivieren
+      # Beleuchtungszeit deaktivieren (zeitig)
+      - seconds: 0
+        minutes: 0
+        hours: 22
+        days_of_week: SUN-THU
+        then:
+          - switch.turn_off: beleuchtungszeit_swi
+      # Beleuchtungszeit deaktivieren (spaet)
       - seconds: 0
         minutes: 30
-        hours: 21
+        hours: 22
+        days_of_week: FRI-SAT
         then:
           - switch.turn_off: beleuchtungszeit_swi
       # Pumpe einschalten (alle halbe Stunde)

@@ -28,9 +28,18 @@ wifi:
   ap:
     ssid: "Pool Fallback Hotspot"
     password: "q1Qp4S8Kif9f"
+    
+  manual_ip:
+    static_ip: 192.168.178.230
+    gateway: 192.168.178.1
+    subnet: 255.255.255.0
+    dns1: 192.168.178.1
+    
   # Zwischenzeitliche Aussetzer vermeiden
-  power_save_mode: none
-
+  output_power: 19.5dB
+  power_save_mode: light
+  fast_connect: true
+  
 captive_portal:
 
 # One-Wire-Bus fuer Temperatursensoren DS18B20
@@ -59,13 +68,17 @@ sensor:
     id: pool_durchfluss
     update_interval: 5s
     filters:
-    - lambda: return (x / 27.0) * 60.0;
+      - multiply: 5.0 # (pulses per minute to l/h)
+    #- lambda: return (x / 27.0) * 60.0;
     unit_of_measurement: "l/h"
   # Pumpenzustand
   - platform: template
     name: "Poolpumpenmodus"
     id: pool_speed_sensor
-
+  - platform: wifi_signal
+    name: "Pool WiFi Signal"
+    update_interval: 60s
+    id: pool_wifi_signal
 
 binary_sensor:
   # Schalter Brunnen
