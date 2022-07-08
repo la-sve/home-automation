@@ -20,3 +20,5 @@ alias githass='git --work-tree=/home/homeassistant --git-dir=/home/homeassistant
 # Rollo Steuerung
 alias rollo_log='journalctl --user-unit rolloctl.service'
 alias rollo_status='systemctl --user status rolloctl.service'
+alias rollo_stop='systemctl --user stop rolloctl.service'
+alias rollo_start='systemctl --user start rolloctl.service'
