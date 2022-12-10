@@ -112,8 +112,10 @@ binary_sensor:
     workdays: [mon, tue, wed, thu, fri]
     excludes: [sat, sun, holiday]
     add_holidays:
-      - "2020-02-24"
-      - "2020-04-25"
+      - "2022-12-27"
+      - "2022-12-28"
+      - "2022-12-29"
+      - "2022-12-30"
   - platform: workday
     name: "Arbeitstag (morgen)"
     country: DE
@@ -122,8 +124,10 @@ binary_sensor:
     excludes: [sat, sun, holiday]
     days_offset: 1
     add_holidays: 
-      - "2020-02-24"
-      - "2020-04-25"
+      - "2022-12-27"
+      - "2022-12-28"
+      - "2022-12-29"
+      - "2022-12-30"
 
 # Sensor mittels Statistik Integration wrappen
 sensor:

@@ -32,7 +32,7 @@
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "sensor.wassertemperatur"
+                                    "entity": "sensor.solartemperatur"
                                 },
                                 {
                                     "entity": "sensor.wassertemperatur_2"
@@ -63,6 +63,9 @@
                                 },
                                 {
                                     "entity": "switch.nachtmodus"
+                                },
+                                {
+                                    "entity": "sensor.pool_wifi_signal"
                                 }
                             ],
                             "title": "Systemzustand"

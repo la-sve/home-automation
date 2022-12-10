@@ -293,6 +293,9 @@
                                 },
                                 {
                                     "entity": "switch.29_b20837000000_pio_6"
+                                },
+                                {
+                                    "entity": "switch.tasmota"
                                 }
                             ]
                         }

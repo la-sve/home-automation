@@ -69,22 +69,18 @@
     domain: switch
   mode: single
 - id: '1637702834285'
-  alias: Weihnachtsbeleuchtung EG und OG EIN (Wochentage)
+  alias: Weihnachtsbeleuchtung EG und OG EIN (Arbeitstage)
   description: ''
   trigger:
   - platform: time
-    at: 08:30
+    at: 06:30
   - platform: sun
     event: sunset
     offset: -00:45:00
   condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+  - condition: state
+    entity_id: binary_sensor.arbeitstag
+    state: 'on'
   action:
   - service: homeassistant.turn_on
     target:
@@ -107,14 +103,17 @@
       entity_id: group.weihnachteg
   mode: single
 - id: '1637703122100'
-  alias: Weihnachtsbeleuchtung OG AUS
+  alias: Weihnachtsbeleuchtung OG AUS (spät)
   description: ''
   trigger:
   - platform: time
     at: '9:00'
   - platform: time
-    at: '23:00'
-  condition: []
+    at: input_datetime.schlafenszeit_spat
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arbeitstag_morgen
+    state: 'off'
   action:
   - service: homeassistant.turn_off
     target:
@@ -130,10 +129,9 @@
     event: sunset
     offset: -00:45:00
   condition:
-  - condition: time
-    weekday:
-    - sat
-    - sun
+  - condition: state
+    entity_id: binary_sensor.arbeitstag
+    state: 'off'
   action:
   - service: homeassistant.turn_on
     target:
@@ -203,4 +201,21 @@
   action:
   - service: homeassistant.turn_off
     entity_id: group.nachtlichter
+  mode: single
+- id: '1669840980505'
+  alias: Weihnachtsbeleuchtung OG AUS (zeitig)
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00
+  - platform: time
+    at: input_datetime.schlafenszeit_zeitig
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arbeitstag_morgen
+    state: 'on'
+  action:
+  - service: homeassistant.turn_off
+    target:
+      entity_id: group.weihnachtenog
   mode: single

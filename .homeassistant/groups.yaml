@@ -26,3 +26,7 @@ weihnachtenog:
     - switch.29_ad0837000000_pio_5
     # Sina
     - switch.29_b20837000000_pio_0
+    # Schlafzimmer Mandy
+    - switch.29_b20837000000_pio_3
+    # Lichterbogen aussen
+    - switch.tasmota
