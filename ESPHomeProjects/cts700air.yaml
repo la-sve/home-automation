@@ -1,0 +1,102 @@
+esphome:
+  name: cts700air
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "CTS700 Air Fallback Hotspot"
+    password: "UqML9IAP2Bw5"
+
+captive_portal:
+
+# For connection to the cts-700 module from NILAN, which is part of my air
+# ventilation system from Kermi, x-well N300 - CR300 with external control unit CTS700
+uart:
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  parity: EVEN
+  baud_rate: 19200
+  id: uart_modbus
+  stop_bits: 1
+  
+modbus:
+  id: modbus_id
+  uart_id: uart_modbus
+  
+modbus_controller:
+  id: nilan_modbus_controller
+  address: 30
+  modbus_id: modbus_id
+  update_interval: 30s
+
+sensor:
+  # T1
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Aussenluftfuehler"
+    id: nilan_temperature_outdoor
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    value_type: S_WORD
+    register_type: read
+    address: 5152
+    filters:
+      - multiply: 0.1
+  # T2
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Zuluftfuehler"
+    id: nilan_temperature_inlet
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    value_type: S_WORD
+    register_type: read
+    address: 5153
+    filters:
+      - multiply: 0.1
+  # T3
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Abluftfuehler (Raumtemperatur)"
+    id: nilan_temperature_room
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    value_type: S_WORD
+    register_type: read
+    address: 5154
+    filters:
+      - multiply: 0.1
+  # T4
+  - platform: modbus_controller
+    modbus_controller_id: nilan_modbus_controller
+    name: "Fortluftfuehler (nach Waermetauscher)"
+    id: nilan_temperature_after_heatexchange
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    value_type: S_WORD
+    register_type: read
+    address: 5155
+    filters:
+      - multiply: 0.1      
