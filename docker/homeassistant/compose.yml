@@ -6,6 +6,7 @@ services:
     volumes:
       - /home/lasve/workspace/home-automation/.homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
+      - /sys/bus/w1/devices:/sys/bus/w1/devices
     restart: unless-stopped
     privileged: true
     network_mode: host
