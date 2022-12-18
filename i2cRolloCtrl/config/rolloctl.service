@@ -9,7 +9,7 @@ Description=I2C Rollo Controller Service
 [Service]
 
 # Command to execute when the service is started
-ExecStart=/usr/bin/python3 /home/pi/workspace/home-automation/i2cRolloCtrl/start_rolloctl.py
+ExecStart=/usr/bin/python3 /home/lasve/workspace/home-automation/i2cRolloCtrl/start_rolloctl.py
 
 # Disable Python's buffering of STDOUT and STDERR, so that output from the
 # service shows up immediately in systemd's logs

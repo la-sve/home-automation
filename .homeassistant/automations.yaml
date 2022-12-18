@@ -219,3 +219,19 @@
     target:
       entity_id: group.weihnachtenog
   mode: single
+- id: '1671373670162'
+  alias: Lüftungseinstellung (Leistung)
+  description: Einstellen der Lüfterleistung
+  trigger:
+  - platform: state
+    entity_id:
+    - input_number.nilan_sollleistung_einstellen
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      address: 4747
+      slave: 1
+      hub: nilan
+      value: '{{ states(''input_number.nilan_sollleistung_einstellen'') }}'
+  mode: single

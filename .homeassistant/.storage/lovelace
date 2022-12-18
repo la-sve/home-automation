@@ -1,639 +1,703 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace",
-    "data": {
-        "config": {
-            "views": [
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Start",
+          "path": "start",
+          "icon": "mdi:home",
+          "theme": "",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "weather-forecast",
+              "entity": "weather.openweathermap",
+              "secondary_info_attribute": "humidity"
+            },
+            {
+              "type": "entities",
+              "entities": [
                 {
-                    "title": "Start",
-                    "path": "start",
-                    "icon": "mdi:home",
-                    "theme": "",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "weather-forecast",
-                            "entity": "weather.openweathermap",
-                            "secondary_info_attribute": "humidity"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "script.rollos_eg_up"
-                                },
-                                {
-                                    "entity": "script.rollos_eg_down"
-                                },
-                                {
-                                    "entity": "script.rollos_og_up"
-                                },
-                                {
-                                    "entity": "script.rollos_og_down"
-                                },
-                                {
-                                    "entity": "sensor.garage_luftfeuchtigkeit"
-                                },
-                                {
-                                    "entity": "sensor.garage_temperatur"
-                                },
-                                {
-                                    "entity": "group.nachtlichter"
-                                },
-                                {
-                                    "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
-                                }
-                            ]
-                        }
-                    ]
+                  "entity": "script.rollos_eg_up"
                 },
                 {
-                    "title": "Heizen EG",
-                    "path": "heizen-eg",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [
-                        {
-                            "entity": "sensor.28_ff80ce501603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff9a3a501603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff380fb41603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ffcbed531604_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff5304511603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ffa9edb31605_temperature"
-                        }
-                    ],
-                    "cards": [
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.wohnzimmer"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.wceg"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.handtucheg"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.arbeitszimmer"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.kueche"
-                        }
-                    ]
+                  "entity": "script.rollos_eg_down"
                 },
                 {
-                    "title": "Heizen OG",
-                    "path": "heizen-og",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [
-                        {
-                            "entity": "sensor.28_ff3b2a511603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff0f3e541604_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ffe302511603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ffc27cb41603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff0dcf501603_temperature"
-                        },
-                        {
-                            "entity": "sensor.28_ff3bc3471603_temperature"
-                        }
-                    ],
-                    "cards": [
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.wcog"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.sina"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.malte"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.handtuchog"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.bibo"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.ankleide"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.schlafzimmer"
-                        }
-                    ]
+                  "entity": "script.rollos_og_up"
                 },
                 {
-                    "title": "Heizen DG",
-                    "path": "heizen-dg",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [
-                        {
-                            "entity": "sensor.28_ff4777b41603_temperature"
-                        },
-                        {
-                            "entity": "switch.29_330214000000_pio_5"
-                        },
-                        {
-                            "entity": "sensor.28_ff5ad9501603_temperature"
-                        },
-                        {
-                            "entity": "switch.29_330214000000_pio_4"
-                        }
-                    ],
-                    "cards": [
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.studio"
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.galerie"
-                        }
-                    ]
+                  "entity": "script.rollos_og_down"
                 },
                 {
-                    "title": "Lichter",
-                    "path": "lichter",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "group.nachtlichter"
-                                },
-                                {
-                                    "entity": "group.weihnachteg"
-                                },
-                                {
-                                    "entity": "group.weihnachtenog"
-                                }
-                            ],
-                            "title": "Beleuchtungsgruppen"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_6"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_0"
-                                }
-                            ],
-                            "header": {
-                                "type": "buttons",
-                                "entities": []
-                            },
-                            "title": "Nachtlichter"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_0"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_1"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_3"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_4"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_5"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_5"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_4"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_1"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_3"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_2"
-                                },
-                                {
-                                    "entity": "switch.29_ad0837000000_pio_7"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_0"
-                                },
-                                {
-                                    "entity": "switch.29_b20837000000_pio_6"
-                                },
-                                {
-                                    "entity": "switch.tasmota"
-                                }
-                            ]
-                        }
-                    ]
+                  "entity": "sensor.garage_luftfeuchtigkeit"
                 },
                 {
-                    "title": "Rollos EG",
-                    "path": "rollos-eg",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "cover.rollo_arbeit"
-                                },
-                                {
-                                    "entity": "cover.rollo_wohn_o"
-                                },
-                                {
-                                    "entity": "cover.rollo_wohn_s"
-                                },
-                                {
-                                    "entity": "cover.rollo_wohn_t"
-                                },
-                                {
-                                    "entity": "cover.rollo_kuec_t"
-                                },
-                                {
-                                    "entity": "cover.rollo_kuec_s"
-                                },
-                                {
-                                    "entity": "cover.rollo_kuec_w"
-                                },
-                                {
-                                    "entity": "cover.rollo_wceg"
-                                },
-                                {
-                                    "entity": "cover.rollo_hwr"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "script.rollos_eg_down"
-                                },
-                                {
-                                    "entity": "script.rollos_eg_up"
-                                }
-                            ]
-                        }
-                    ]
+                  "entity": "sensor.garage_temperatur"
                 },
                 {
-                    "title": "Rollos OG",
-                    "path": "rollos-og",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "cover.rollo_trep"
-                                },
-                                {
-                                    "entity": "cover.rollo_kid1_n"
-                                },
-                                {
-                                    "entity": "cover.rollo_kid1_o"
-                                },
-                                {
-                                    "entity": "cover.rollo_kid2_o"
-                                },
-                                {
-                                    "entity": "cover.rollo_kid2_s"
-                                },
-                                {
-                                    "entity": "cover.rollo_bibo"
-                                },
-                                {
-                                    "entity": "cover.rollo_wcog_s"
-                                },
-                                {
-                                    "entity": "cover.rollo_wcog_w"
-                                },
-                                {
-                                    "entity": "cover.rollo_schl"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "script.rollos_og_down",
-                                "script.rollos_og_up"
-                            ]
-                        }
-                    ]
+                  "entity": "group.nachtlichter"
                 },
                 {
-                    "title": "Sonstiges",
-                    "path": "sonstiges",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "media-control",
-                            "entity": "media_player.hauptschlafzimmer"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.arbeitstag"
-                                },
-                                {
-                                    "entity": "binary_sensor.arbeitstag_morgen"
-                                },
-                                {
-                                    "entity": "input_datetime.schlafenszeit_zeitig"
-                                },
-                                {
-                                    "entity": "input_datetime.schlafenszeit_spat"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "switch.pflanz_licht"
-                                },
-                                {
-                                    "entity": "switch.pflanz_pumpe"
-                                },
-                                {
-                                    "entity": "switch.beleuchtungszeit"
-                                },
-                                {
-                                    "entity": "sensor.bh1750_illuminance"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "title": "Statistik",
-                    "path": "statistik",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "statistics-graph",
-                            "entities": [
-                                "sensor.28_ff5ad9501603_temperature",
-                                "sensor.28_ff3bc3471603_temperature"
-                            ],
-                            "days_to_show": 30,
-                            "title": "Temperaturtest"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "sensor.vicare_outside_temperature_2"
-                                },
-                                {
-                                    "entity": "sensor.vicare_supply_temperature_2"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "thermostat",
-                            "entity": "climate.vicare_heating"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "water_heater.vicare_water"
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "binary_sensor.vicare_circulation_pump_active"
-                            ]
-                        },
-                        {
-                            "type": "history-graph",
-                            "entities": [
-                                {
-                                    "entity": "sensor.vicare_outside_temperature"
-                                },
-                                {
-                                    "entity": "water_heater.vicare_water"
-                                },
-                                {
-                                    "entity": "sensor.vicare_supply_temperature"
-                                },
-                                {
-                                    "entity": "binary_sensor.vicare_circulation_pump_active"
-                                }
-                            ],
-                            "hours_to_show": 24,
-                            "refresh_interval": 0
-                        }
-                    ]
-                },
-                {
-                    "title": "Warmwasser",
-                    "path": "warmwasser",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [
-                        {
-                            "entity": "switch.29_b20837000000_pio_7"
-                        },
-                        {
-                            "entity": "binary_sensor.vicare_circulation_pump_active"
-                        },
-                        {
-                            "entity": "water_heater.vicare_water"
-                        }
-                    ],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "sensor.vicare_supply_temperature",
-                                "water_heater.vicare_water"
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "switch.29_b20837000000_pio_7"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "title": "Flask-test",
-                    "path": "flask-test",
-                    "visible": [
-                        {
-                            "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-                        },
-                        {
-                            "user": "675cd8bf137e4693a41a12558f448a73"
-                        }
-                    ],
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "cover.rollo_arbeit"
-                                },
-                                {
-                                    "entity": "cover.fenstertestrollo"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                "sensor.26_00003824da00_humidity_htm1735",
-                                "sensor.26_00003824da00_temperature"
-                            ]
-                        },
-                        {
-                            "type": "custom:mini-graph-card",
-                            "name": "Garage",
-                            "entities": [
-                                {
-                                    "entity": "sensor.26_00003824da00_humidity_htm1735",
-                                    "name": "Luftfeuchtigkeit",
-                                    "aggregate_func": "median"
-                                },
-                                {
-                                    "entity": "sensor.garage_temperatur",
-                                    "name": "Temperatur",
-                                    "y_axis": "secondary"
-                                }
-                            ],
-                            "upper_bound": 100,
-                            "lower_bound": "~50",
-                            "min_bound_range_secondary": 10,
-                            "hours_to_show": 48,
-                            "hour24": true,
-                            "points_per_hour": 1,
-                            "smoothing": true,
-                            "line_width": 2,
-                            "font_size": 80
-                        }
-                    ]
+                  "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
                 }
-            ],
-            "title": "Zuhause bei Mandy und Sven"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Heizen EG",
+          "path": "heizen-eg",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [
+            {
+              "entity": "sensor.28_ff80ce501603_temperature"
+            },
+            {
+              "entity": "sensor.28_ff9a3a501603_temperature"
+            },
+            {
+              "entity": "sensor.28_ff380fb41603_temperature"
+            },
+            {
+              "entity": "sensor.28_ffcbed531604_temperature"
+            },
+            {
+              "entity": "sensor.28_ff5304511603_temperature"
+            },
+            {
+              "entity": "sensor.28_ffa9edb31605_temperature"
+            }
+          ],
+          "cards": [
+            {
+              "type": "thermostat",
+              "entity": "climate.wohnzimmer"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.wceg"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.handtucheg"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.arbeitszimmer"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.kueche"
+            }
+          ]
+        },
+        {
+          "title": "Heizen OG",
+          "path": "heizen-og",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [
+            {
+              "entity": "sensor.28_ff3b2a511603_temperature"
+            },
+            {
+              "entity": "sensor.28_ff0f3e541604_temperature"
+            },
+            {
+              "entity": "sensor.28_ffe302511603_temperature"
+            },
+            {
+              "entity": "sensor.28_ffc27cb41603_temperature"
+            },
+            {
+              "entity": "sensor.28_ff0dcf501603_temperature"
+            },
+            {
+              "entity": "sensor.28_ff3bc3471603_temperature"
+            }
+          ],
+          "cards": [
+            {
+              "type": "thermostat",
+              "entity": "climate.wcog"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.sina"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.malte"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.handtuchog"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.bibo"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.ankleide"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.schlafzimmer"
+            }
+          ]
+        },
+        {
+          "title": "Heizen DG",
+          "path": "heizen-dg",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [
+            {
+              "entity": "sensor.28_ff4777b41603_temperature"
+            },
+            {
+              "entity": "switch.29_330214000000_pio_5"
+            },
+            {
+              "entity": "sensor.28_ff5ad9501603_temperature"
+            },
+            {
+              "entity": "switch.29_330214000000_pio_4"
+            }
+          ],
+          "cards": [
+            {
+              "type": "thermostat",
+              "entity": "climate.studio"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.galerie"
+            }
+          ]
+        },
+        {
+          "title": "Lichter",
+          "path": "lichter",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "group.nachtlichter"
+                },
+                {
+                  "entity": "group.weihnachteg"
+                },
+                {
+                  "entity": "group.weihnachtenog"
+                }
+              ],
+              "title": "Beleuchtungsgruppen"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.29_ad0837000000_pio_6"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_0"
+                }
+              ],
+              "header": {
+                "type": "buttons",
+                "entities": []
+              },
+              "title": "Nachtlichter"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.29_ad0837000000_pio_0"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_1"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_3"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_4"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_5"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_5"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_4"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_1"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_3"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_2"
+                },
+                {
+                  "entity": "switch.29_ad0837000000_pio_7"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_0"
+                },
+                {
+                  "entity": "switch.29_b20837000000_pio_6"
+                },
+                {
+                  "entity": "switch.tasmota"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Rollos EG",
+          "path": "rollos-eg",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.rollo_arbeit"
+                },
+                {
+                  "entity": "cover.rollo_wohn_o"
+                },
+                {
+                  "entity": "cover.rollo_wohn_s"
+                },
+                {
+                  "entity": "cover.rollo_wohn_t"
+                },
+                {
+                  "entity": "cover.rollo_kuec_t"
+                },
+                {
+                  "entity": "cover.rollo_kuec_s"
+                },
+                {
+                  "entity": "cover.rollo_kuec_w"
+                },
+                {
+                  "entity": "cover.rollo_wceg"
+                },
+                {
+                  "entity": "cover.rollo_hwr"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "script.rollos_eg_down"
+                },
+                {
+                  "entity": "script.rollos_eg_up"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Rollos OG",
+          "path": "rollos-og",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.rollo_trep"
+                },
+                {
+                  "entity": "cover.rollo_kid1_n"
+                },
+                {
+                  "entity": "cover.rollo_kid1_o"
+                },
+                {
+                  "entity": "cover.rollo_kid2_o"
+                },
+                {
+                  "entity": "cover.rollo_kid2_s"
+                },
+                {
+                  "entity": "cover.rollo_bibo"
+                },
+                {
+                  "entity": "cover.rollo_wcog_s"
+                },
+                {
+                  "entity": "cover.rollo_wcog_w"
+                },
+                {
+                  "entity": "cover.rollo_schl"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "script.rollos_og_down",
+                "script.rollos_og_up"
+              ]
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Lüftung",
+          "path": "luftung",
+          "icon": "mdi:air-conditioner",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.nilan_system_off"
+                },
+                {
+                  "entity": "switch.nilan_pause"
+                },
+                {
+                  "entity": "sensor.nilan_humidity"
+                },
+                {
+                  "entity": "sensor.nilan_sollleistung"
+                },
+                {
+                  "entity": "sensor.nilan_leistung_in"
+                },
+                {
+                  "entity": "sensor.nilan_leistung_out"
+                }
+              ],
+              "title": "Lüftung"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.nilan_aussentemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_innentemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_abluftfuehler_raumtemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_fortluftfuehler_nach_waermetauscher"
+                }
+              ],
+              "title": "Lüftung Temperaturen"
+            },
+            {
+              "type": "gauge",
+              "entity": "sensor.nilan_sollleistung",
+              "max": 100,
+              "min": 20,
+              "needle": false
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "input_number.nilan_sollleistung_einstellen"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Sonstiges",
+          "path": "sonstiges",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "media-control",
+              "entity": "media_player.hauptschlafzimmer"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.arbeitstag"
+                },
+                {
+                  "entity": "binary_sensor.arbeitstag_morgen"
+                },
+                {
+                  "entity": "input_datetime.schlafenszeit_zeitig"
+                },
+                {
+                  "entity": "input_datetime.schlafenszeit_spat"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.pflanz_licht"
+                },
+                {
+                  "entity": "switch.pflanz_pumpe"
+                },
+                {
+                  "entity": "switch.beleuchtungszeit"
+                },
+                {
+                  "entity": "sensor.bh1750_illuminance"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Statistik",
+          "path": "statistik",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "statistics-graph",
+              "entities": [
+                "sensor.28_ff5ad9501603_temperature",
+                "sensor.28_ff3bc3471603_temperature"
+              ],
+              "days_to_show": 30,
+              "title": "Temperaturtest"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.vicare_outside_temperature_2"
+                },
+                {
+                  "entity": "sensor.vicare_supply_temperature_2"
+                }
+              ]
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.vicare_heating"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "water_heater.vicare_water"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "binary_sensor.vicare_circulation_pump_active"
+              ]
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.vicare_outside_temperature"
+                },
+                {
+                  "entity": "water_heater.vicare_water"
+                },
+                {
+                  "entity": "sensor.vicare_supply_temperature"
+                },
+                {
+                  "entity": "binary_sensor.vicare_circulation_pump_active"
+                }
+              ],
+              "hours_to_show": 24,
+              "refresh_interval": 0
+            }
+          ]
+        },
+        {
+          "title": "Warmwasser",
+          "path": "warmwasser",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [
+            {
+              "entity": "switch.29_b20837000000_pio_7"
+            },
+            {
+              "entity": "binary_sensor.vicare_circulation_pump_active"
+            },
+            {
+              "entity": "water_heater.vicare_water"
+            }
+          ],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                "sensor.vicare_supply_temperature",
+                "water_heater.vicare_water"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "switch.29_b20837000000_pio_7"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Flask-test",
+          "path": "flask-test",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.rollo_arbeit"
+                },
+                {
+                  "entity": "cover.fenstertestrollo"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "sensor.26_00003824da00_humidity_htm1735",
+                "sensor.26_00003824da00_temperature"
+              ]
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Garage",
+              "entities": [
+                {
+                  "entity": "sensor.26_00003824da00_humidity_htm1735",
+                  "name": "Luftfeuchtigkeit",
+                  "aggregate_func": "median"
+                },
+                {
+                  "entity": "sensor.garage_temperatur",
+                  "name": "Temperatur",
+                  "y_axis": "secondary"
+                }
+              ],
+              "upper_bound": 100,
+              "lower_bound": "~50",
+              "min_bound_range_secondary": 10,
+              "hours_to_show": 48,
+              "hour24": true,
+              "points_per_hour": 1,
+              "smoothing": true,
+              "line_width": 2,
+              "font_size": 80
+            }
+          ]
         }
+      ],
+      "title": "Zuhause bei Mandy und Sven"
     }
+  }
 }
