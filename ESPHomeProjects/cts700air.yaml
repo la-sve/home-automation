@@ -1,3 +1,5 @@
+# FUNKTIONIERT NICHT, MODBUS TCP über LAN wird jetzt verwendet !
+
 esphome:
   name: cts700air
 
@@ -45,7 +47,7 @@ modbus_controller:
   id: nilan_modbus_controller
   address: 30
   modbus_id: modbus_id
-  update_interval: 30s
+  update_interval: 5s
 
 sensor:
   # T1

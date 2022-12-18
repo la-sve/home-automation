@@ -1,3 +1,6 @@
+# TODO: Beschreibung
+# ESPHome einfach aus diesem Ordner heraus mit 'docker-compose up' starten.
+
 esphome:
   name: pool
   on_boot:
