@@ -143,12 +143,16 @@ modbus:
         address: 4727
         command_on: 3
         command_off: 0
+        verify:
+            delay: 2
       - name: "NILAN System Off"
         unique_id: nilan_all_systems_stop
         slave: 1
         address: 4104
         command_on: 1
         command_off: 0
+        verify:
+            delay: 2
     sensors:
       - name: "NILAN Humidity"
         unique_id: nilan_humidity
@@ -235,6 +239,159 @@ modbus:
         slave: 1
         address: 4747
         count: 1
+  - name: victron
+    type: tcp
+    host: 192.168.178.43
+    port: 502
+    sensors:
+      - name: 'Victron Grid meter Energie L1'
+        unique_id: victron_grid_l1_energy_from_net
+        unit_of_measurement: "kWh"
+        slave: 30
+        address: 2603
+        data_type: uint16
+        scale: 0.01
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Grid meter Energie L2'
+        unique_id: victron_grid_l2_energy_from_net
+        unit_of_measurement: "kWh"
+        slave: 30
+        address: 2604
+        data_type: uint16
+        scale: 0.01
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Grid meter Energie L3'
+        unique_id: victron_grid_l3_energy_from_net
+        unit_of_measurement: "kWh"
+        slave: 30
+        address: 2605
+        data_type: uint16
+        scale: 0.01
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Grid meter Total ins Netz'
+        unique_id: victron_grid_total_energy_to_net
+        unit_of_measurement: "kWh"
+        slave: 30
+        address: 2636
+        data_type: uint32
+        scale: 0.01
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Grid meter Total aus Netz'
+        unique_id: victron_grid_total_energy_from_net
+        unit_of_measurement: "kWh"
+        slave: 30
+        address: 2634
+        data_type: uint32
+        scale: 0.01
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Solar Gesamteintrag'
+        unique_id: victron_solar_user_yield
+        unit_of_measurement: "kWh"
+        slave: 238
+        address: 790
+        data_type: uint16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Batterie'
+        unique_id: victron_battery_state_of_charge
+        unit_of_measurement: "%"
+        slave: 100 # hub
+        address: 843
+        data_type: uint16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: battery
+      - name: 'Victron Batteriespannung'
+        unique_id: victron_battery_voltage
+        unit_of_measurement: "V"
+        slave: 100 # hub
+        address: 840
+        data_type: uint16
+        scale: 0.1
+        precision: 0
+        scan_interval: 5
+        device_class: voltage
+      - name: 'Victron Batteriestrom (BMS)'
+        unique_id: victron_battery_current
+        unit_of_measurement: "A"
+        slave: 1
+        address: 261
+        data_type: int16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: current
+      - name: 'Victron Batterietemperatur (BMS)'
+        unique_id: victron_battery_temperature
+        unit_of_measurement: "°C"
+        slave: 1
+        address: 262
+        data_type: int16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: temperature
+      - name: 'Victron Batterie Gesamtentladung (BMS)'
+        unique_id: victron_battery_discharged_energy
+        unit_of_measurement: "kWh"
+        slave: 1
+        address: 301
+        data_type: uint16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Batterie Gesamtladung (BMS)'
+        unique_id: victron_battery_charged_energy
+        unit_of_measurement: "kWh"
+        slave: 1
+        address: 302
+        data_type: uint16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
+      - name: 'Victron Ladeleistung'
+        unique_id: victron_charger_power
+        unit_of_measurement: "W"
+        slave: 100 # hub
+        address: 855
+        data_type: uint16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
+      - name: 'Victron Solar-Eintrag'
+        unique_id: victron_pv_dc_coupled_power
+        unit_of_measurement: "W"
+        slave: 100 # hub
+        address: 850
+        data_type: uint16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
 
 # Sensor mittels Statistik Integration wrappen
 sensor:

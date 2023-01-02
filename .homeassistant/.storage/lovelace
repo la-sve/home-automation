@@ -51,12 +51,138 @@
                 },
                 {
                   "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
+                },
+                {
+                  "entity": "sensor.vicare_outside_temperature_2"
                 }
               ]
             }
           ]
         },
         {
+          "theme": "Backend-selected",
+          "title": "Lüftung",
+          "path": "luftung",
+          "icon": "mdi:air-conditioner",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.nilan_system_off"
+                },
+                {
+                  "entity": "switch.nilan_pause"
+                },
+                {
+                  "entity": "sensor.nilan_humidity"
+                },
+                {
+                  "entity": "sensor.nilan_co2_sensor"
+                },
+                {
+                  "entity": "sensor.nilan_sollleistung"
+                },
+                {
+                  "entity": "sensor.nilan_leistung_in"
+                },
+                {
+                  "entity": "sensor.nilan_leistung_out"
+                }
+              ],
+              "title": "Lüftung"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.nilan_aussentemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_innentemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_abluftfuehler_raumtemperatur"
+                },
+                {
+                  "entity": "sensor.nilan_fortluftfuehler_nach_waermetauscher"
+                }
+              ],
+              "title": "Lüftung Temperaturen"
+            },
+            {
+              "type": "gauge",
+              "entity": "sensor.nilan_sollleistung",
+              "max": 100,
+              "min": 20,
+              "needle": false
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "input_number.nilan_sollleistung_einstellen"
+              ]
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "icon": "mdi:heating-coil",
+          "title": "Gastherme",
+          "path": "gastherme",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.29_b20837000000_pio_7"
+                },
+                {
+                  "entity": "sensor.vicare_outside_temperature_2"
+                },
+                {
+                  "entity": "sensor.vicare_supply_temperature_2"
+                },
+                {
+                  "entity": "water_heater.vicare_water"
+                },
+                {
+                  "entity": "sensor.vicare_solar_collector_temperature"
+                },
+                {
+                  "entity": "sensor.vicare_solar_energy_production_this_week"
+                },
+                {
+                  "entity": "sensor.vicare_heating_gas_consumption_this_week"
+                },
+                {
+                  "entity": "sensor.vicare_power_consumption_this_week"
+                }
+              ]
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.vicare_heating"
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "water_heater.vicare_water"
+                },
+                {
+                  "entity": "sensor.vicare_solar_storage_temperature"
+                }
+              ],
+              "hours_to_show": 24,
+              "refresh_interval": 0
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
           "title": "Heizen EG",
           "path": "heizen-eg",
           "visible": [
@@ -67,6 +193,7 @@
               "user": "675cd8bf137e4693a41a12558f448a73"
             }
           ],
+          "icon": "mdi:home-floor-0",
           "badges": [
             {
               "entity": "sensor.28_ff80ce501603_temperature"
@@ -111,6 +238,7 @@
           ]
         },
         {
+          "theme": "Backend-selected",
           "title": "Heizen OG",
           "path": "heizen-og",
           "visible": [
@@ -121,6 +249,7 @@
               "user": "675cd8bf137e4693a41a12558f448a73"
             }
           ],
+          "icon": "mdi:home-floor-1",
           "badges": [
             {
               "entity": "sensor.28_ff3b2a511603_temperature"
@@ -173,6 +302,7 @@
           ]
         },
         {
+          "theme": "Backend-selected",
           "title": "Heizen DG",
           "path": "heizen-dg",
           "visible": [
@@ -183,18 +313,13 @@
               "user": "675cd8bf137e4693a41a12558f448a73"
             }
           ],
+          "icon": "mdi:home-floor-2",
           "badges": [
             {
               "entity": "sensor.28_ff4777b41603_temperature"
             },
             {
-              "entity": "switch.29_330214000000_pio_5"
-            },
-            {
               "entity": "sensor.28_ff5ad9501603_temperature"
-            },
-            {
-              "entity": "switch.29_330214000000_pio_4"
             }
           ],
           "cards": [
@@ -209,6 +334,7 @@
           ]
         },
         {
+          "theme": "Backend-selected",
           "title": "Lichter",
           "path": "lichter",
           "visible": [
@@ -219,6 +345,7 @@
               "user": "675cd8bf137e4693a41a12558f448a73"
             }
           ],
+          "icon": "mdi:home-lightbulb",
           "badges": [],
           "cards": [
             {
@@ -302,8 +429,9 @@
           ]
         },
         {
-          "title": "Rollos EG",
-          "path": "rollos-eg",
+          "theme": "Backend-selected",
+          "title": "Rollos",
+          "path": "rollos",
           "visible": [
             {
               "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
@@ -312,6 +440,7 @@
               "user": "675cd8bf137e4693a41a12558f448a73"
             }
           ],
+          "icon": "mdi:roller-shade",
           "badges": [],
           "cards": [
             {
@@ -344,34 +473,9 @@
                 {
                   "entity": "cover.rollo_hwr"
                 }
-              ]
+              ],
+              "title": "Rollos EG"
             },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "script.rollos_eg_down"
-                },
-                {
-                  "entity": "script.rollos_eg_up"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "title": "Rollos OG",
-          "path": "rollos-og",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "badges": [],
-          "cards": [
             {
               "type": "entities",
               "entities": [
@@ -402,78 +506,8 @@
                 {
                   "entity": "cover.rollo_schl"
                 }
-              ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "script.rollos_og_down",
-                "script.rollos_og_up"
-              ]
-            }
-          ]
-        },
-        {
-          "theme": "Backend-selected",
-          "title": "Lüftung",
-          "path": "luftung",
-          "icon": "mdi:air-conditioner",
-          "badges": [],
-          "cards": [
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "switch.nilan_system_off"
-                },
-                {
-                  "entity": "switch.nilan_pause"
-                },
-                {
-                  "entity": "sensor.nilan_humidity"
-                },
-                {
-                  "entity": "sensor.nilan_sollleistung"
-                },
-                {
-                  "entity": "sensor.nilan_leistung_in"
-                },
-                {
-                  "entity": "sensor.nilan_leistung_out"
-                }
               ],
-              "title": "Lüftung"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.nilan_aussentemperatur"
-                },
-                {
-                  "entity": "sensor.nilan_innentemperatur"
-                },
-                {
-                  "entity": "sensor.nilan_abluftfuehler_raumtemperatur"
-                },
-                {
-                  "entity": "sensor.nilan_fortluftfuehler_nach_waermetauscher"
-                }
-              ],
-              "title": "Lüftung Temperaturen"
-            },
-            {
-              "type": "gauge",
-              "entity": "sensor.nilan_sollleistung",
-              "max": 100,
-              "min": 20,
-              "needle": false
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "input_number.nilan_sollleistung_einstellen"
-              ]
+              "title": "Rollos OG"
             }
           ]
         },
@@ -527,6 +561,39 @@
                   "entity": "sensor.bh1750_illuminance"
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.victron_grid_meter_energie_l1"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_energie_l2"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_energie_l3"
+                },
+                {
+                  "entity": "sensor.victron_solar_eintrag"
+                },
+                {
+                  "entity": "sensor.victron_batterie"
+                },
+                {
+                  "entity": "sensor.victron_batteriespannung"
+                },
+                {
+                  "entity": "sensor.victron_batteriestrom_bms"
+                },
+                {
+                  "entity": "sensor.victron_solar_eintrag_2"
+                },
+                {
+                  "entity": "sensor.victron_solar_gesamteintrag"
+                }
+              ],
+              "title": "Victron Test"
             }
           ]
         },
@@ -551,90 +618,6 @@
               ],
               "days_to_show": 30,
               "title": "Temperaturtest"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.vicare_outside_temperature_2"
-                },
-                {
-                  "entity": "sensor.vicare_supply_temperature_2"
-                }
-              ]
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.vicare_heating"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "water_heater.vicare_water"
-              ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "binary_sensor.vicare_circulation_pump_active"
-              ]
-            },
-            {
-              "type": "history-graph",
-              "entities": [
-                {
-                  "entity": "sensor.vicare_outside_temperature"
-                },
-                {
-                  "entity": "water_heater.vicare_water"
-                },
-                {
-                  "entity": "sensor.vicare_supply_temperature"
-                },
-                {
-                  "entity": "binary_sensor.vicare_circulation_pump_active"
-                }
-              ],
-              "hours_to_show": 24,
-              "refresh_interval": 0
-            }
-          ]
-        },
-        {
-          "title": "Warmwasser",
-          "path": "warmwasser",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "badges": [
-            {
-              "entity": "switch.29_b20837000000_pio_7"
-            },
-            {
-              "entity": "binary_sensor.vicare_circulation_pump_active"
-            },
-            {
-              "entity": "water_heater.vicare_water"
-            }
-          ],
-          "cards": [
-            {
-              "type": "entities",
-              "entities": [
-                "sensor.vicare_supply_temperature",
-                "water_heater.vicare_water"
-              ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "switch.29_b20837000000_pio_7"
-              ]
             }
           ]
         },

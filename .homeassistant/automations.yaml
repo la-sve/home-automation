@@ -226,7 +226,25 @@
   - platform: state
     entity_id:
     - input_number.nilan_sollleistung_einstellen
-  condition: []
+  - platform: state
+    entity_id:
+    - switch.nilan_pause
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id:
+    - switch.nilan_system_off
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: switch.nilan_system_off
+      state: 'off'
+    - condition: state
+      entity_id: switch.nilan_pause
+      state: 'off'
   action:
   - service: modbus.write_register
     data:
