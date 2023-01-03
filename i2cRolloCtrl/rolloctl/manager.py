@@ -75,7 +75,7 @@ class RolloAutomationManager(threading.Thread):
             state_interruptpin = GPIO.input(self._interrupt_gpio)
             if state_interruptpin == False:
                 print('Raspi interrupt pin is still low after update. Execute additional update.')
-                self.update(self._interrupt_gpio)
+                # self.update(self._interrupt_gpio) TODO: was sollte hier eigentlich passieren?
             
             # Rollos updaten -> relevant: Muss ein Rollo gestoppt werden, weil es bereits die entsprechende Zeit aktiv ist?
             self._updateModules()
