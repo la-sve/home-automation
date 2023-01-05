@@ -78,6 +78,7 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+template: !include templates.yaml
 
 # Connect to Vitodens 300 with Vitotronic 200 via vicare integration
 vicare:
@@ -422,6 +423,24 @@ sensor:
       - filter: lowpass
         time_constant: 5
         precision: 1
+  # Nutzt Template-Sensor, um Verbrauch aufzuakkumulieren (Batterieeintrag)
+  - platform: integration
+    name: Victron Batterieeintrag
+    unique_id: victron_battery_energy_in
+    source: sensor.victron_tmpl_battery_power_in
+    method: left
+  # Nutzt Template-Sensor, um Verbrauch aufzuakkumulieren (Batterienutzung)
+  - platform: integration
+    name: Victron Batterieaustrag
+    unique_id: victron_battery_energy_out
+    source: sensor.victron_tmpl_battery_power_out
+    method: left
+  - platform: command_line
+    # delete old backups
+    # flow: open backup folder & list files sorted by age -> delete first 3 entries (jungest files) from output -> run remove on each left
+    name: delete old backups
+    command: 'cd /config/backups/ && ls -A1t | sed -e "1,4d" | xargs rm'
+    scan_interval: 3600
 
 # Add "Lovelace Mini Graph Card"
 # https://github.com/kalkih/mini-graph-card

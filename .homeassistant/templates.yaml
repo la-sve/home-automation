@@ -1,0 +1,29 @@
+- sensor:
+    # Batterieleistung selbst berechnen. Wird benoetigt, um aufintegrierenden Sensor fuer das energy dashboard zu generieren.
+    - name: "Victron tmpl Battery Power In"
+      unique_id: victron_tmpl_battery_power_in
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      state: >
+        {% set power = states('sensor.victron_batteriestrom_bms' )|float(0) * states('sensor.victron_batteriespannung')|float(0) /1000 %}
+        {% if power >= 0 %}
+          {{ power }}
+        {% else %}
+          0
+        {% endif %}
+      availability: "{{ states('sensor.victron_batteriestrom_bms' )|is_number and states('sensor.victron_batteriespannung')|is_number }}"
+      
+    - name: "Victron tmpl Battery Power Out"
+      unique_id: victron_tmpl_battery_power_out
+      unit_of_measurement: "kW"
+      device_class: power
+      state_class: measurement
+      state: >
+        {% set power = states('sensor.victron_batteriestrom_bms' )|float(0) * states('sensor.victron_batteriespannung')|float(0) /1000 %}
+        {% if power < 0 %}
+          {{ power|abs }}
+        {% else %}
+          0
+        {% endif %}
+      availability: "{{ states('sensor.victron_batteriestrom_bms' )|is_number and states('sensor.victron_batteriespannung')|is_number }}"

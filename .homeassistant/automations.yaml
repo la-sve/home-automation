@@ -253,3 +253,14 @@
       hub: nilan
       value: '{{ states(''input_number.nilan_sollleistung_einstellen'') }}'
   mode: single
+- id: '1672735811546'
+  alias: HASS Backup
+  description: Tägliches Backup ausführen
+  trigger:
+  - platform: time
+    at: 01:00:00
+  condition: []
+  action:
+  - service: backup.create
+    data: {}
+  mode: single
