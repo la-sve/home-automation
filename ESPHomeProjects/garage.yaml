@@ -1,0 +1,44 @@
+# Garage: Steuerung der Notheizung fuer Akku (inkl. Temp. Sensoren) sowie Lichterbogensteuerung.
+
+esphome:
+  name: "garage"
+
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Garage Air Fallback Hotspot"
+    password: "UqML9IAP2Bw5"
+
+captive_portal:
+
+# One-Wire-Bus fuer Temperatursensoren DS18B20
+dallas:
+  - pin: 23
+    update_interval: 5s
+
+sensor:
+  # Temperatursensoren. Auswertung erfolgt ueber binary template sensor.
+  - platform: dallas
+    address: 0x20c45f5e1e64ff28
+    #index: 0
+    id: garage_temp_battery
+    resolution: 10
+    name: "ESPHome Garage Batterietemperatur"
