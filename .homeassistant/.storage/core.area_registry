@@ -1,32 +1,45 @@
 {
-    "version": 1,
-    "key": "core.area_registry",
-    "data": {
-        "areas": [
-            {
-                "name": "Wohnzimmer",
-                "id": "wohnzimmer"
-            },
-            {
-                "name": "K\u00fcche",
-                "id": "kuche"
-            },
-            {
-                "name": "Schlafzimmer",
-                "id": "schlafzimmer"
-            },
-            {
-                "name": "DG",
-                "id": "dg"
-            },
-            {
-                "name": "Wasser",
-                "id": "wasser"
-            },
-            {
-                "name": "Hauptschlafzimmer",
-                "id": "hauptschlafzimmer"
-            }
-        ]
-    }
+  "version": 1,
+  "minor_version": 3,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "name": "Wohnzimmer",
+        "id": "wohnzimmer",
+        "picture": null,
+        "aliases": []
+      },
+      {
+        "name": "Küche",
+        "id": "kuche",
+        "picture": null,
+        "aliases": []
+      },
+      {
+        "name": "Schlafzimmer",
+        "id": "schlafzimmer",
+        "picture": null,
+        "aliases": []
+      },
+      {
+        "name": "DG",
+        "id": "dg",
+        "picture": null,
+        "aliases": []
+      },
+      {
+        "name": "Wasser",
+        "id": "wasser",
+        "picture": null,
+        "aliases": []
+      },
+      {
+        "name": "Hauptschlafzimmer",
+        "id": "hauptschlafzimmer",
+        "picture": null,
+        "aliases": []
+      }
+    ]
+  }
 }

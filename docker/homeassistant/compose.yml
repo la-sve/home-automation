@@ -2,11 +2,13 @@ version: '3'
 services:
   homeassistant:
     container_name: homeassistant
+      #image: "ghcr.io/home-assistant/raspberrypi3-homeassistant"
     image: "ghcr.io/home-assistant/home-assistant:stable"
+    network_mode: "host"
     volumes:
       - /home/lasve/workspace/home-automation/.homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
       - /sys/bus/w1/devices:/sys/bus/w1/devices
     restart: unless-stopped
     privileged: true
-    network_mode: host
+      #    user: 1000:1000
