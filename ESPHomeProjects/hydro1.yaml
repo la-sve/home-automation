@@ -30,15 +30,17 @@ captive_portal:
 i2c:
   # I2C fuer Helligkeitssensor
   - id: bus_a
-    sda: 16
-    scl: 17
+    # gelb SDA an Sensor
+    sda: 33  
+    # weiß SCL an Sensor
+    scl: 32
     scan: true
   # I2C fuer Helligkeitssensor
-  - id: bus_b
-    sda: 33
-    scl: 32
-    frequency: 10000
-    scan: true
+  #- id: bus_b
+  #  sda: 33
+  #  scl: 32
+  #  frequency: 10000
+  #  scan: true
 
 switch:
   # Zeit zum Beleuchten
@@ -59,28 +61,42 @@ switch:
   - platform: gpio
     name: "Pflanz-Pumpe"
     id: pumpe_swi
+    # Blau
     pin: 5
-    inverted: true
+    inverted: false
   - platform: gpio
     name: "Pflanz-Licht"
     id: beleuchtung_swi
+    # Weiss
     pin: 18
-    inverted: true
+    inverted: false
+  - platform: gpio
+    name: "Pflanz-Licht2"
+    id: beleuchtung2_swi
+    # Gelb
+    pin: 19
+    inverted: false
+  - platform: gpio
+    name: "Pflanz-Licht230"
+    id: beleuchtung230_swi
+    # Grau
+    pin: 17
+    inverted: false
 
 sensor:
   # Wasserstand
-  - platform: vl53l0x
-    name: "Wasserstand"
-    id: hydro_level
-    address: 0x29
-    update_interval: 10s
-    long_range: false
-    i2c_id: bus_b
+  #- platform: vl53l0x
+  #  name: "Wasserstand"
+  #  id: hydro_level
+  #  address: 0x29
+  #  update_interval: 10s
+  #  long_range: false
+  #  i2c_id: bus_b
   # Helligkeit
   - platform: bh1750
     name: "BH1750 Illuminance"
     address: 0x23
-    measurement_duration: 69
+    #measurement_duration: 69
     update_interval: 60s
     i2c_id: bus_a
     on_value:
