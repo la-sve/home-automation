@@ -311,6 +311,17 @@ modbus:
         scan_interval: 5
         device_class: energy
         state_class: total_increasing
+      - name: 'Victron Solareintrag Dach'
+        unique_id: victron_solar_user_yield_dach
+        unit_of_measurement: "kWh"
+        slave: 235
+        address: 790
+        data_type: uint16
+        scale: 0.1
+        precision: 1
+        scan_interval: 5
+        device_class: energy
+        state_class: total_increasing
       - name: 'Victron Batterie'
         unique_id: victron_battery_state_of_charge
         unit_of_measurement: "%"

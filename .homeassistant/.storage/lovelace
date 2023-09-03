@@ -107,6 +107,9 @@
                 },
                 {
                   "entity": "sensor.nilan_fortluftfuehler_nach_waermetauscher"
+                },
+                {
+                  "entity": "sensor.nilan_bypass_state"
                 }
               ],
               "title": "Lüftung Temperaturen"
@@ -552,7 +555,16 @@
                   "entity": "switch.pflanz_licht"
                 },
                 {
+                  "entity": "switch.pflanz_licht2"
+                },
+                {
+                  "entity": "switch.pflanz_licht230"
+                },
+                {
                   "entity": "switch.pflanz_pumpe"
+                },
+                {
+                  "entity": "switch.pflanz_luefter"
                 },
                 {
                   "entity": "switch.beleuchtungszeit"

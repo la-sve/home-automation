@@ -1,78 +1,78 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace.lovelace_garten",
-    "data": {
-        "config": {
-            "views": [
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.lovelace_garten",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Pool",
+          "icon": "mdi:pool",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
                 {
-                    "title": "Pool",
-                    "icon": "mdi:pool",
-                    "badges": [],
-                    "cards": [
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "button.stoppe_pumpe"
-                                },
-                                {
-                                    "entity": "button.aktiviere_stufe_1"
-                                },
-                                {
-                                    "entity": "button.aktiviere_stufe_2"
-                                },
-                                {
-                                    "entity": "button.aktiviere_stufe_3"
-                                }
-                            ],
-                            "title": "Wenn im manuellen Modus:"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "sensor.solartemperatur"
-                                },
-                                {
-                                    "entity": "sensor.wassertemperatur_2"
-                                },
-                                {
-                                    "entity": "sensor.pulse_counter"
-                                },
-                                {
-                                    "entity": "sensor.poolpumpenmodus"
-                                }
-                            ],
-                            "title": "Messdaten"
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.automatikmodus"
-                                },
-                                {
-                                    "entity": "binary_sensor.brunnen_leer"
-                                },
-                                {
-                                    "entity": "binary_sensor.wasser_noch_zu_kalt"
-                                },
-                                {
-                                    "entity": "binary_sensor.solar_warme_verfugbar"
-                                },
-                                {
-                                    "entity": "switch.nachtmodus"
-                                },
-                                {
-                                    "entity": "sensor.pool_wifi_signal"
-                                }
-                            ],
-                            "title": "Systemzustand"
-                        }
-                    ]
+                  "entity": "button.stoppe_pumpe"
+                },
+                {
+                  "entity": "button.aktiviere_stufe_1"
+                },
+                {
+                  "entity": "button.aktiviere_stufe_2"
+                },
+                {
+                  "entity": "button.aktiviere_stufe_3"
                 }
-            ]
+              ],
+              "title": "Wenn im manuellen Modus:"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.pulse_counter"
+                },
+                {
+                  "entity": "sensor.poolpumpenmodus"
+                },
+                {
+                  "entity": "sensor.wassertemperatur"
+                },
+                {
+                  "entity": "sensor.solartemperatur_2"
+                }
+              ],
+              "title": "Messdaten"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.automatikmodus"
+                },
+                {
+                  "entity": "binary_sensor.brunnen_leer"
+                },
+                {
+                  "entity": "binary_sensor.wasser_noch_zu_kalt"
+                },
+                {
+                  "entity": "binary_sensor.solar_warme_verfugbar"
+                },
+                {
+                  "entity": "switch.nachtmodus"
+                },
+                {
+                  "entity": "sensor.pool_wifi_signal"
+                }
+              ],
+              "title": "Systemzustand"
+            }
+          ]
         }
+      ]
     }
+  }
 }

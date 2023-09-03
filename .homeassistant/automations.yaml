@@ -264,3 +264,39 @@
   - service: backup.create
     data: {}
   mode: single
+- id: '1681031981995'
+  alias: Abwesenheit Rollos Down
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:15:00'
+  condition: []
+  action:
+  - service: script.rollos_eg_down
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - service: script.rollos_og_down
+    data: {}
+  mode: single
+- id: '1681032086984'
+  alias: Abwesenheit Rollos UP
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  condition: []
+  action:
+  - service: script.rollos_eg_up
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - service: script.rollos_og_up
+    data: {}
+  mode: single
