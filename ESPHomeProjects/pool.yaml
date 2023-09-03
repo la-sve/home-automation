@@ -431,6 +431,7 @@ script:
 time:
   - platform: homeassistant
     id: homeassistant_time
+    timezone: Europe/Berlin
     on_time:
       # Nachtmodus aktivieren
       - seconds: 0
