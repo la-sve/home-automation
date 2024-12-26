@@ -18,16 +18,19 @@
     entity_id: switch.29_980837000000_latch_0
     domain: switch
   mode: single
-- alias: NachtlichterEIN
+- id: 8e4cb118af1e4c88888214b942448e72
+  alias: NachtlichterEIN
   description: ''
   trigger:
   - platform: sun
     event: sunset
   action:
   - service: homeassistant.turn_on
-    entity_id: group.nachtlichter
+    data: {}
+    target:
+      entity_id:
+      - group.nachtlichter
   mode: single
-  id: 8e4cb118af1e4c88888214b942448e72
 - id: f8ad11e14c304d71add86c68d1baaf07
   alias: NachtlichterAUS (zeitig)
   description: ''
@@ -40,7 +43,10 @@
     state: 'on'
   action:
   - service: homeassistant.turn_off
-    entity_id: group.nachtlichter
+    data: {}
+    target:
+      entity_id:
+      - group.nachtlichter
   mode: single
 - id: '1634413193653'
   alias: ZirkulationspumpeEIN
@@ -73,7 +79,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 06:30
+    at: 08:31:00
   - platform: sun
     event: sunset
     offset: -00:45:00
@@ -87,6 +93,9 @@
       entity_id:
       - group.weihnachteg
       - group.weihnachtenog
+      - switch.29_ad0837000000_pio_4
+      - switch.29_ad0837000000_pio_5
+    data: {}
   mode: single
 - id: '1637703042825'
   alias: Weihnachtsbeleuchtung EG AUS
@@ -96,11 +105,14 @@
     at: '9:00'
   - platform: time
     at: '20:30'
+  - platform: time
+    at: '22:00:00'
   condition: []
   action:
   - service: homeassistant.turn_off
     target:
       entity_id: group.weihnachteg
+    data: {}
   mode: single
 - id: '1637703122100'
   alias: Weihnachtsbeleuchtung OG AUS (spät)
@@ -117,7 +129,10 @@
   action:
   - service: homeassistant.turn_off
     target:
-      entity_id: group.weihnachtenog
+      entity_id:
+      - group.weihnachtenog
+      - switch.29_ad0837000000_pio_4
+    data: {}
   mode: single
 - id: '1637785069143'
   alias: Weihnachtsbeleuchtung EG und OG EIN (Wochenende)
@@ -138,6 +153,8 @@
       entity_id:
       - group.weihnachteg
       - group.weihnachtenog
+      - switch.29_ad0837000000_pio_4
+    data: {}
   mode: single
 - id: '1638738277247'
   alias: Heizung Schlafzimmer AUS
@@ -200,7 +217,10 @@
     state: 'off'
   action:
   - service: homeassistant.turn_off
-    entity_id: group.nachtlichter
+    data: {}
+    target:
+      entity_id:
+      - group.nachtlichter
   mode: single
 - id: '1669840980505'
   alias: Weihnachtsbeleuchtung OG AUS (zeitig)
@@ -217,7 +237,11 @@
   action:
   - service: homeassistant.turn_off
     target:
-      entity_id: group.weihnachtenog
+      entity_id:
+      - group.weihnachtenog
+      - switch.29_ad0837000000_pio_4
+      - switch.29_ad0837000000_pio_5
+    data: {}
   mode: single
 - id: '1671373670162'
   alias: Lüftungseinstellung (Leistung)
@@ -269,7 +293,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '20:15:00'
+    at: '19:45:00'
   condition: []
   action:
   - service: script.rollos_eg_down
@@ -299,4 +323,65 @@
       milliseconds: 0
   - service: script.rollos_og_up
     data: {}
+  mode: single
+- id: '1701879294351'
+  alias: Außenlichterbogen (EIN)
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00:00
+  - platform: time
+    at: '17:30:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: ed04aadb13be7447f67fcd0498b5839e
+    entity_id: switch.tasmota_3
+    domain: switch
+  mode: single
+- id: '1701879362373'
+  alias: Außenlichterbogen (AUS)
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: ed04aadb13be7447f67fcd0498b5839e
+    entity_id: switch.tasmota_3
+    domain: switch
+  mode: single
+- id: '1707065038425'
+  alias: MalteAufwachen
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:30:00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.arbeitstag
+    state: 'on'
+  action:
+  - service: homeassistant.turn_on
+    data: {}
+    target:
+      entity_id: switch.29_ad0837000000_pio_5
+  mode: single
+- id: '1707065385526'
+  alias: MalteAufwachenAUS
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  - platform: time
+    at: 07:15:00
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    data: {}
+    target:
+      entity_id: switch.29_ad0837000000_pio_5
   mode: single

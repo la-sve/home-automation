@@ -41,6 +41,12 @@
                   "entity": "script.rollos_og_down"
                 },
                 {
+                  "entity": "script.rollos_og_sonne"
+                },
+                {
+                  "entity": "sensor.victron_batterie"
+                },
+                {
                   "entity": "sensor.garage_luftfeuchtigkeit"
                 },
                 {
@@ -338,6 +344,89 @@
         },
         {
           "theme": "Backend-selected",
+          "title": "Rollos",
+          "path": "rollos",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "icon": "mdi:roller-shade",
+          "badges": [],
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.rollo_arbeit"
+                },
+                {
+                  "entity": "cover.rollo_wohn_o"
+                },
+                {
+                  "entity": "cover.rollo_wohn_s"
+                },
+                {
+                  "entity": "cover.rollo_wohn_t"
+                },
+                {
+                  "entity": "cover.rollo_kuec_t"
+                },
+                {
+                  "entity": "cover.rollo_kuec_s"
+                },
+                {
+                  "entity": "cover.rollo_kuec_w"
+                },
+                {
+                  "entity": "cover.rollo_wceg"
+                },
+                {
+                  "entity": "cover.rollo_hwr"
+                }
+              ],
+              "title": "Rollos EG"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.rollo_trep"
+                },
+                {
+                  "entity": "cover.rollo_kid1_n"
+                },
+                {
+                  "entity": "cover.rollo_kid1_o"
+                },
+                {
+                  "entity": "cover.rollo_kid2_o"
+                },
+                {
+                  "entity": "cover.rollo_kid2_s"
+                },
+                {
+                  "entity": "cover.rollo_bibo"
+                },
+                {
+                  "entity": "cover.rollo_wcog_s"
+                },
+                {
+                  "entity": "cover.rollo_wcog_w"
+                },
+                {
+                  "entity": "cover.rollo_schl"
+                }
+              ],
+              "title": "Rollos OG"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
           "title": "Lichter",
           "path": "lichter",
           "visible": [
@@ -425,7 +514,7 @@
                   "entity": "switch.29_b20837000000_pio_6"
                 },
                 {
-                  "entity": "switch.tasmota"
+                  "entity": "switch.tasmota_3"
                 }
               ]
             }
@@ -433,84 +522,52 @@
         },
         {
           "theme": "Backend-selected",
-          "title": "Rollos",
-          "path": "rollos",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "icon": "mdi:roller-shade",
+          "title": "Energie",
+          "path": "energie",
+          "icon": "mdi:lightning-bolt-circle",
           "badges": [],
           "cards": [
             {
               "type": "entities",
               "entities": [
                 {
-                  "entity": "cover.rollo_arbeit"
+                  "entity": "sensor.tasmota_nas_energy_power"
                 },
                 {
-                  "entity": "cover.rollo_wohn_o"
+                  "entity": "sensor.tasmota_energy_power"
                 },
                 {
-                  "entity": "cover.rollo_wohn_s"
+                  "entity": "sensor.tasmota_energy_power_2"
                 },
                 {
-                  "entity": "cover.rollo_wohn_t"
+                  "entity": "sensor.tasmota_2_energy_power"
                 },
                 {
-                  "entity": "cover.rollo_kuec_t"
-                },
-                {
-                  "entity": "cover.rollo_kuec_s"
-                },
-                {
-                  "entity": "cover.rollo_kuec_w"
-                },
-                {
-                  "entity": "cover.rollo_wceg"
-                },
-                {
-                  "entity": "cover.rollo_hwr"
+                  "entity": "sensor.tasmota_energy_power_3"
                 }
               ],
-              "title": "Rollos EG"
+              "title": "Aktueller Energieverbrauch"
             },
             {
               "type": "entities",
               "entities": [
                 {
-                  "entity": "cover.rollo_trep"
+                  "entity": "sensor.tasmota_nas_energy_today"
                 },
                 {
-                  "entity": "cover.rollo_kid1_n"
+                  "entity": "sensor.tasmota_energy_today"
                 },
                 {
-                  "entity": "cover.rollo_kid1_o"
+                  "entity": "sensor.tasmota_energy_today_2"
                 },
                 {
-                  "entity": "cover.rollo_kid2_o"
+                  "entity": "sensor.tasmota_2_energy_today"
                 },
                 {
-                  "entity": "cover.rollo_kid2_s"
-                },
-                {
-                  "entity": "cover.rollo_bibo"
-                },
-                {
-                  "entity": "cover.rollo_wcog_s"
-                },
-                {
-                  "entity": "cover.rollo_wcog_w"
-                },
-                {
-                  "entity": "cover.rollo_schl"
+                  "entity": "sensor.tasmota_energy_today_3"
                 }
               ],
-              "title": "Rollos OG"
+              "title": "Tagesverbrauch"
             }
           ]
         },
@@ -527,10 +584,6 @@
           ],
           "badges": [],
           "cards": [
-            {
-              "type": "media-control",
-              "entity": "media_player.hauptschlafzimmer"
-            },
             {
               "type": "entities",
               "entities": [
@@ -603,33 +656,12 @@
                 },
                 {
                   "entity": "sensor.victron_solar_gesamteintrag"
+                },
+                {
+                  "entity": "sensor.victron_solareintrag_dach"
                 }
               ],
               "title": "Victron Test"
-            }
-          ]
-        },
-        {
-          "title": "Statistik",
-          "path": "statistik",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "badges": [],
-          "cards": [
-            {
-              "type": "statistics-graph",
-              "entities": [
-                "sensor.28_ff5ad9501603_temperature",
-                "sensor.28_ff3bc3471603_temperature"
-              ],
-              "days_to_show": 30,
-              "title": "Temperaturtest"
             }
           ]
         },
@@ -688,6 +720,34 @@
               "smoothing": true,
               "line_width": 2,
               "font_size": 80
+            }
+          ]
+        },
+        {
+          "title": "Statistik",
+          "path": "statistik",
+          "visible": [
+            {
+              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+            },
+            {
+              "user": "675cd8bf137e4693a41a12558f448a73"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "type": "statistics-graph",
+              "entities": [
+                "sensor.28_ff5ad9501603_temperature",
+                "sensor.28_ff3bc3471603_temperature"
+              ],
+              "days_to_show": 30,
+              "title": "Temperaturtest"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.hauptschlafzimmer"
             }
           ]
         }

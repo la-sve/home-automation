@@ -235,3 +235,66 @@ sonos_mdr_jump:
       source: MDR Jump
   mode: single
   alias: SONOS MDR JUMP
+rollos_og_sonne:
+  alias: Rollos OG Sonne
+  sequence:
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 11
+      time: 25
+    enabled: false
+  - delay:
+      seconds: 2
+    enabled: false
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 12
+      time: 12
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 13
+      time: 13
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 14
+      time: 13
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 15
+      time: 13
+    alias: Bibo
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 16
+      time: 13
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 17
+      time: 13
+  - delay:
+      seconds: 2
+  - service: rest_command.rollosteuerung
+    data:
+      cmd: close
+      window: 18
+      time: 14
+    alias: Schlafzimmer
+  mode: single
+  icon: mdi:roller-shade
