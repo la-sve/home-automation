@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 3,
+  "minor_version": 7,
   "key": "core.area_registry",
   "data": {
     "areas": [
@@ -8,37 +8,67 @@
         "name": "Wohnzimmer",
         "id": "wohnzimmer",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Küche",
         "id": "kuche",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Schlafzimmer",
         "id": "schlafzimmer",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "DG",
         "id": "dg",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Wasser",
         "id": "wasser",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "name": "Hauptschlafzimmer",
         "id": "hauptschlafzimmer",
         "picture": null,
-        "aliases": []
+        "aliases": [],
+        "icon": null,
+        "floor_id": null,
+        "labels": [],
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       }
     ]
   }

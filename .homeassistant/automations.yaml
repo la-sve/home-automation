@@ -77,25 +77,25 @@
 - id: '1637702834285'
   alias: Weihnachtsbeleuchtung EG und OG EIN (Arbeitstage)
   description: ''
-  trigger:
-  - platform: time
-    at: 08:31:00
-  - platform: sun
-    event: sunset
+  triggers:
+  - at: 08:31:00
+    trigger: time
+  - event: sunset
     offset: -00:45:00
-  condition:
+    trigger: sun
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag
     state: 'on'
-  action:
-  - service: homeassistant.turn_on
-    target:
+  actions:
+  - target:
       entity_id:
       - group.weihnachteg
       - group.weihnachtenog
       - switch.29_ad0837000000_pio_4
       - switch.29_ad0837000000_pio_5
     data: {}
+    action: homeassistant.turn_on
   mode: single
 - id: '1637703042825'
   alias: Weihnachtsbeleuchtung EG AUS

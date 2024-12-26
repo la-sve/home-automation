@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "energy",
+  "data": {
+    "energy_sources": [
+      {
+        "type": "grid",
+        "flow_from": [
+          {
+            "stat_energy_from": "sensor.victron_grid_meter_total_aus_netz",
+            "stat_cost": null,
+            "entity_energy_price": null,
+            "number_energy_price": null
+          }
+        ],
+        "flow_to": [
+          {
+            "stat_energy_to": "sensor.victron_grid_meter_total_ins_netz",
+            "stat_compensation": null,
+            "entity_energy_price": null,
+            "number_energy_price": null
+          }
+        ],
+        "cost_adjustment_day": 0.0
+      },
+      {
+        "type": "gas",
+        "stat_energy_from": "sensor.vicare_heating_gas_consumption_today",
+        "stat_cost": null,
+        "entity_energy_price": null,
+        "number_energy_price": null
+      },
+      {
+        "type": "gas",
+        "stat_energy_from": "sensor.vicare_hot_water_gas_consumption_today",
+        "stat_cost": null,
+        "entity_energy_price": null,
+        "number_energy_price": null
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.victron_solar_gesamteintrag",
+        "config_entry_solar_forecast": null
+      },
+      {
+        "type": "battery",
+        "stat_energy_from": "sensor.victron_batterieaustrag",
+        "stat_energy_to": "sensor.victron_batterieeintrag"
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.victron_solareintrag_dach",
+        "config_entry_solar_forecast": null
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.vicare_energy_consumption_this_year"
+      },
+      {
+        "stat_consumption": "sensor.arbeitszimmer_17_8_1d"
+      },
+      {
+        "stat_consumption": "sensor.backofen_15_1d"
+      },
+      {
+        "stat_consumption": "sensor.studio_20_11_1d"
+      },
+      {
+        "stat_consumption": "sensor.garage_1_1_1d"
+      },
+      {
+        "stat_consumption": "sensor.garage_2_2_1d"
+      },
+      {
+        "stat_consumption": "sensor.garage_3_3_1d"
+      },
+      {
+        "stat_consumption": "sensor.kuhltruhe_16_1d"
+      },
+      {
+        "stat_consumption": "sensor.uv_1_4_1d"
+      },
+      {
+        "stat_consumption": "sensor.uv_2_5_1d"
+      },
+      {
+        "stat_consumption": "sensor.uv_3_6_1d"
+      },
+      {
+        "stat_consumption": "sensor.heizung_32_14_1d"
+      },
+      {
+        "stat_consumption": "sensor.mikrowelle_71_7_1d"
+      },
+      {
+        "stat_consumption": "sensor.luftung_31_12_1d"
+      },
+      {
+        "stat_consumption": "sensor.geschirrspuler_38_13_1d"
+      },
+      {
+        "stat_consumption": "sensor.malte_22_10_1d"
+      },
+      {
+        "stat_consumption": "sensor.sina_23_9_1d"
+      },
+      {
+        "stat_consumption": "sensor.tasmota_energy_total"
+      },
+      {
+        "stat_consumption": "sensor.tasmota_nas_energy_total"
+      },
+      {
+        "stat_consumption": "sensor.tasmota_energy_total_3"
+      },
+      {
+        "stat_consumption": "sensor.tasmota_energy_total_2"
+      },
+      {
+        "stat_consumption": "sensor.tasmota_2_energy_total"
+      }
+    ]
+  }
+}

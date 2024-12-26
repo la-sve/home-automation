@@ -21,11 +21,6 @@
           "badges": [],
           "cards": [
             {
-              "type": "weather-forecast",
-              "entity": "weather.openweathermap",
-              "secondary_info_attribute": "humidity"
-            },
-            {
               "type": "entities",
               "entities": [
                 {

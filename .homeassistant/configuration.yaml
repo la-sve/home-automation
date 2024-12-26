@@ -103,33 +103,6 @@ vicare:
 #    switch.29_ae571a000000_pio_6:
 #      friendly_name: Erz_Studio
 
-# Hilfs-Schalter definieren
-binary_sensor:
-  # Arbeitstag
-  - platform: workday
-    name: "Arbeitstag"
-    country: DE
-    province: SN
-    workdays: [mon, tue, wed, thu, fri]
-    excludes: [sat, sun, holiday]
-    add_holidays:
-      - "2022-12-27"
-      - "2022-12-28"
-      - "2022-12-29"
-      - "2022-12-30"
-  - platform: workday
-    name: "Arbeitstag (morgen)"
-    country: DE
-    province: SN
-    workdays: [mon, tue, wed, thu, fri]
-    excludes: [sat, sun, holiday]
-    days_offset: 1
-    add_holidays: 
-      - "2022-12-27"
-      - "2022-12-28"
-      - "2022-12-29"
-      - "2022-12-30"
-
 # For connection to the cts-700 module from NILAN, which is part of my air
 # ventilation system from Kermi, x-well N300 - CR300 with external control unit CTS700
 modbus:
@@ -168,7 +141,7 @@ modbus:
         address: 5152
         scale: 0.1
         precision: 1
-        count: 1
+        # count: 1
         # data_type: int
       - name: "NILAN Zuluftfuehler"
         unique_id: nilan_temperature_inlet
@@ -178,7 +151,7 @@ modbus:
         address: 5153
         scale: 0.1
         precision: 1
-        count: 1
+        # count: 1
         # data_type: int
       - name: "NILAN Abluftfuehler (Raumtemperatur)"
         unique_id: nilan_temperature_room
@@ -188,7 +161,7 @@ modbus:
         address: 5154
         scale: 0.1
         precision: 1
-        count: 1
+        # count: 1
         # data_type: int
       - name: "NILAN Fortluftfuehler (nach Waermetauscher)"
         unique_id: nilan_temperature_after_heatexchange
@@ -198,7 +171,7 @@ modbus:
         address: 5155
         scale: 0.1
         precision: 1
-        count: 1
+        # count: 1
         # data_type: int
       - name: "NILAN CO2 Sensor"
         unique_id: nilan_dev_co2_sensor
@@ -206,7 +179,7 @@ modbus:
         unit_of_measurement: "%"
         slave: 1
         address: 4712
-        count: 1
+        # count: 1
         # data_type: int
       - name: "NILAN Bypass State"
         unique_id: nilan_dev_bypass1
@@ -214,32 +187,32 @@ modbus:
         unit_of_measurement: "%"
         slave: 1
         address: 4704
-        count: 1
+        # count: 1
       - name: "NILAN Leistung IN"
         unique_id: nilan_fan_speed_in
         unit_of_measurement: '%'
         slave: 1
         address: 4699
-        count: 1
+        # count: 1
       - name: "NILAN Leistung OUT"
         unique_id: nilan_fan_speed_out
         unit_of_measurement: '%'
         slave: 1
         address: 4700
-        count: 1
+        # count: 1
       - name: "NILAN Sollwert Lufttemperatur"
         unique_id: nilan_air_setpoint
         unit_of_measurement: '°C'
         slave: 1
         address: 4746
-        count: 1
+        # count: 1
         scale: 0.1
       - name: "NILAN Sollleistung"
         unique_id: nilan_fan_setpoint
         unit_of_measurement: '%'
         slave: 1
         address: 4747
-        count: 1
+        # count: 1
   - name: victron
     type: tcp
     host: 192.168.178.43
