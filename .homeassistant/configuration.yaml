@@ -81,11 +81,12 @@ scene: !include scenes.yaml
 template: !include templates.yaml
 
 # Connect to Vitodens 300 with Vitotronic 200 via vicare integration
-vicare:
-  username: !secret vicare_user
-  password: !secret vicare_pass
-  client_id: !secret vicare_id
-  name: ViCare
+# Geht nicht mehr ueber yaml
+#vicare:
+#  username: !secret vicare_user
+#  password: !secret vicare_pass
+#  client_id: !secret vicare_id
+#  name: ViCare
 
 # Altes esersa Geraet
 #    switch.29_ae571a000000_pio_0:
@@ -273,6 +274,36 @@ modbus:
         scan_interval: 5
         device_class: energy
         state_class: total_increasing
+      - name: 'Victron Grid meter L1 Power'
+        unique_id: victron_grid_l1_power
+        unit_of_measurement: "W"
+        slave: 30
+        address: 2600
+        data_type: int16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
+      - name: 'Victron Grid meter L2 Power'
+        unique_id: victron_grid_l2_power
+        unit_of_measurement: "W"
+        slave: 30
+        address: 2601
+        data_type: int16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
+      - name: 'Victron Grid meter L3 Power'
+        unique_id: victron_grid_l3_power
+        unit_of_measurement: "W"
+        slave: 30
+        address: 2602
+        data_type: int16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
       - name: 'Victron Solar Gesamteintrag'
         unique_id: victron_solar_user_yield
         unit_of_measurement: "kWh"

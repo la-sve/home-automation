@@ -54,7 +54,8 @@
                   "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
                 },
                 {
-                  "entity": "sensor.vicare_outside_temperature_2"
+                  "entity": "sensor.vicare_outside_temperature_2",
+                  "name": "Außentemperatur ViCare"
                 }
               ]
             }
@@ -144,31 +145,34 @@
                   "entity": "switch.29_b20837000000_pio_7"
                 },
                 {
-                  "entity": "sensor.vicare_outside_temperature_2"
+                  "entity": "sensor.vicare_outside_temperature_2",
+                  "name": "Außentemperatur"
                 },
                 {
-                  "entity": "sensor.vicare_supply_temperature_2"
+                  "entity": "sensor.vicare_supply_temperature_2",
+                  "name": "Vorlauftemperatur"
                 },
                 {
-                  "entity": "water_heater.vicare_water"
+                  "entity": "water_heater.vicare_water",
+                  "name": "Warmwasser"
                 },
                 {
-                  "entity": "sensor.vicare_solar_collector_temperature"
+                  "entity": "sensor.vicare_solar_collector_temperature",
+                  "name": "Solarkollektor-Temperatur"
                 },
                 {
-                  "entity": "sensor.vicare_solar_energy_production_this_week"
+                  "entity": "sensor.vicare_solar_energy_production_this_week",
+                  "name": "Solarenergie-Erzeugung diese Woche"
                 },
                 {
-                  "entity": "sensor.vicare_heating_gas_consumption_this_week"
+                  "entity": "sensor.vicare_heating_gas_consumption_this_week",
+                  "name": "Heizung-Gasverbrauch diese Woche"
                 },
                 {
-                  "entity": "sensor.vicare_power_consumption_this_week"
+                  "entity": "sensor.vicare_power_consumption_this_week",
+                  "name": "Stromverbrauch diese Woche"
                 }
               ]
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.vicare_heating"
             },
             {
               "type": "history-graph",
@@ -182,6 +186,171 @@
               ],
               "hours_to_show": 24,
               "refresh_interval": 0
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.vicare_outside_temperature_2",
+                  "name": "Außentemperatur"
+                },
+                {
+                  "entity": "binary_sensor.vicare_burner_active",
+                  "name": "Brenner"
+                },
+                {
+                  "entity": "sensor.vicare_burner_modulation",
+                  "name": "Brennermodulation"
+                },
+                {
+                  "entity": "sensor.vicare_energy_consumption_this_month",
+                  "name": "Energie"
+                },
+                {
+                  "entity": "binary_sensor.vicare_frost_protection_active",
+                  "name": "Frostschutz"
+                },
+                {
+                  "entity": "binary_sensor.vicare_circulation_pump_active_2",
+                  "name": "Heizkreisumwälzpumpe"
+                },
+                {
+                  "entity": "sensor.vicare_heating_gas_consumption_this_week",
+                  "name": "Heizung-Gasverbrauch diese Woche"
+                },
+                {
+                  "entity": "sensor.vicare_heating_gas_consumption_this_month",
+                  "name": "Heizung-Gasverbrauch diesen Monat"
+                },
+                {
+                  "entity": "sensor.vicare_heating_gas_consumption_this_year",
+                  "name": "Heizung-Gasverbrauch dieses Jahr"
+                },
+                {
+                  "entity": "sensor.vicare_heating_gas_consumption_today",
+                  "name": "Heizung-Gasverbrauch heute"
+                },
+                {
+                  "entity": "sensor.vicare_boiler_temperature",
+                  "name": "Kesseltemperatur"
+                },
+                {
+                  "entity": "sensor.vicare_solar_energy_production_this_week",
+                  "name": "Solarenergie-Erzeugung diese Woche"
+                },
+                {
+                  "entity": "sensor.vicare_solar_energy_production_this_month",
+                  "name": "Solarenergie-Erzeugung diesen Monat"
+                },
+                {
+                  "entity": "sensor.vicare_solar_energy_production_this_year",
+                  "name": "Solarenergie-Erzeugung dieses Jahr"
+                },
+                {
+                  "entity": "sensor.vicare_solar_energy_production_today",
+                  "name": "Solarenergie-Erzeugung heute"
+                },
+                {
+                  "entity": "sensor.vicare_solar_collector_temperature",
+                  "name": "Solarkollektor-Temperatur"
+                },
+                {
+                  "entity": "binary_sensor.vicare_solar_pump_active",
+                  "name": "Solarpumpe"
+                },
+                {
+                  "entity": "sensor.vicare_solar_storage_temperature",
+                  "name": "Solarspeicher-Temperatur"
+                },
+                {
+                  "entity": "sensor.vicare_power_consumption_this_week",
+                  "name": "Stromverbrauch diese Woche"
+                },
+                {
+                  "entity": "sensor.vicare_energy_consumption_this_year",
+                  "name": "Stromverbrauch dieses Jahr"
+                },
+                {
+                  "entity": "sensor.vicare_energy_consumption_today",
+                  "name": "Stromverbrauch heute"
+                },
+                {
+                  "entity": "sensor.vicare_supply_temperature_2",
+                  "name": "Vorlauftemperatur"
+                },
+                {
+                  "entity": "binary_sensor.vicare_dhw_charging_active",
+                  "name": "WW-Aufladung"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_gas_consumption_this_week",
+                  "name": "WW-Gasverbrauch diese Woche"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_gas_consumption_this_month",
+                  "name": "WW-Gasverbrauch diesen Monat"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_gas_consumption_this_year",
+                  "name": "WW-Gasverbrauch dieses Jahr"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_gas_consumption_today",
+                  "name": "WW-Gasverbrauch heute"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_max_temperature",
+                  "name": "WW-Höchsttemperatur"
+                },
+                {
+                  "entity": "sensor.vicare_hot_water_min_temperature",
+                  "name": "WW-Mindesttemperatur"
+                },
+                {
+                  "entity": "binary_sensor.vicare_dhw_pump_active",
+                  "name": "WW-Pumpe"
+                },
+                {
+                  "entity": "sensor.vscotho1_200_ww_speichertemperatur",
+                  "name": "WW-Speichertemperatur"
+                },
+                {
+                  "entity": "binary_sensor.vicare_dhw_circulation_pump_active",
+                  "name": "WW-Zirkulationspumpe"
+                }
+              ],
+              "title": "VScotHO1_200"
+            },
+            {
+              "type": "grid",
+              "square": false,
+              "columns": 1,
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "water_heater.vicare_water",
+                      "name": "Warmwasser"
+                    }
+                  ],
+                  "title": "VScotHO1_200"
+                },
+                {
+                  "type": "thermostat",
+                  "entity": "climate.vscotho1_200_heizung",
+                  "features": [
+                    {
+                      "type": "climate-hvac-modes",
+                      "hvac_modes": [
+                        "off",
+                        "auto",
+                        "heat"
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -654,6 +823,24 @@
                 },
                 {
                   "entity": "sensor.victron_solareintrag_dach"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_total_aus_netz"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_total_ins_netz"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_l1_power"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_l2_power"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_l3_power"
+                },
+                {
+                  "entity": "sensor.victron_grid_meter_power_sum"
                 }
               ],
               "title": "Victron Test"
