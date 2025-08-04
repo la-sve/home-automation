@@ -56,9 +56,6 @@
     ],
     "device_consumption": [
       {
-        "stat_consumption": "sensor.vicare_energy_consumption_this_year"
-      },
-      {
         "stat_consumption": "sensor.arbeitszimmer_17_8_1d"
       },
       {

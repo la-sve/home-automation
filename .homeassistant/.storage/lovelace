@@ -708,6 +708,15 @@
                 },
                 {
                   "entity": "sensor.tasmota_energy_power_3"
+                },
+                {
+                  "entity": "sensor.garage_1_1_1min"
+                },
+                {
+                  "entity": "sensor.garage_2_2_1min"
+                },
+                {
+                  "entity": "sensor.garage_3_3_1min"
                 }
               ],
               "title": "Aktueller Energieverbrauch"
@@ -930,6 +939,15 @@
             {
               "type": "media-control",
               "entity": "media_player.hauptschlafzimmer"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "script.sonos_sleep_60_min"
+                }
+              ],
+              "title": "Sonos Steuerung"
             }
           ]
         }

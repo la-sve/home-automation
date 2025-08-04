@@ -78,7 +78,7 @@
   alias: Weihnachtsbeleuchtung EG und OG EIN (Arbeitstage)
   description: ''
   triggers:
-  - at: 08:31:00
+  - at: 06:30:00
     trigger: time
   - event: sunset
     offset: -00:45:00

@@ -298,3 +298,14 @@ rollos_og_sonne:
     alias: Schlafzimmer
   mode: single
   icon: mdi:roller-shade
+sonos_sleep_60_min:
+  alias: Sonos Sleep 60 min
+  sequence:
+  - action: sonos.set_sleep_timer
+    metadata: {}
+    data:
+      sleep_time: 3600
+    target:
+      device_id: 89dc9cc6961d23e5e40476c7141494f2
+  description: Sleep timer setzen auf 60 Minuten
+  icon: mdi:sleep

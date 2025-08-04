@@ -25,7 +25,7 @@ rest_command:
     content_type: 'application/json; charset=utf-8'
   rollosteuerung:
     method: POST
-    url: http://localhost:5000/Shutters
+    url: http://192.168.178.34:5000/Shutters
     payload: '{"cmd": "{{ cmd }}","window": "{{ window }}","time": "{{ time }}"}'
     content_type: 'application/json; charset=utf-8'
 
@@ -404,6 +404,16 @@ modbus:
         slave: 100 # hub
         address: 850
         data_type: uint16
+        scale: 1
+        precision: 1
+        scan_interval: 5
+        device_class: power
+      - name: 'Victron Batterie Leistung'
+        unique_id: victron_battery_power
+        unit_of_measurement: "W"
+        slave: 100 # hub
+        address: 842
+        data_type: int16
         scale: 1
         precision: 1
         scan_interval: 5
