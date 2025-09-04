@@ -1,74 +1,112 @@
 {
   "version": 1,
-  "minor_version": 7,
+  "minor_version": 8,
   "key": "core.area_registry",
   "data": {
     "areas": [
       {
-        "name": "Wohnzimmer",
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
         "id": "wohnzimmer",
-        "picture": null,
-        "aliases": [],
-        "icon": null,
-        "floor_id": null,
         "labels": [],
+        "name": "Wohnzimmer",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
-        "name": "Küche",
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
         "id": "kuche",
-        "picture": null,
-        "aliases": [],
-        "icon": null,
-        "floor_id": null,
         "labels": [],
+        "name": "Küche",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
-        "name": "Schlafzimmer",
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
         "id": "schlafzimmer",
-        "picture": null,
-        "aliases": [],
-        "icon": null,
-        "floor_id": null,
         "labels": [],
+        "name": "Schlafzimmer",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
-        "name": "DG",
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
         "id": "dg",
-        "picture": null,
-        "aliases": [],
-        "icon": null,
-        "floor_id": null,
         "labels": [],
+        "name": "DG",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
-        "name": "Wasser",
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
         "id": "wasser",
-        "picture": null,
-        "aliases": [],
-        "icon": null,
-        "floor_id": null,
         "labels": [],
+        "name": "Wasser",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
-        "name": "Hauptschlafzimmer",
-        "id": "hauptschlafzimmer",
-        "picture": null,
         "aliases": [],
-        "icon": null,
         "floor_id": null,
+        "icon": null,
+        "id": "hauptschlafzimmer",
         "labels": [],
+        "name": "Hauptschlafzimmer",
+        "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
+        "id": "studio",
+        "labels": [],
+        "name": "studio",
+        "picture": null,
+        "created_at": "2025-01-09T06:37:24.428292+00:00",
+        "modified_at": "2025-01-09T06:37:24.428301+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
+        "id": "galerie",
+        "labels": [],
+        "name": "Galerie",
+        "picture": null,
+        "created_at": "2025-01-17T17:29:49.632628+00:00",
+        "modified_at": "2025-01-17T17:29:49.632642+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       }
     ]
   }

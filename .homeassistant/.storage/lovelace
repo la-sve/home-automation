@@ -54,7 +54,7 @@
                   "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
                 },
                 {
-                  "entity": "sensor.vicare_outside_temperature_2",
+                  "entity": "sensor.vscotho1_200_aussentemperatur",
                   "name": "Außentemperatur ViCare"
                 }
               ]
@@ -145,24 +145,24 @@
                   "entity": "switch.29_b20837000000_pio_7"
                 },
                 {
-                  "entity": "sensor.vicare_outside_temperature_2",
+                  "entity": "sensor.vscotho1_200_aussentemperatur",
                   "name": "Außentemperatur"
                 },
                 {
-                  "entity": "sensor.vicare_supply_temperature_2",
+                  "entity": "sensor.vscotho1_200_vorlauftemperatur",
                   "name": "Vorlauftemperatur"
                 },
                 {
-                  "entity": "water_heater.vicare_water",
+                  "entity": "sensor.vscotho1_200_ww_speichertemperatur",
                   "name": "Warmwasser"
                 },
                 {
-                  "entity": "sensor.vicare_solar_collector_temperature",
+                  "entity": "sensor.vscotho1_200_solarkollektor_temperatur",
                   "name": "Solarkollektor-Temperatur"
                 },
                 {
-                  "entity": "sensor.vicare_solar_energy_production_this_week",
-                  "name": "Solarenergie-Erzeugung diese Woche"
+                  "entity": "sensor.vscotho1_200_solarenergie_erzeugung_heute",
+                  "name": "Solarenergie-Erzeugung Heute"
                 },
                 {
                   "entity": "sensor.vicare_heating_gas_consumption_this_week",
@@ -771,6 +771,15 @@
                 },
                 {
                   "entity": "input_datetime.schlafenszeit_spat"
+                },
+                {
+                  "entity": "sensor.backup_letztes_erfolgreiches_automatisches_backup"
+                },
+                {
+                  "entity": "sensor.backup_nachstes_geplantes_automatisches_backup"
+                },
+                {
+                  "entity": "automation.hass_backup"
                 }
               ]
             },

@@ -464,7 +464,7 @@ sensor:
     # delete old backups
     # flow: open backup folder & list files sorted by age -> delete first 3 entries (jungest files) from output -> run remove on each left
     name: delete old backups
-    command: 'cd /config/backups/ && ls -A1t | sed -e "1,4d" | xargs rm'
+    command: 'cd backup/ && ls -A1t | sed -e "1,4d" | xargs rm'
     scan_interval: 3600
 
 # Add "Lovelace Mini Graph Card"

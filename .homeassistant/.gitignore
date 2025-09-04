@@ -4,3 +4,4 @@
 blueprints
 deps
 tts
+.storage/tmp*
