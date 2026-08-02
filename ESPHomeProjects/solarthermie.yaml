@@ -79,8 +79,8 @@ switch:
       then:
         - lambda: |-
             id(wartungsmodus) = true;
-            // Sicherheitsmechanismus, bei Maximaltemperatur im Speicher nicht einschalten.
-            if (id(temp_speicher).state < id(max_speicher_temp).state) {
+            // Sicherheitsmechanismus, bei Überhitzungsschutz nicht einschalten.
+            if (!id(ueberhitzungsschutz_aktiv).state) {
               id(pwm_solarpumpe).set_level(id(manual_pwm_target));
               id(current_pwm_val) = id(manual_pwm_target);
             }
@@ -116,8 +116,8 @@ number:
       then:
         - lambda: |-
             id(manual_pwm_target) = x / 100.0;
-            // Blockiere manuelle Steuerung, wenn Speichertemp >= Max-Temp ist
-            if (id(wartungsmodus) && id(temp_speicher).state < id(max_speicher_temp).state) {
+            // Blockiere manuelle Steuerung, wenn Überhitzungsschutz aktiv ist
+            if (id(wartungsmodus) && !id(ueberhitzungsschutz_aktiv).state) {
               id(pwm_solarpumpe).set_level(id(manual_pwm_target));
               id(current_pwm_val) = id(manual_pwm_target);
             }
@@ -254,8 +254,14 @@ interval:
           id(temp_difference).publish_state(delta);
 
           // 2. ABSOLUTER ÜBERHITZUNGSSCHUTZ (Greift in jedem Modus!)
-          // Vergleicht nun mit dem variablen Wert aus HA
-          bool is_overheated = (t_speicher >= t_max);
+          // Vergleicht mit dem variablen Wert aus HA inkl. 3°C Hysterese
+          // Pumpe schaltet ab bei >= t_max und schaltet erst wieder frei, wenn < (t_max - 3.0)
+          bool is_overheated = id(ueberhitzungsschutz_aktiv).state;
+          if (t_speicher >= t_max) {
+            is_overheated = true;
+          } else if (t_speicher < (t_max - 3.0)) {
+            is_overheated = false;
+          }
           id(ueberhitzungsschutz_aktiv).publish_state(is_overheated);
           
           if (is_overheated) {
