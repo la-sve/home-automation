@@ -39,6 +39,19 @@ globals:
     type: float
     initial_value: '0.0'
 
+binary_sensor:
+  - platform: template
+    name: "Solarthermie Sensorfehler"
+    id: sensor_fehler
+    device_class: problem
+    icon: "mdi:alert"
+
+  - platform: template
+    name: "Solarthermie Überhitzungsschutz"
+    id: ueberhitzungsschutz_aktiv
+    device_class: heat
+    icon: "mdi:fire-alert"
+
 switch:
   - platform: gpio
     pin: 2
@@ -82,10 +95,10 @@ number:
     id: max_speicher_temp
     icon: "mdi:thermometer-high"
     min_value: 40
-    max_value: 90
+    max_value: 80
     step: 1
     unit_of_measurement: "°C"
-    initial_value: 80
+    initial_value: 70
     optimistic: true
     mode: slider
   # Virtueller Slider für Home Assistant im manuellen Modus
@@ -114,10 +127,11 @@ output:
   - platform: ledc       # Muss echtes PWM-Signal sein. 0-10V analog geht nicht.
     pin: 13              # Pin von Temperatursensor, da einziger freier GPIO
     id: pwm_solarpumpe
-    frequency: 1000 Hz
+    frequency: 150 Hz
+    inverted: true
     
 sensor:
-  # Rückmeldung der aktuell einstestellten Pumpenleistung an HA
+  # Rückmeldung der aktuell eingestellten Pumpenleistung an HA
   - platform: template
     name: "Aktuelle Pumpenleistung"
     id: actual_pump_speed
@@ -204,6 +218,15 @@ sensor:
       - 5000.0Ohm -> 40.0°C
       - 600.0Ohm -> 100.0°C
 
+  # Temperaturdifferenz zwischen Kollektor und Speicher
+  - platform: template
+    name: "Kollektor-Speicher Differenz"
+    id: temp_difference
+    unit_of_measurement: "K"
+    accuracy_decimals: 1
+    icon: "mdi:thermometer-water"
+
+
 # --- AUTARKE REGELUNG & INTERVALLPRÜFUNG (V3) ---
 interval:
   - interval: 10s
@@ -214,16 +237,28 @@ interval:
           float t_max = id(max_speicher_temp).state;
           
           // 1. FEHLER-CHECK
-          if (isnan(t_koll) || isnan(t_speicher) || isnan(t_max)) {
+          bool has_error = isnan(t_koll) || isnan(t_speicher) || isnan(t_max);
+          id(sensor_fehler).publish_state(has_error);
+          
+          if (has_error) {
             id(pwm_solarpumpe).set_level(0.0);
             id(current_pwm_val) = 0.0;
             id(relais_solarpumpe).turn_off();
+            id(ueberhitzungsschutz_aktiv).publish_state(false);
+            id(temp_difference).publish_state(NAN);
             return;
           }
 
+          // Differenz berechnen und an Home Assistant senden (Synchron mit Intervall)
+          float delta = t_koll - t_speicher;
+          id(temp_difference).publish_state(delta);
+
           // 2. ABSOLUTER ÜBERHITZUNGSSCHUTZ (Greift in jedem Modus!)
           // Vergleicht nun mit dem variablen Wert aus HA
-          if (t_speicher >= t_max) {
+          bool is_overheated = (t_speicher >= t_max);
+          id(ueberhitzungsschutz_aktiv).publish_state(is_overheated);
+          
+          if (is_overheated) {
             id(pwm_solarpumpe).set_level(0.0);
             id(current_pwm_val) = 0.0;
             id(relais_solarpumpe).turn_off();
@@ -232,7 +267,6 @@ interval:
 
           // 3. AUTOMATIK-MODUS
           if (!id(wartungsmodus)) {
-            float delta = t_koll - t_speicher;
 
             if (delta >= 8.0) {
               id(relais_solarpumpe).turn_on();
