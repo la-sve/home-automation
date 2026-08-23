@@ -1,30 +1,34 @@
-# Board: Generic ESP32-S3 Board (Generic)
-# Definition: definitions/boards/generic-esp32s3/manifest.yaml
+# Board: Waveshare ESP32-S3-ETH Development Board
+# Project: Lüftungssteuerung (Kermi x-well N300 Retrofit)
 
 esphome:
   name: lueftungssteuerung
   friendly_name: Lueftungssteuerung
+  on_boot:
+    priority: 80.0
+    then:
+      - select.set:
+          id: operating_mode
+          option: "Aus"
+      - script.execute: update_fan_control
 
 esp32:
   variant: esp32s3
   framework:
     type: esp-idf
-  # Optional, aber empfohlen für das Waveshare-Board:
   flash_size: 16MB
-  
+
 logger:
 
 api:
   encryption:
     key: "EQBYhOe8RHU3qmvrNApd8GsjOfW3i947BhcapJ3he8Q="
 
-# OTA (Over-The-Air Updates)
 ota:
   - platform: esphome
 
-    
 # ==========================================
-# 1. PHASE: WLAN (Aktuell aktiv)
+# Netzanbindung: WLAN (Standard) / LAN (W5500)
 # ==========================================
 wifi:
   ssid: !secret wifi_ssid
@@ -35,12 +39,7 @@ wifi:
 
 captive_portal:
 
-# ==========================================
-# 2. PHASE: ETHERNET / LAN (Für später)
-# ==========================================
-# Um auf LAN zu wechseln, kommentiere den obigen 'wifi:'- 
-# und 'captive_portal:'-Block aus und aktiviere diesen Block:
-#
+# Um auf LAN zu wechseln, wifi/captive_portal auskommentieren und folgendes aktivieren:
 # ethernet:
 #   type: W5500
 #   clk_pin: GPIO13
@@ -48,3 +47,308 @@ captive_portal:
 #   miso_pin: GPIO12
 #   cs_pin: GPIO14
 
+# ==========================================
+# 1. BUSSYSTEME (I2C & 1-WIRE)
+# ==========================================
+i2c:
+  - id: i2c_dac
+    scl: GPIO33
+    sda: GPIO34
+    frequency: 100kHz
+    scan: true
+
+  - id: i2c_sensors
+    scl: GPIO16
+    sda: GPIO18
+    scan: true
+
+one_wire:
+  - platform: gpio
+    pin: GPIO35
+    id: bus_t1
+  - platform: gpio
+    pin: GPIO36
+    id: bus_t2
+  - platform: gpio
+    pin: GPIO37
+    id: bus_t3
+  - platform: gpio
+    pin: GPIO38
+    id: bus_t4
+
+# ==========================================
+# 2. HARDWARE OUTPUTS & DAC (GP8403)
+# ==========================================
+gp8403:
+  - id: dac_hub
+    i2c_id: i2c_dac
+    address: 0x58
+    voltage: 10V
+
+output:
+  - platform: gp8403
+    gp8403_id: dac_hub
+    channel: 0
+    id: dac_abluft
+
+  - platform: gp8403
+    gp8403_id: dac_hub
+    channel: 1
+    id: dac_zuluft
+
+# ==========================================
+# 3. RELAIS (GEGENSEITIG VERRIEGELT & SCHÜTZ)
+# ==========================================
+switch:
+  - platform: gpio
+    pin: GPIO39
+    id: relay_bypass_open
+    name: "Relais Bypass Öffnen (R1)"
+    interlock: [relay_bypass_close]
+    interlock_wait_time: 500ms
+    icon: "mdi:valve-open"
+    restore_mode: ALWAYS_OFF
+    inverted: true
+
+  - platform: gpio
+    pin: GPIO40
+    id: relay_bypass_close
+    name: "Relais Bypass Schließen (R2)"
+    interlock: [relay_bypass_open]
+    interlock_wait_time: 500ms
+    icon: "mdi:valve-closed"
+    restore_mode: ALWAYS_OFF
+    inverted: true
+
+  - platform: gpio
+    pin: GPIO41
+    id: relay_fan_power
+    name: "Relais Ventilatoren Schütz (R3)"
+    icon: "mdi:power"
+    restore_mode: ALWAYS_OFF
+    inverted: true
+
+# ==========================================
+# 4. BYPASS KLAPPENSTEUERUNG (BELIMO CM230-F-L)
+# ==========================================
+cover:
+  - platform: time_based
+    name: "Bypass-Klappe"
+    id: bypass_cover
+    open_action:
+      - switch.turn_off: relay_bypass_close
+      - switch.turn_on: relay_bypass_open
+    open_duration: 75s
+    close_action:
+      - switch.turn_off: relay_bypass_open
+      - switch.turn_on: relay_bypass_close
+    close_duration: 75s
+    stop_action:
+      - switch.turn_off: relay_bypass_open
+      - switch.turn_off: relay_bypass_close
+
+# ==========================================
+# 5. SENSOREN (TEMPERATUR, TACHO & FEUCHTE)
+# ==========================================
+sensor:
+  # Dallas DS18B20 Temperatursensoren via 1-Wire
+  - platform: dallas_temp
+    one_wire_id: bus_t1
+    name: "Temperatur Aussenluft (T1)"
+    id: temp_t1_aussenluft
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+      - filter_out: nan
+
+  - platform: dallas_temp
+    one_wire_id: bus_t2
+    name: "Temperatur Zuluft (T2)"
+    id: temp_t2_zuluft
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+      - filter_out: nan
+
+  - platform: dallas_temp
+    one_wire_id: bus_t3
+    name: "Temperatur Abluft (T3)"
+    id: temp_t3_abluft
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+      - filter_out: nan
+
+  - platform: dallas_temp
+    one_wire_id: bus_t4
+    name: "Temperatur Fortluft (T4)"
+    id: temp_t4_fortluft
+    filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 1
+      - filter_out: nan
+
+  # Tacho-Signale Lüfter (Pulse Counter)
+  - platform: pulse_counter
+    pin:
+      number: GPIO47
+      mode:
+        input: true
+        pullup: true
+    name: "Drehzahl Zuluft"
+    id: rpm_zuluft
+    unit_of_measurement: "RPM"
+    icon: "mdi:fan"
+    update_interval: 3s
+    filters:
+      - multiply: 60
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+
+  - platform: pulse_counter
+    pin:
+      number: GPIO48
+      mode:
+        input: true
+        pullup: true
+    name: "Drehzahl Abluft"
+    id: rpm_abluft
+    unit_of_measurement: "RPM"
+    icon: "mdi:fan"
+    update_interval: 3s
+    filters:
+      - multiply: 60
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+
+  # Feuchte- und Temperatursensor HTU21D (I2C)
+  - platform: htu21d
+    i2c_id: i2c_sensors
+    temperature:
+      name: "Feuchtesensor Temperatur"
+      id: htu21d_temp
+    humidity:
+      name: "Luftfeuchtigkeit Abluft"
+      id: htu21d_humidity
+    update_interval: 10s
+
+# ==========================================
+# 6. EINSTELLUNGEN & BETRIEBSMODI
+# ==========================================
+number:
+  - platform: template
+    name: "Lüftergeschwindigkeit Vorgabe (Automatik)"
+    id: fan_speed_setpoint
+    min_value: 20
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    icon: "mdi:fan-speed-1"
+    initial_value: 30
+    optimistic: true
+    set_action:
+      then:
+        - script.execute: update_fan_control
+
+  - platform: template
+    name: "Lüftergeschwindigkeit Zuluft (Wartung)"
+    id: fan_speed_zuluft
+    min_value: 20
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    icon: "mdi:fan-plus"
+    initial_value: 30
+    optimistic: true
+    set_action:
+      then:
+        - script.execute: update_fan_control
+
+  - platform: template
+    name: "Lüftergeschwindigkeit Abluft (Wartung)"
+    id: fan_speed_abluft
+    min_value: 20
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    icon: "mdi:fan-minus"
+    initial_value: 30
+    optimistic: true
+    set_action:
+      then:
+        - script.execute: update_fan_control
+
+select:
+  - platform: template
+    name: "Betriebsmodus"
+    id: operating_mode
+    options:
+      - "Aus"
+      - "Automatik"
+      - "Wartungsmodus"
+    initial_option: "Aus"
+    optimistic: true
+    set_action:
+      then:
+        - script.execute: update_fan_control
+
+# ==========================================
+# 7. REGELUNGS- LOGIK & AUTOMATION
+# ==========================================
+script:
+  - id: update_fan_control
+    mode: restart
+    then:
+      - lambda: |-
+          std::string mode = id(operating_mode).state;
+          
+          if (mode == "Aus") {
+            // Modus Aus: Schütz abfallen lassen, DACs auf 0V
+            id(relay_fan_power).turn_off();
+            id(dac_zuluft).set_level(0.0f);
+            id(dac_abluft).set_level(0.0f);
+            ESP_LOGI("control", "Modus AUS: Ventilatoren ausgeschaltet.");
+          } 
+          else if (mode == "Automatik") {
+            // Modus Automatik: Schütz einschalten, DACs gemäß gemeinsamem Schieberegler (20-100%) ansteuern
+            float speed_pct = id(fan_speed_setpoint).state;
+            if (speed_pct < 20.0f) speed_pct = 20.0f;
+            if (speed_pct > 100.0f) speed_pct = 100.0f;
+            
+            float level = speed_pct / 100.0f; // 0.20 bis 1.00 entsprechend 2.0V bis 10.0V
+            
+            id(relay_fan_power).turn_on();
+            id(dac_zuluft).set_level(level);
+            id(dac_abluft).set_level(level);
+            
+            // Synchronisiere Einzelschieberegler zur Anzeige
+            id(fan_speed_zuluft).publish_state(speed_pct);
+            id(fan_speed_abluft).publish_state(speed_pct);
+            
+            ESP_LOGI("control", "Modus AUTOMATIK: Ventilatoren auf %.0f%% (%.2f V).", speed_pct, level * 10.0f);
+          } 
+          else if (mode == "Wartungsmodus") {
+            // Modus Wartungsmodus: Zuluft und Abluft separat über Schieberegler (20-100%) steuerbar
+            float speed_zu = id(fan_speed_zuluft).state;
+            if (speed_zu < 20.0f) speed_zu = 20.0f;
+            if (speed_zu > 100.0f) speed_zu = 100.0f;
+            
+            float speed_ab = id(fan_speed_abluft).state;
+            if (speed_ab < 20.0f) speed_ab = 20.0f;
+            if (speed_ab > 100.0f) speed_ab = 100.0f;
+            
+            float level_zu = speed_zu / 100.0f;
+            float level_ab = speed_ab / 100.0f;
+            
+            id(dac_zuluft).set_level(level_zu);
+            id(dac_abluft).set_level(level_ab);
+            
+            ESP_LOGI("control", "Modus WARTUNGSMODUS: Zuluft %.0f%% (%.2f V), Abluft %.0f%% (%.2f V).", 
+                     speed_zu, level_zu * 10.0f, speed_ab, level_ab * 10.0f);
+          }

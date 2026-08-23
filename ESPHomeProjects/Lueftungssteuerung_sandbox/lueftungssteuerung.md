@@ -106,6 +106,7 @@ Die Steuerung soll folgende Funktionsmodi unterstützen:
 - Aus
 - Wartungsmodus
 - Automatik Modus
+- Weitere Modi TODO
 
 ### Wartungsmodus
 Der Nutzer kann sämtliche Aktoren direkt über Home Assistant ansteuern.
