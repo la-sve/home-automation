@@ -56,8 +56,45 @@
                 {
                   "entity": "sensor.vscotho1_200_aussentemperatur",
                   "name": "Außentemperatur ViCare"
+                },
+                {
+                  "entity": "sensor.temp_terrasse_temperature"
+                },
+                {
+                  "entity": "sensor.temp_terrasse_humidity"
+                },
+                {
+                  "entity": "sensor.temp_garage_temperature"
+                },
+                {
+                  "entity": "sensor.temp_garage_humidity"
+                },
+                {
+                  "entity": "sensor.vscotho1_200_ww_speichertemperatur"
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.bewaesserungsventil",
+                  "name": "Hochbeet-Links"
+                },
+                {
+                  "entity": "script.bewaesserung1_test"
+                },
+                {
+                  "entity": "switch.bewaesserungsventil2",
+                  "name": "Hochbeet-Rechts"
+                },
+                {
+                  "entity": "script.bewaesserung_hochbeet_rechts_1min"
+                }
+              ],
+              "title": "Bewässerung",
+              "show_header_toggle": false,
+              "state_color": true
             }
           ]
         },
@@ -78,19 +115,16 @@
                   "entity": "switch.nilan_pause"
                 },
                 {
-                  "entity": "sensor.nilan_humidity"
+                  "entity": "sensor.lueftungssteuerung_luftfeuchtigkeit_abluft",
+                  "name": "Luftfeuchtigkeit"
                 },
                 {
-                  "entity": "sensor.nilan_co2_sensor"
+                  "entity": "sensor.lueftungssteuerung_drehzahl_zuluft",
+                  "name": "Zuluftventilator"
                 },
                 {
-                  "entity": "sensor.nilan_sollleistung"
-                },
-                {
-                  "entity": "sensor.nilan_leistung_in"
-                },
-                {
-                  "entity": "sensor.nilan_leistung_out"
+                  "entity": "sensor.lueftungssteuerung_drehzahl_abluft",
+                  "name": "Abluftventilator"
                 }
               ],
               "title": "Lüftung"
@@ -99,16 +133,20 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "sensor.nilan_aussentemperatur"
+                  "entity": "sensor.lueftungssteuerung_temperatur_aussenluft_t1",
+                  "name": "Außentemperatur (T1)"
                 },
                 {
-                  "entity": "sensor.nilan_innentemperatur"
+                  "entity": "sensor.lueftungssteuerung_temperatur_zuluft_t2",
+                  "name": "Zuluft (In Raum T2)"
                 },
                 {
-                  "entity": "sensor.nilan_abluftfuehler_raumtemperatur"
+                  "entity": "sensor.lueftungssteuerung_temperatur_abluft_t3",
+                  "name": "Abluft (Aus Raum T3)"
                 },
                 {
-                  "entity": "sensor.nilan_fortluftfuehler_nach_waermetauscher"
+                  "entity": "sensor.lueftungssteuerung_temperatur_fortluft_t4",
+                  "name": "Fortluft (Nach draußen T4)"
                 },
                 {
                   "entity": "sensor.nilan_bypass_state"
@@ -117,16 +155,12 @@
               "title": "Lüftung Temperaturen"
             },
             {
-              "type": "gauge",
-              "entity": "sensor.nilan_sollleistung",
-              "max": 100,
-              "min": 20,
-              "needle": false
-            },
-            {
               "type": "entities",
               "entities": [
-                "input_number.nilan_sollleistung_einstellen"
+                {
+                  "entity": "number.lueftungssteuerung_luftergeschwindigkeit_vorgabe_automatik",
+                  "name": "Leistung"
+                }
               ]
             }
           ]
@@ -142,7 +176,7 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "switch.29_b20837000000_pio_7"
+                  "entity": "switch.solarthermie_zirkulationspumpe_230v"
                 },
                 {
                   "entity": "sensor.vscotho1_200_aussentemperatur",
@@ -165,12 +199,8 @@
                   "name": "Solarenergie-Erzeugung Heute"
                 },
                 {
-                  "entity": "sensor.vicare_heating_gas_consumption_this_week",
-                  "name": "Heizung-Gasverbrauch diese Woche"
-                },
-                {
-                  "entity": "sensor.vicare_power_consumption_this_week",
-                  "name": "Stromverbrauch diese Woche"
+                  "entity": "binary_sensor.vscotho1_200_solarpumpe",
+                  "name": "Solar Pumpe "
                 }
               ]
             },
@@ -190,169 +220,186 @@
             {
               "type": "entities",
               "entities": [
-                {
-                  "entity": "sensor.vicare_outside_temperature_2",
-                  "name": "Außentemperatur"
-                },
-                {
-                  "entity": "binary_sensor.vicare_burner_active",
-                  "name": "Brenner"
-                },
-                {
-                  "entity": "sensor.vicare_burner_modulation",
-                  "name": "Brennermodulation"
-                },
-                {
-                  "entity": "sensor.vicare_energy_consumption_this_month",
-                  "name": "Energie"
-                },
-                {
-                  "entity": "binary_sensor.vicare_frost_protection_active",
-                  "name": "Frostschutz"
-                },
-                {
-                  "entity": "binary_sensor.vicare_circulation_pump_active_2",
-                  "name": "Heizkreisumwälzpumpe"
-                },
-                {
-                  "entity": "sensor.vicare_heating_gas_consumption_this_week",
-                  "name": "Heizung-Gasverbrauch diese Woche"
-                },
-                {
-                  "entity": "sensor.vicare_heating_gas_consumption_this_month",
-                  "name": "Heizung-Gasverbrauch diesen Monat"
-                },
-                {
-                  "entity": "sensor.vicare_heating_gas_consumption_this_year",
-                  "name": "Heizung-Gasverbrauch dieses Jahr"
-                },
-                {
-                  "entity": "sensor.vicare_heating_gas_consumption_today",
-                  "name": "Heizung-Gasverbrauch heute"
-                },
-                {
-                  "entity": "sensor.vicare_boiler_temperature",
-                  "name": "Kesseltemperatur"
-                },
-                {
-                  "entity": "sensor.vicare_solar_energy_production_this_week",
-                  "name": "Solarenergie-Erzeugung diese Woche"
-                },
-                {
-                  "entity": "sensor.vicare_solar_energy_production_this_month",
-                  "name": "Solarenergie-Erzeugung diesen Monat"
-                },
-                {
-                  "entity": "sensor.vicare_solar_energy_production_this_year",
-                  "name": "Solarenergie-Erzeugung dieses Jahr"
-                },
-                {
-                  "entity": "sensor.vicare_solar_energy_production_today",
-                  "name": "Solarenergie-Erzeugung heute"
-                },
-                {
-                  "entity": "sensor.vicare_solar_collector_temperature",
-                  "name": "Solarkollektor-Temperatur"
-                },
-                {
-                  "entity": "binary_sensor.vicare_solar_pump_active",
-                  "name": "Solarpumpe"
-                },
-                {
-                  "entity": "sensor.vicare_solar_storage_temperature",
-                  "name": "Solarspeicher-Temperatur"
-                },
-                {
-                  "entity": "sensor.vicare_power_consumption_this_week",
-                  "name": "Stromverbrauch diese Woche"
-                },
-                {
-                  "entity": "sensor.vicare_energy_consumption_this_year",
-                  "name": "Stromverbrauch dieses Jahr"
-                },
-                {
-                  "entity": "sensor.vicare_energy_consumption_today",
-                  "name": "Stromverbrauch heute"
-                },
-                {
-                  "entity": "sensor.vicare_supply_temperature_2",
-                  "name": "Vorlauftemperatur"
-                },
-                {
-                  "entity": "binary_sensor.vicare_dhw_charging_active",
-                  "name": "WW-Aufladung"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_gas_consumption_this_week",
-                  "name": "WW-Gasverbrauch diese Woche"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_gas_consumption_this_month",
-                  "name": "WW-Gasverbrauch diesen Monat"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_gas_consumption_this_year",
-                  "name": "WW-Gasverbrauch dieses Jahr"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_gas_consumption_today",
-                  "name": "WW-Gasverbrauch heute"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_max_temperature",
-                  "name": "WW-Höchsttemperatur"
-                },
-                {
-                  "entity": "sensor.vicare_hot_water_min_temperature",
-                  "name": "WW-Mindesttemperatur"
-                },
-                {
-                  "entity": "binary_sensor.vicare_dhw_pump_active",
-                  "name": "WW-Pumpe"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_ww_speichertemperatur",
-                  "name": "WW-Speichertemperatur"
-                },
-                {
-                  "entity": "binary_sensor.vicare_dhw_circulation_pump_active",
-                  "name": "WW-Zirkulationspumpe"
-                }
-              ],
-              "title": "VScotHO1_200"
+                "sensor.temp_heizung_temperature",
+                "binary_sensor.vscotho1_200_heizkreisumwalzpumpe"
+              ]
             },
             {
+              "title": "Verlauf",
+              "type": "history-graph",
+              "hours_to_show": 3,
+              "entities": [
+                "binary_sensor.vscotho1_200_heizkreisumwalzpumpe",
+                "sensor.temp_heizung_temperature",
+                "sensor.vscotho1_200_kesseltemperatur",
+                "sensor.vscotho1_200_ww_speichertemperatur",
+                "binary_sensor.vscotho1_200_ww_pumpe"
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Handtuchheizung OG",
+              "entities": [
+                {
+                  "entity": "input_boolean.og_bad_handtuch_manueller_modus",
+                  "name": "Manueller Modus (FBH sperren)"
+                },
+                {
+                  "entity": "switch.29_b90437000000_pio_7",
+                  "name": "Zusatzheizung (Heizstab)"
+                },
+                {
+                  "entity": "timer.og_bad_handtuch_heizstab_timer",
+                  "name": "Restzeit Heizstab"
+                },
+                {
+                  "entity": "timer.og_bad_handtuch_abkuehl_timer",
+                  "name": "Restzeit Abkühlung"
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "entity": "switch.29_b90437000000_pio_6",
+                  "name": "FBH-Ventil Status"
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "entity": "sensor.og_bad_handtuch_heizstab_energie"
+                }
+              ],
+              "show_header_toggle": false
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Solar",
+          "path": "solar",
+          "icon": "mdi:weather-sunny",
+          "sections": [
+            {
               "type": "grid",
-              "square": false,
-              "columns": 1,
               "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Info / Einstellungen",
+                  "heading_style": "title"
+                },
                 {
                   "type": "entities",
                   "entities": [
                     {
-                      "entity": "water_heater.vicare_water",
-                      "name": "Warmwasser"
+                      "entity": "switch.solar_regler_power"
+                    },
+                    {
+                      "entity": "number.solarthermie_maximaltemperatur_speicher"
+                    },
+                    {
+                      "entity": "number.solarthermie_maximale_pwm_leistung"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_kollektor_temperatur"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_speicher_temperatur"
+                    },
+                    {
+                      "entity": "sensor.temp_heizung_temperature"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_aktuelle_pumpenleistung"
                     }
-                  ],
-                  "title": "VScotHO1_200"
+                  ]
                 },
                 {
-                  "type": "thermostat",
-                  "entity": "climate.vscotho1_200_heizung",
-                  "features": [
+                  "title": "Verlauf",
+                  "type": "history-graph",
+                  "hours_to_show": 43,
+                  "entities": [
                     {
-                      "type": "climate-hvac-modes",
-                      "hvac_modes": [
-                        "off",
-                        "auto",
-                        "heat"
-                      ]
+                      "entity": "sensor.solarthermie_kollektor_speicher_differenz"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_aktuelle_pumpenleistung"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_kollektor_temperatur"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_speicher_temperatur"
+                    },
+                    {
+                      "entity": "switch.solarthermie_solarpumpe_230v"
+                    },
+                    {
+                      "entity": "switch.solarthermie_solarregelung_wartungsmodus"
                     }
                   ]
                 }
               ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Zusatzheizung / Debug",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "switch.solarthermie_warmwasser_heizstab_1kw"
+                    },
+                    {
+                      "entity": "switch.solarthermie_warmwasser_heizstab_2kw"
+                    },
+                    {
+                      "entity": "sensor.solar_regler_power_energy"
+                    },
+                    {
+                      "entity": "sensor.solar_regler_power_power"
+                    },
+                    {
+                      "entity": "sensor.ww_heizstab_2kw_leistung"
+                    },
+                    {
+                      "entity": "sensor.ww_heizstab_2kw_energie"
+                    }
+                  ]
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "switch.solarthermie_solarpumpe_230v"
+                    },
+                    {
+                      "entity": "switch.solarthermie_solarregelung_wartungsmodus"
+                    },
+                    {
+                      "entity": "number.solarthermie_manuelle_pumpenleistung"
+                    },
+                    {
+                      "entity": "binary_sensor.solarthermie_solarthermie_uberhitzungsschutz"
+                    }
+                  ]
+                },
+                {
+                  "type": "thermostat",
+                  "entity": "climate.warmwasser_heizstab_2kw",
+                  "name": "Warmwasser Zusatzheizung ",
+                  "show_current_as_primary": false
+                }
+              ]
             }
-          ]
+          ],
+          "cards": []
         },
         {
           "theme": "Backend-selected",
@@ -681,6 +728,21 @@
                   "entity": "switch.tasmota_3"
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.steckdose_outdoor_l2",
+                  "name": "Außen Weihnachtsstern"
+                },
+                {
+                  "entity": "light.0x00158d000211e433"
+                }
+              ],
+              "title": "Zigbee",
+              "show_header_toggle": false,
+              "state_color": true
             }
           ]
         },
@@ -866,6 +928,35 @@
           ]
         },
         {
+          "type": "sections",
+          "max_columns": 4,
+          "icon": "mdi:fireplace",
+          "path": "sauna",
+          "title": "Sauna",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Neuer Abschnitt"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.temp_sauna_temperature"
+                    },
+                    {
+                      "entity": "light.gallerie_ambient"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "title": "Flask-test",
           "path": "flask-test",
           "visible": [
@@ -957,6 +1048,23 @@
                 }
               ],
               "title": "Sonos Steuerung"
+            },
+            {
+              "title": "Verlauf",
+              "type": "history-graph",
+              "hours_to_show": 3617,
+              "entities": [
+                "sensor.temp_heizung_temperature",
+                "sensor.vscotho1_200_aussentemperatur",
+                "sensor.temp_terrasse_temperature",
+                "sensor.vscotho1_200_vorlauftemperatur",
+                "sensor.vscotho1_200_ww_speichertemperatur",
+                "sensor.vscotho1_200_solarspeicher_temperatur",
+                "sensor.vscotho1_200_kesseltemperatur",
+                "sensor.vscotho1_200_solarkollektor_temperatur",
+                "sensor.vscotho1_200_heizung_gasverbrauch_heute",
+                "sensor.vscotho1_200_ww_gasverbrauch_heute"
+              ]
             }
           ]
         }

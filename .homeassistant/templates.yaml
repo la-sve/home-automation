@@ -27,3 +27,47 @@
           0
         {% endif %}
       availability: "{{ states('sensor.victron_batteriestrom_bms' )|is_number and states('sensor.victron_batteriespannung')|is_number }}"
+# ------------------------------------------------------------------------------
+# HANDTUCHHEIZKOERPER OG (Schutzschalter vor dem FBH-Ventil)
+# ------------------------------------------------------------------------------
+# Das FBH-Ventil (pio_6) darf NUR einschalten, wenn:
+# - der manuelle Modus AUS ist,
+# - der Abkühl-Timer NICHT läuft (idle ist) UND
+# - der Heizstab AUS ist.
+- switch:
+    - name: "OG Bad Handtuch FBH-Ventil Proxy"
+      unique_id: og_bad_handtuch_fbh_ventil_proxy
+      state: "{{ is_state('switch.29_b90437000000_pio_6', 'on') }}"
+      turn_on:
+        - condition: and
+          conditions:
+            - condition: state
+              entity_id: input_boolean.og_bad_handtuch_manueller_modus
+              state: "off"
+            - condition: state
+              entity_id: timer.og_bad_handtuch_abkuehl_timer
+              state: "idle"
+            - condition: state
+              entity_id: switch.29_b90437000000_pio_7
+              state: "off"
+        - action: switch.turn_on
+          target:
+            entity_id: switch.29_b90437000000_pio_6
+      turn_off:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.29_b90437000000_pio_6
+# HANDTUCHHEIZKOERPER OG Virtueller Leistungssensor (Momentanleistung in Watt)
+- sensor:
+    - name: "OG Bad Handtuch Heizstab Leistung"
+      unique_id: og_bad_handtuch_heizstab_leistung
+      icon: mdi:flash
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: >
+        {% if is_state('switch.29_b90437000000_pio_7', 'on') %}
+          600
+        {% else %}
+          0
+        {% endif %}

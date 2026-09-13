@@ -21,32 +21,43 @@
 - id: 8e4cb118af1e4c88888214b942448e72
   alias: NachtlichterEIN
   description: ''
-  trigger:
-  - platform: sun
-    event: sunset
-  action:
-  - service: homeassistant.turn_on
-    data: {}
+  triggers:
+  - event: sunset
+    trigger: sun
+  actions:
+  - data: {}
     target:
       entity_id:
       - group.nachtlichter
+    action: homeassistant.turn_on
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 6
+    target:
+      entity_id: light.0x00158d000211e433
   mode: single
 - id: f8ad11e14c304d71add86c68d1baaf07
   alias: NachtlichterAUS (zeitig)
   description: ''
-  trigger:
-  - platform: time
-    at: input_datetime.schlafenszeit_zeitig
-  condition:
+  triggers:
+  - at: input_datetime.schlafenszeit_zeitig
+    trigger: time
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag_morgen
     state: 'on'
-  action:
-  - service: homeassistant.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id:
       - group.nachtlichter
+    action: homeassistant.turn_off
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.0x00158d000211e433
   mode: single
 - id: '1634413193653'
   alias: ZirkulationspumpeEIN
@@ -94,6 +105,7 @@
       - group.weihnachtenog
       - switch.29_ad0837000000_pio_4
       - switch.29_ad0837000000_pio_5
+      - switch.29_ad0837000000_pio_6
     data: {}
     action: homeassistant.turn_on
   mode: single
@@ -117,44 +129,46 @@
 - id: '1637703122100'
   alias: Weihnachtsbeleuchtung OG AUS (spät)
   description: ''
-  trigger:
-  - platform: time
-    at: '9:00'
-  - platform: time
-    at: input_datetime.schlafenszeit_spat
-  condition:
+  triggers:
+  - at: '9:00'
+    trigger: time
+  - at: input_datetime.schlafenszeit_spat
+    trigger: time
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag_morgen
     state: 'off'
-  action:
-  - service: homeassistant.turn_off
-    target:
+  actions:
+  - target:
       entity_id:
       - group.weihnachtenog
       - switch.29_ad0837000000_pio_4
+      - switch.29_ad0837000000_pio_6
     data: {}
+    action: homeassistant.turn_off
   mode: single
 - id: '1637785069143'
   alias: Weihnachtsbeleuchtung EG und OG EIN (Wochenende)
   description: ''
-  trigger:
-  - platform: time
-    at: 08:30
-  - platform: sun
-    event: sunset
+  triggers:
+  - at: 08:30
+    trigger: time
+  - event: sunset
     offset: -00:45:00
-  condition:
+    trigger: sun
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag
     state: 'off'
-  action:
-  - service: homeassistant.turn_on
-    target:
+  actions:
+  - target:
       entity_id:
       - group.weihnachteg
       - group.weihnachtenog
       - switch.29_ad0837000000_pio_4
+      - switch.29_ad0837000000_pio_6
     data: {}
+    action: homeassistant.turn_on
   mode: single
 - id: '1638738277247'
   alias: Heizung Schlafzimmer AUS
@@ -208,40 +222,46 @@
 - id: '1642627506827'
   alias: NachtlichterAUS (spät)
   description: ''
-  trigger:
-  - platform: time
-    at: input_datetime.schlafenszeit_spat
-  condition:
+  triggers:
+  - at: input_datetime.schlafenszeit_spat
+    trigger: time
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag_morgen
     state: 'off'
-  action:
-  - service: homeassistant.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id:
       - group.nachtlichter
+    action: homeassistant.turn_off
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.0x00158d000211e433
   mode: single
 - id: '1669840980505'
   alias: Weihnachtsbeleuchtung OG AUS (zeitig)
   description: ''
-  trigger:
-  - platform: time
-    at: 09:00
-  - platform: time
-    at: input_datetime.schlafenszeit_zeitig
-  condition:
+  triggers:
+  - at: 09:00
+    trigger: time
+  - at: input_datetime.schlafenszeit_zeitig
+    trigger: time
+  conditions:
   - condition: state
     entity_id: binary_sensor.arbeitstag_morgen
     state: 'on'
-  action:
-  - service: homeassistant.turn_off
-    target:
+  actions:
+  - target:
       entity_id:
       - group.weihnachtenog
       - switch.29_ad0837000000_pio_4
       - switch.29_ad0837000000_pio_5
+      - switch.29_ad0837000000_pio_6
     data: {}
+    action: homeassistant.turn_off
   mode: single
 - id: '1671373670162'
   alias: Lüftungseinstellung (Leistung)
@@ -291,67 +311,75 @@
 - id: '1681031981995'
   alias: Abwesenheit Rollos Down
   description: ''
-  trigger:
-  - platform: time
-    at: '19:45:00'
-  condition: []
-  action:
-  - service: script.rollos_eg_down
-    data: {}
+  triggers:
+  - at: '20:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - data: {}
+    action: script.rollos_eg_down
   - delay:
       hours: 0
       minutes: 1
       seconds: 0
       milliseconds: 0
-  - service: script.rollos_og_down
-    data: {}
+  - data: {}
+    action: script.rollos_og_down
   mode: single
 - id: '1681032086984'
   alias: Abwesenheit Rollos UP
   description: ''
-  trigger:
-  - platform: time
-    at: 08:00:00
-  condition: []
-  action:
-  - service: script.rollos_eg_up
-    data: {}
+  triggers:
+  - at: 07:30:00
+    trigger: time
+  conditions: []
+  actions:
+  - data: {}
+    action: script.rollos_eg_up
   - delay:
       hours: 0
       minutes: 1
       seconds: 0
       milliseconds: 0
-  - service: script.rollos_og_up
-    data: {}
+  - data: {}
+    action: script.rollos_og_up
   mode: single
 - id: '1701879294351'
   alias: Außenlichterbogen (EIN)
   description: ''
-  trigger:
-  - platform: time
-    at: 06:00:00
-  - platform: time
-    at: '17:30:00'
-  condition: []
-  action:
+  triggers:
+  - at: 06:00:00
+    trigger: time
+  - at: '17:30:00'
+    trigger: time
+  conditions: []
+  actions:
   - type: turn_on
     device_id: ed04aadb13be7447f67fcd0498b5839e
     entity_id: switch.tasmota_3
+    domain: switch
+  - type: turn_on
+    device_id: 695abced3b18e77a17fd1832cc665492
+    entity_id: d3a2b7553589397e4536d1afccb8818b
     domain: switch
   mode: single
 - id: '1701879362373'
   alias: Außenlichterbogen (AUS)
   description: ''
-  trigger:
-  - platform: time
-    at: 08:00:00
-  - platform: time
-    at: '23:00:00'
-  condition: []
-  action:
+  triggers:
+  - at: 08:00:00
+    trigger: time
+  - at: '23:00:00'
+    trigger: time
+  conditions: []
+  actions:
   - type: turn_off
     device_id: ed04aadb13be7447f67fcd0498b5839e
     entity_id: switch.tasmota_3
+    domain: switch
+  - type: turn_off
+    device_id: 695abced3b18e77a17fd1832cc665492
+    entity_id: d3a2b7553589397e4536d1afccb8818b
     domain: switch
   mode: single
 - id: '1707065038425'
@@ -385,3 +413,164 @@
     target:
       entity_id: switch.29_ad0837000000_pio_5
   mode: single
+- id: '1784226968273'
+  alias: Automatische Bewässerung
+  description: ''
+  triggers:
+  - trigger: time
+    at: '10:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - trigger: time
+    at: '18:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - action: script.bewaesserung_hochbeet_rechts_1min
+    metadata: {}
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - action: script.bewaesserung_hochbeet_rechts_1min
+    metadata: {}
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 30
+      milliseconds: 0
+  - action: script.bewaesserung1_test
+    metadata: {}
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - action: script.bewaesserung1_test
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1785955624328'
+  alias: Zirkulationspumpe Zyklisch
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    hours: '*'
+    minutes: /30
+  conditions:
+  - condition: time
+    after: 06:00:00
+    before: '22:00:00'
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.solarthermie_zirkulationspumpe_230v
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.solarthermie_zirkulationspumpe_230v
+  mode: single
+# HANDTUCHHEIZKOERPER OG
+# 1. Manueller Modus aktiviert -> FBH-Ventil sofort schließen
+- id: og_bad_handtuch_manuell_aktiviert
+  alias: "OG Bad - Manueller Modus aktiviert"
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.og_bad_handtuch_manueller_modus
+      to: "on"
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.29_b90437000000_pio_6
+# 2. Heizstab eingeschaltet -> 30-Minuten-Heiztimer starten
+# Schutz: Wird der Heizstab eingeschaltet, OHNE dass der manuelle Modus aktiv ist,
+# schaltet er sich sofort wieder ab.
+- id: og_bad_handtuch_heizstab_gestartet
+  alias: "OG Bad - Heizstab Timer Start"
+  trigger:
+    - trigger: state
+      entity_id: switch.29_b90437000000_pio_7
+      to: "on"
+  action:
+    - if:
+        - condition: state
+          entity_id: input_boolean.og_bad_handtuch_manueller_modus
+          state: "on"
+      then:
+        # Falls die Abkühlzeit noch lief: sofort abbrechen und auf 30:00 zurücksetzen
+        - action: timer.cancel
+          target:
+            entity_id: timer.og_bad_handtuch_abkuehl_timer
+
+        # Heiztimer starten
+        - action: timer.start
+          target:
+            entity_id: timer.og_bad_handtuch_heizstab_timer
+
+        # FBH-Ventil sicherheitshalber geschlossen halten
+        - action: switch.turn_off
+          target:
+            entity_id: switch.29_b90437000000_pio_6
+      else:
+        # Sicherheit: Kein Heizstab ohne aktiven manuellen Modus
+        - action: switch.turn_off
+          target:
+            entity_id: switch.29_b90437000000_pio_7
+# 3. Heizstab-Laufzeit abgelaufen -> Heizstab aus & 30-Minuten-Abkühlung starten
+- id: og_bad_handtuch_heizstab_zeit_abgelaufen
+  alias: "OG Bad - Heizstab Zeit abgelaufen"
+  trigger:
+    - trigger: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.og_bad_handtuch_heizstab_timer
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.29_b90437000000_pio_7
+    - action: timer.start
+      target:
+        entity_id: timer.og_bad_handtuch_abkuehl_timer
+# 4. Vorzeitiges manuelles Ausschalten des Heizstabs abfangen
+- id: og_bad_handtuch_heizstab_vorzeitig_aus
+  alias: "OG Bad - Heizstab vorzeitig ausgeschaltet"
+  trigger:
+    - trigger: state
+      entity_id: switch.29_b90437000000_pio_7
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: timer.og_bad_handtuch_heizstab_timer
+      state: "active"
+  action:
+    - action: timer.cancel
+      target:
+        entity_id: timer.og_bad_handtuch_heizstab_timer
+    - action: timer.start
+      target:
+        entity_id: timer.og_bad_handtuch_abkuehl_timer

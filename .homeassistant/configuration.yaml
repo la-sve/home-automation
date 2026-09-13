@@ -74,6 +74,34 @@ cover: !include cover.yaml
 #  name: SchlafenUp
 #  name: SchlafenDown
 
+# ------------------------------------------------------------------------------
+# HELFER HANDTUCHHEIZKOERPER OG (Modus & Timer)
+# ------------------------------------------------------------------------------
+input_boolean:
+  # Einziger Modus-Schalter:
+  # OFF = Automatikmodus (Thermostat regelt FBH)
+  # ON  = Manueller Modus (FBH verriegelt, Zusatzheizung freigegeben)
+  og_bad_handtuch_manueller_modus:
+    name: "OG Bad Handtuch - Manueller Modus"
+    icon: mdi:hand-back-right
+
+timer:
+  # Laufzeit für den elektrischen Heizstab
+  og_bad_handtuch_heizstab_timer:
+    name: "OG Bad Handtuch - Heizstab aktiv"
+    duration: "00:30:00"
+    icon: mdi:radiator
+    restore: true
+
+  # Abkühlphase zum Schutz des Wärmepumpen-Rücklaufs
+  og_bad_handtuch_abkuehl_timer:
+    name: "OG Bad Handtuch - Abkühlphase"
+    duration: "00:15:00"
+    icon: mdi:snowflake-thermometer
+    restore: true
+# ------------------------------------------------------------------------------
+
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -466,6 +494,14 @@ sensor:
     name: delete old backups
     command: 'cd backup/ && ls -A1t | sed -e "1,4d" | xargs rm'
     scan_interval: 3600
+  - platform: integration
+    name: "OG Bad Handtuch Heizstab Energie"
+    unique_id: og_bad_handtuch_heizstab_energie
+    source: sensor.og_bad_handtuch_heizstab_leistung
+    unit_prefix: k        # Rechnet W in kW um
+    unit_time: h          # Ergibt zusammen kWh
+    method: left          # SEHR WICHTIG bei Ein/Aus-Schaltlasten!
+
 
 # Add "Lovelace Mini Graph Card"
 # https://github.com/kalkih/mini-graph-card

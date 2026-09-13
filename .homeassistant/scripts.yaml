@@ -238,64 +238,112 @@ sonos_mdr_jump:
 rollos_og_sonne:
   alias: Rollos OG Sonne
   sequence:
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 11
       time: 25
     enabled: false
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
     enabled: false
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 12
       time: 12
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 13
       time: 13
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 14
       time: 13
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
+  - alias: Bibo
     data:
       cmd: close
       window: 15
-      time: 13
-    alias: Bibo
+      time: 14
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 16
       time: 13
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 17
       time: 13
+    action: rest_command.rollosteuerung
   - delay:
       seconds: 2
-  - service: rest_command.rollosteuerung
-    data:
+  - data:
       cmd: close
       window: 18
       time: 14
     alias: Schlafzimmer
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Arbeitszimmer
+    data:
+      cmd: close
+      window: 1
+      time: 14
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Wohnen Ost
+    data:
+      cmd: close
+      window: 2
+      time: 14
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Wohnen OstSüd
+    data:
+      cmd: close
+      window: 3
+      time: 14
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Bad EG
+    data:
+      cmd: close
+      window: 8
+      time: 10
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Küche
+    data:
+      cmd: close
+      window: 6
+      time: 14
+    action: rest_command.rollosteuerung
+  - delay:
+      seconds: 2
+  - alias: Küche
+    data:
+      cmd: close
+      window: 7
+      time: 10
+    action: rest_command.rollosteuerung
   mode: single
   icon: mdi:roller-shade
 sonos_sleep_60_min:
@@ -309,3 +357,25 @@ sonos_sleep_60_min:
       device_id: 89dc9cc6961d23e5e40476c7141494f2
   description: Sleep timer setzen auf 60 Minuten
   icon: mdi:sleep
+bewaesserung1_test:
+  sequence:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: '1'
+      topic: zigbee2mqtt/Bewaesserungsventil/set
+      payload: '{"cyclic_timed_irrigation": {"current_count": 1, "total_number": 1,
+        "irrigation_duration": 240, "irrigation_interval": 1}}'
+  alias: Bewaesserung-Hochbeet-Links-1Min.
+  description: ''
+bewaesserung_hochbeet_rechts_1min:
+  sequence:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: '1'
+      topic: zigbee2mqtt/Bewaesserungsventil2/set
+      payload: '{"cyclic_timed_irrigation": {"current_count": 1, "total_number": 1,
+        "irrigation_duration": 240, "irrigation_interval": 1}}'
+  alias: Bewaesserung-Hochbeet-Rechts-1Min.
+  description: ''
