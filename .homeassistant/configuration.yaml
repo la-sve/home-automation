@@ -84,6 +84,9 @@ input_boolean:
   og_bad_handtuch_manueller_modus:
     name: "OG Bad Handtuch - Manueller Modus"
     icon: mdi:hand-back-right
+  eg_bad_handtuch_manueller_modus:
+    name: "EG Bad Handtuch - Manueller Modus"
+    icon: mdi:hand-back-right
 
 timer:
   # Laufzeit für den elektrischen Heizstab
@@ -92,11 +95,21 @@ timer:
     duration: "00:30:00"
     icon: mdi:radiator
     restore: true
+  eg_bad_handtuch_heizstab_timer:
+    name: "EG Bad Handtuch - Heizstab aktiv"
+    duration: "00:30:00"
+    icon: mdi:radiator
+    restore: true
 
   # Abkühlphase zum Schutz des Wärmepumpen-Rücklaufs
   og_bad_handtuch_abkuehl_timer:
     name: "OG Bad Handtuch - Abkühlphase"
-    duration: "00:15:00"
+    duration: "00:30:00"
+    icon: mdi:snowflake-thermometer
+    restore: true
+  eg_bad_handtuch_abkuehl_timer:
+    name: "EG Bad Handtuch - Abkühlphase"
+    duration: "00:30:00"
     icon: mdi:snowflake-thermometer
     restore: true
 # ------------------------------------------------------------------------------
@@ -498,6 +511,13 @@ sensor:
     name: "OG Bad Handtuch Heizstab Energie"
     unique_id: og_bad_handtuch_heizstab_energie
     source: sensor.og_bad_handtuch_heizstab_leistung
+    unit_prefix: k        # Rechnet W in kW um
+    unit_time: h          # Ergibt zusammen kWh
+    method: left          # SEHR WICHTIG bei Ein/Aus-Schaltlasten!
+  - platform: integration
+    name: "EG Bad Handtuch Heizstab Energie"
+    unique_id: eg_bad_handtuch_heizstab_energie
+    source: sensor.eg_bad_handtuch_heizstab_leistung
     unit_prefix: k        # Rechnet W in kW um
     unit_time: h          # Ergibt zusammen kWh
     method: left          # SEHR WICHTIG bei Ein/Aus-Schaltlasten!

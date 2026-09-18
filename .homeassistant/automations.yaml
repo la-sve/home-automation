@@ -574,3 +574,82 @@
     - action: timer.start
       target:
         entity_id: timer.og_bad_handtuch_abkuehl_timer
+# HANDTUCHHEIZKOERPER EG
+# 1. Manueller Modus aktiviert -> FBH-Ventil sofort schließen
+- id: eg_bad_handtuch_manuell_aktiviert
+  alias: "EG Bad - Manueller Modus aktiviert"
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.eg_bad_handtuch_manueller_modus
+      to: "on"
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.29_c10437000000_pio_6
+# 2. Heizstab eingeschaltet -> 30-Minuten-Heiztimer starten
+# Schutz: Wird der Heizstab eingeschaltet, OHNE dass der manuelle Modus aktiv ist,
+# schaltet er sich sofort wieder ab.
+- id: eg_bad_handtuch_heizstab_gestartet
+  alias: "EG Bad - Heizstab Timer Start"
+  trigger:
+    - trigger: state
+      entity_id: switch.29_c10437000000_pio_7
+      to: "on"
+  action:
+    - if:
+        - condition: state
+          entity_id: input_boolean.eg_bad_handtuch_manueller_modus
+          state: "on"
+      then:
+        # Falls die Abkühlzeit noch lief: sofort abbrechen und auf 30:00 zurücksetzen
+        - action: timer.cancel
+          target:
+            entity_id: timer.eg_bad_handtuch_abkuehl_timer
+
+        # Heiztimer starten
+        - action: timer.start
+          target:
+            entity_id: timer.eg_bad_handtuch_heizstab_timer
+
+        # FBH-Ventil sicherheitshalber geschlossen halten
+        - action: switch.turn_off
+          target:
+            entity_id: switch.29_c10437000000_pio_6
+      else:
+        # Sicherheit: Kein Heizstab ohne aktiven manuellen Modus
+        - action: switch.turn_off
+          target:
+            entity_id: switch.29_c10437000000_pio_7
+# 3. Heizstab-Laufzeit abgelaufen -> Heizstab aus & 30-Minuten-Abkühlung starten
+- id: eg_bad_handtuch_heizstab_zeit_abgelaufen
+  alias: "EG Bad - Heizstab Zeit abgelaufen"
+  trigger:
+    - trigger: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.eg_bad_handtuch_heizstab_timer
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.29_c10437000000_pio_7
+    - action: timer.start
+      target:
+        entity_id: timer.eg_bad_handtuch_abkuehl_timer
+# 4. Vorzeitiges manuelles Ausschalten des Heizstabs abfangen
+- id: eg_bad_handtuch_heizstab_vorzeitig_aus
+  alias: "EG Bad - Heizstab vorzeitig ausgeschaltet"
+  trigger:
+    - trigger: state
+      entity_id: switch.29_c10437000000_pio_7
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: timer.eg_bad_handtuch_heizstab_timer
+      state: "active"
+  action:
+    - action: timer.cancel
+      target:
+        entity_id: timer.eg_bad_handtuch_heizstab_timer
+    - action: timer.start
+      target:
+        entity_id: timer.eg_bad_handtuch_abkuehl_timer

@@ -42,61 +42,122 @@
                   "entity": "sensor.victron_batterie"
                 },
                 {
-                  "entity": "sensor.garage_luftfeuchtigkeit"
-                },
-                {
-                  "entity": "sensor.garage_temperatur"
-                },
-                {
                   "entity": "group.nachtlichter"
                 },
                 {
-                  "entity": "sensor.garage_gefilterte_luftfeuchtigkeit"
+                  "entity": "sensor.temp_terrasse_temperature",
+                  "name": "Außentemp. (Terrasse)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Garten",
+          "path": "garten",
+          "icon": "mdi:shovel",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Neuer Abschnitt"
                 },
                 {
-                  "entity": "sensor.vscotho1_200_aussentemperatur",
-                  "name": "Außentemperatur ViCare"
-                },
-                {
-                  "entity": "sensor.temp_terrasse_temperature"
-                },
-                {
-                  "entity": "sensor.temp_terrasse_humidity"
-                },
-                {
-                  "entity": "sensor.temp_garage_temperature"
-                },
-                {
-                  "entity": "sensor.temp_garage_humidity"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_ww_speichertemperatur"
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "switch.bewaesserungsventil",
+                      "name": "Hochbeet-Links"
+                    },
+                    {
+                      "entity": "script.bewaesserung1_test"
+                    },
+                    {
+                      "entity": "switch.bewaesserungsventil2",
+                      "name": "Hochbeet-Rechts"
+                    },
+                    {
+                      "entity": "script.bewaesserung_hochbeet_rechts_1min"
+                    }
+                  ],
+                  "title": "Bewässerung",
+                  "show_header_toggle": false,
+                  "state_color": true
                 }
               ]
             },
             {
-              "type": "entities",
-              "entities": [
+              "type": "grid",
+              "cards": [
                 {
-                  "entity": "switch.bewaesserungsventil",
-                  "name": "Hochbeet-Links"
+                  "type": "heading",
+                  "heading_style": "title"
                 },
                 {
-                  "entity": "script.bewaesserung1_test"
-                },
-                {
-                  "entity": "switch.bewaesserungsventil2",
-                  "name": "Hochbeet-Rechts"
-                },
-                {
-                  "entity": "script.bewaesserung_hochbeet_rechts_1min"
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.garage_temperatur",
+                      "name": "Temp (uC)"
+                    },
+                    {
+                      "entity": "sensor.temp_garage_temperature",
+                      "name": "Temp (zigbee)"
+                    },
+                    {
+                      "entity": "sensor.garage_luftfeuchtigkeit",
+                      "name": "Feuchte (uC)"
+                    },
+                    {
+                      "entity": "sensor.temp_garage_humidity",
+                      "name": "Feuchte (zigbee)"
+                    },
+                    {
+                      "entity": "sensor.garage_gefilterte_luftfeuchtigkeit",
+                      "name": "Feuchte (Filter)"
+                    }
+                  ],
+                  "title": "Garage"
                 }
-              ],
-              "title": "Bewässerung",
-              "show_header_toggle": false,
-              "state_color": true
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.temp_terrasse_temperature",
+                      "name": "Terrasse"
+                    },
+                    {
+                      "entity": "sensor.temp_terrasse_humidity",
+                      "name": "Terrasse"
+                    },
+                    {
+                      "entity": "sensor.solarthermie_kollektor_temperatur",
+                      "name": "Kollektor"
+                    },
+                    {
+                      "entity": "sensor.lueftungssteuerung_temperatur_aussenluft_t1",
+                      "name": "Lüftungssensor"
+                    }
+                  ],
+                  "title": "Außen"
+                }
+              ]
             }
-          ]
+          ],
+          "cards": []
         },
         {
           "theme": "Backend-selected",
@@ -205,38 +266,6 @@
               ]
             },
             {
-              "type": "history-graph",
-              "entities": [
-                {
-                  "entity": "water_heater.vicare_water"
-                },
-                {
-                  "entity": "sensor.vicare_solar_storage_temperature"
-                }
-              ],
-              "hours_to_show": 24,
-              "refresh_interval": 0
-            },
-            {
-              "type": "entities",
-              "entities": [
-                "sensor.temp_heizung_temperature",
-                "binary_sensor.vscotho1_200_heizkreisumwalzpumpe"
-              ]
-            },
-            {
-              "title": "Verlauf",
-              "type": "history-graph",
-              "hours_to_show": 3,
-              "entities": [
-                "binary_sensor.vscotho1_200_heizkreisumwalzpumpe",
-                "sensor.temp_heizung_temperature",
-                "sensor.vscotho1_200_kesseltemperatur",
-                "sensor.vscotho1_200_ww_speichertemperatur",
-                "binary_sensor.vscotho1_200_ww_pumpe"
-              ]
-            },
-            {
               "type": "entities",
               "title": "Handtuchheizung OG",
               "entities": [
@@ -268,6 +297,42 @@
                 },
                 {
                   "entity": "sensor.og_bad_handtuch_heizstab_energie"
+                }
+              ],
+              "show_header_toggle": false
+            },
+            {
+              "type": "entities",
+              "title": "Handtuchheizung EG",
+              "entities": [
+                {
+                  "entity": "input_boolean.eg_bad_handtuch_manueller_modus",
+                  "name": "Manueller Modus (FBH sperren)"
+                },
+                {
+                  "entity": "switch.29_c10437000000_pio_7",
+                  "name": "Zusatzheizung (Heizstab)"
+                },
+                {
+                  "entity": "timer.eg_bad_handtuch_heizstab_timer",
+                  "name": "Restzeit Heizstab"
+                },
+                {
+                  "entity": "timer.eg_bad_handtuch_abkuehl_timer",
+                  "name": "Restzeit Abkühlung"
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "entity": "switch.29_c10437000000_pio_6",
+                  "name": "FBH-Ventil Status"
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "entity": "sensor.eg_bad_handtuch_heizstab_energie"
                 }
               ],
               "show_header_toggle": false
@@ -437,7 +502,7 @@
           "cards": [
             {
               "type": "thermostat",
-              "entity": "climate.wohnzimmer"
+              "entity": "climate.hauswirtschaftsraum"
             },
             {
               "type": "thermostat",
@@ -446,14 +511,6 @@
             {
               "type": "thermostat",
               "entity": "climate.handtucheg"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.arbeitszimmer"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.kueche"
             }
           ]
         },
@@ -506,10 +563,6 @@
             {
               "type": "thermostat",
               "entity": "climate.handtuchog"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.bibo"
             },
             {
               "type": "thermostat",
