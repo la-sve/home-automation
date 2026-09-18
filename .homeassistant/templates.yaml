@@ -115,3 +115,67 @@
         {% else %}
           0
         {% endif %}
+
+# ------------------------------------------------------------------------------
+# ABSOLUTE LUFTFEUCHTIGKEIT (g/m³)
+# ------------------------------------------------------------------------------
+- sensor:
+    - name: "Absolute Luftfeuchtigkeit Abluft"
+      unique_id: absolute_luftfeuchtigkeit_abluft
+      unit_of_measurement: "g/m³"
+      state_class: measurement
+      icon: mdi:water-percent
+      state: >
+        {% set T = states('sensor.lueftungssteuerung_feuchtesensor_temperatur') | float(none) %}
+        {% set RH = states('sensor.lueftungssteuerung_luftfeuchtigkeit_abluft') | float(none) %}
+        {% if T is not none and RH is not none %}
+          {% set e = 2.718281828459 %}
+          {% set sat_vp = 6.112 * (e ** ((17.67 * T) / (T + 243.5))) %}
+          {% set act_vp = sat_vp * (RH / 100.0) %}
+          {{ ((216.7 * act_vp) / (273.15 + T)) | round(2) }}
+        {% else %}
+          unavailable
+        {% endif %}
+      availability: >
+        {{ states('sensor.lueftungssteuerung_feuchtesensor_temperatur') | is_number and 
+           states('sensor.lueftungssteuerung_luftfeuchtigkeit_abluft') | is_number }}
+
+    - name: "Absolute Luftfeuchtigkeit Terrasse"
+      unique_id: absolute_luftfeuchtigkeit_terrasse
+      unit_of_measurement: "g/m³"
+      state_class: measurement
+      icon: mdi:water-percent
+      state: >
+        {% set T = states('sensor.temp_terrasse_temperature') | float(none) %}
+        {% set RH = states('sensor.temp_terrasse_humidity') | float(none) %}
+        {% if T is not none and RH is not none %}
+          {% set e = 2.718281828459 %}
+          {% set sat_vp = 6.112 * (e ** ((17.67 * T) / (T + 243.5))) %}
+          {% set act_vp = sat_vp * (RH / 100.0) %}
+          {{ ((216.7 * act_vp) / (273.15 + T)) | round(2) }}
+        {% else %}
+          unavailable
+        {% endif %}
+      availability: >
+        {{ states('sensor.temp_terrasse_temperature') | is_number and 
+           states('sensor.temp_terrasse_humidity') | is_number }}
+
+    - name: "Absolute Luftfeuchtigkeit Garage"
+      unique_id: absolute_luftfeuchtigkeit_garage
+      unit_of_measurement: "g/m³"
+      state_class: measurement
+      icon: mdi:water-percent
+      state: >
+        {% set T = states('sensor.temp_garage_temperature') | float(none) %}
+        {% set RH = states('sensor.temp_garage_humidity') | float(none) %}
+        {% if T is not none and RH is not none %}
+          {% set e = 2.718281828459 %}
+          {% set sat_vp = 6.112 * (e ** ((17.67 * T) / (T + 243.5))) %}
+          {% set act_vp = sat_vp * (RH / 100.0) %}
+          {{ ((216.7 * act_vp) / (273.15 + T)) | round(2) }}
+        {% else %}
+          unavailable
+        {% endif %}
+      availability: >
+        {{ states('sensor.temp_garage_temperature') | is_number and 
+           states('sensor.temp_garage_humidity') | is_number }}

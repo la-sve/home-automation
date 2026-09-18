@@ -49,6 +49,35 @@
                   "name": "Außentemp. (Terrasse)"
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.lueftungssteuerung_luftfeuchtigkeit_abluft",
+                  "name": "Abluft rel. Feuchte"
+                },
+                {
+                  "entity": "sensor.absolute_luftfeuchtigkeit_abluft",
+                  "name": "Abluft abs. Feuchte"
+                },
+                {
+                  "entity": "sensor.temp_terrasse_humidity",
+                  "name": "Terrasse rel. Feuchte"
+                },
+                {
+                  "entity": "sensor.absolute_luftfeuchtigkeit_terrasse",
+                  "name": "Terrasse abs. Feuchte"
+                },
+                {
+                  "entity": "sensor.temp_garage_humidity",
+                  "name": "Garage rel. Feuchte"
+                },
+                {
+                  "entity": "sensor.absolute_luftfeuchtigkeit_garage",
+                  "name": "Garage abs. Feuchte"
+                }
+              ]
             }
           ]
         },
