@@ -179,3 +179,8 @@
       availability: >
         {{ states('sensor.temp_garage_temperature') | is_number and 
            states('sensor.temp_garage_humidity') | is_number }}
+
+# ------------------------------------------------------------------------------
+# ROLLOS (Template Covers)
+# ------------------------------------------------------------------------------
+- cover: !include cover.yaml

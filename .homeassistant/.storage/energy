@@ -1,28 +1,20 @@
 {
   "version": 1,
-  "minor_version": 1,
+  "minor_version": 3,
   "key": "energy",
   "data": {
     "energy_sources": [
       {
         "type": "grid",
-        "flow_from": [
-          {
-            "stat_energy_from": "sensor.victron_grid_meter_total_aus_netz",
-            "stat_cost": null,
-            "entity_energy_price": null,
-            "number_energy_price": null
-          }
-        ],
-        "flow_to": [
-          {
-            "stat_energy_to": "sensor.victron_grid_meter_total_ins_netz",
-            "stat_compensation": null,
-            "entity_energy_price": null,
-            "number_energy_price": null
-          }
-        ],
-        "cost_adjustment_day": 0.0
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.victron_grid_meter_total_aus_netz",
+        "stat_cost": null,
+        "entity_energy_price": null,
+        "number_energy_price": null,
+        "stat_energy_to": "sensor.victron_grid_meter_total_ins_netz",
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
       },
       {
         "type": "gas",
@@ -118,6 +110,7 @@
       {
         "stat_consumption": "sensor.tasmota_2_energy_total"
       }
-    ]
+    ],
+    "device_consumption_water": []
   }
 }

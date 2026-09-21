@@ -12,3 +12,5 @@ services:
     restart: unless-stopped
     privileged: true
       #    user: 1000:1000
+    #devices:
+    #  - /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_32858f809674ef119b82c48c8fcc3fa0-if00-port0:/dev/ttyUSB0
