@@ -180,6 +180,193 @@
         {{ states('sensor.temp_garage_temperature') | is_number and 
            states('sensor.temp_garage_humidity') | is_number }}
 
+# AQUAREA
+- sensor:
+    # 1. Aktuelle thermische Heizleistung im Raumheizbetrieb (kalorimetrisch, ohne Warmwasser)
+    - name: "Aquarea Heizleistung Raum Kalorimetrisch"
+      unique_id: aquarea_heizleistung_raum_kalorimetrisch
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: >
+        {% set valve = states('sensor.panasonic_heat_pump_main_threeway_valve_state') %}
+        {% set dhw_p = states('sensor.panasonic_heat_pump_main_dhw_power_production') | float(0) %}
+        {% set flow = states('sensor.panasonic_heat_pump_main_pump_flow') | float(0) %}
+        {% set tvl = states('sensor.panasonic_heat_pump_main_main_outlet_temp') | float(0) %}
+        {% set trl = states('sensor.panasonic_heat_pump_main_main_inlet_temp') | float(0) %}
+        {% set spread = tvl - trl %}
+        {% if valve == 'Room' and dhw_p < 50 and flow > 3.0 and spread > 0.25 %}
+          {{ (69.78 * flow * spread) | round(0) }}
+        {% else %}
+          0
+        {% endif %}
+
+    # 2. Aktueller passiver solarer Wärmegewinn im Raum über Fenster [W]
+    #    Parameter aus efh/waermebilanz.md: g_Solar = 0.95 W/W_PV, gedeckelt auf max. 1000 W
+    - name: "Wärmebilanz Solarer Gewinn Raum"
+      unique_id: waermebilanz_solarer_gewinn_raum
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      icon: mdi:weather-sunny
+      state: >
+        {% set p_pv = states('sensor.victron_solar_eintrag_2') | float(0) %}
+        {{ ([0.95 * p_pv, 1000.0] | min) | round(0) }}
+
+    # 3. Aktuelle Transmissions- und Lüftungswärmeverlustleistung des Hauses [W]
+    #    Parameter aus efh/waermebilanz.md: H = 98.7 W/K
+    - name: "Wärmebilanz Verlustleistung Haus"
+      unique_id: waermebilanz_verlustleistung_haus
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      icon: mdi:home-export-outline
+      state: >
+        {% set t_eg = states('sensor.mittlere_temperatur_eg') | float(22.0) %}
+        {% set t_out = states('sensor.temp_terrasse_temperature') | float(
+              states('sensor.panasonic_heat_pump_main_outside_temp') | float(10.0)
+            ) %}
+        {% set h_wk = 98.7 %}
+        {{ ([0.0, h_wk * (t_eg - t_out)] | max) | round(0) }}
+
+    # 4. Laufende Netto-Leistungsbilanz des Hauses P_Bilanz(t) [W]
+    #    Parameter aus efh/waermebilanz.md:
+    #    H = 98.7 W/K, P_Intern = 180 W, g_Solar = 0.95 W/W_PV (gedeckelt auf max. 1000 W Fenstergewinn)
+    - name: "Wärmebilanz Netto-Leistung"
+      unique_id: waermebilanz_netto_leistung
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      icon: mdi:scale-balance
+      state: >
+        {% set p_wp = states('sensor.aquarea_heizleistung_raum_kalorimetrisch') | float(0) %}
+        {% set p_solar = states('sensor.warmebilanz_solarer_gewinn_raum') | float(0) %}
+        {% set p_intern = 180.0 %}
+        {% set p_loss = states('sensor.warmebilanz_verlustleistung_haus') | float(0) %}
+        {{ (p_wp + p_solar + p_intern - p_loss) | round(0) }}
+
+    # 5. Im Estrich gespeicherter 4h-Temperaturvorhalt Delta T_Estrich,4h [K]
+    #    Parameter aus efh/waermebilanz.md: C_Haus = 15000 Wh/K (15.0 kWh/K), begrenzt auf +-0.8 K
+    - name: "Temperatur EG Estrich-Vorhalt 4h"
+      unique_id: temperatur_eg_estrich_vorhalt_4h
+      unit_of_measurement: "K"
+      device_class: temperature_delta
+      state_class: measurement
+      icon: mdi:waves-arrow-up
+      state: >
+        {% set p_net_4h = states('sensor.warmebilanz_netto_leistung_4h_mittel') | float(0) %}
+        {% set dt_estrich = (p_net_4h * 4.0) / 15000.0 %}
+        {{ ([[-0.8, dt_estrich] | max, 0.8] | min) | round(2) }}
+
+    # 6. Prädiktive Raumtemperatur EG (inkl. der im Estrich gespeicherten 4h-Wärmemenge)
+    #    Parameter aus efh/waermebilanz.md: C_Haus = 15000 Wh/K (15.0 kWh/K)
+    - name: "Temperatur EG Prädiktiv"
+      unique_id: temperatur_eg_praediktiv
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      state: >
+        {% set t_eg = states('sensor.mittlere_temperatur_eg') | float(22.0) %}
+        {% set dt_clamped = states('sensor.temperatur_eg_estrich_vorhalt_4h') | float(0.0) %}
+        {{ (t_eg + dt_clamped) | round(2) }}
+      attributes:
+        t_eg_ist: "{{ states('sensor.mittlere_temperatur_eg') | float(22.0) | round(2) }}"
+        dt_estrich_prognose_k: >
+          {% set p_net_4h = states('sensor.warmebilanz_netto_leistung_4h_mittel') | float(0) %}
+          {{ ((p_net_4h * 4.0) / 15000.0) | round(2) }}
+        q_estrich_4h_kwh: >
+          {% set p_net_4h = states('sensor.warmebilanz_netto_leistung_4h_mittel') | float(0) %}
+          {{ ((p_net_4h * 4.0) / 1000.0) | round(2) }}
+
+    # 7. Effektive Soll-Temperatur EG (inkl. zeitgesteuerter Nachtabsenkung)
+    - name: "Raumregelung Soll-Temperatur EG Effektiv"
+      unique_id: raumregelung_soll_temperatur_eg_effektiv
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      icon: mdi:thermometer-auto
+      state: >
+        {% set t_soll_tag = states('input_number.raumregelung_soll_temperatur_eg') | float(22.0) %}
+        {% set dt_nacht = states('input_number.raumregelung_nachtabsenkung_delta_t') | float(2.5) %}
+        {% set nav_on = is_state('input_boolean.raumregelung_nachtabsenkung_aktiv', 'on') %}
+        {% set now_str = now().strftime('%H:%M:%S') %}
+        {% set start_str = states('input_datetime.raumregelung_nachtabsenkung_start') %}
+        {% set end_str = states('input_datetime.raumregelung_nachtabsenkung_ende') %}
+        {% if start_str in ['unknown', 'unavailable', ''] %}{% set start_str = '19:00:00' %}{% endif %}
+        {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '04:30:00' %}{% endif %}
+        {% if start_str <= end_str %}
+          {% set in_window = (start_str <= now_str < end_str) %}
+        {% else %}
+          {% set in_window = (now_str >= start_str or now_str < end_str) %}
+        {% endif %}
+        {% if nav_on and in_window %}
+          {{ (t_soll_tag - dt_nacht) | round(2) }}
+        {% else %}
+          {{ t_soll_tag | round(2) }}
+        {% endif %}
+      attributes:
+        modus: >
+          {% set nav_on = is_state('input_boolean.raumregelung_nachtabsenkung_aktiv', 'on') %}
+          {% set now_str = now().strftime('%H:%M:%S') %}
+          {% set start_str = states('input_datetime.raumregelung_nachtabsenkung_start') %}
+          {% set end_str = states('input_datetime.raumregelung_nachtabsenkung_ende') %}
+          {% if start_str in ['unknown', 'unavailable', ''] %}{% set start_str = '19:00:00' %}{% endif %}
+          {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '04:30:00' %}{% endif %}
+          {% if start_str <= end_str %}
+            {% set in_window = (start_str <= now_str < end_str) %}
+          {% else %}
+            {% set in_window = (now_str >= start_str or now_str < end_str) %}
+          {% endif %}
+          {% if not nav_on %}
+            Tagbetrieb (Nachtabsenkung aus)
+          {% elif in_window %}
+            Nachtabsenkung aktiv
+          {% else %}
+            Tagbetrieb
+          {% endif %}
+
+    # 8. Berechneter Heizkurven-Shift (ungerundet mit Hysterese-Schwelle -> ganzzahliger Ziel-Shift)
+    #    Verstärkungsfaktor Kp = 2.2 K Vorlauf / K Raumtemperatur-Abweichung
+    - name: "Raumregelung Empfohlener Shift"
+      unique_id: raumregelung_empfohlener_shift
+      unit_of_measurement: "K"
+      state_class: measurement
+      state: >
+        {% set t_soll = states('sensor.raumregelung_soll_temperatur_eg_effektiv') | float(
+              states('input_number.raumregelung_soll_temperatur_eg') | float(22.0)
+            ) %}
+        {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
+        {% set base_offset = states('input_number.raumregelung_shift_basis_offset') | float(0.0) %}
+        {% set cur_shift = states('number.panasonic_heat_pump_main_z1_heat_request_temp') | float(0.0) | round(0) %}
+        {% set kp = 2.2 %}
+        {% set u_raw = base_offset + kp * (t_soll - t_pred) %}
+        {# Hysterese: Wechsel auf neue Stufe erst ab 0.65 K Abstand zur aktuellen Stufe (statt 0.50 K) #}
+        {% set diff = u_raw - cur_shift %}
+        {% if diff >= 0.65 %}
+          {% set target = (u_raw - 0.15) | round(0) %}
+        {% elif diff <= -0.65 %}
+          {% set target = (u_raw + 0.15) | round(0) %}
+        {% else %}
+          {% set target = cur_shift %}
+        {% endif %}
+        {{ [[-5, target] | max, 5] | min | int }}
+      attributes:
+        stellgroesse_ungerundet: >
+          {% set t_soll = states('sensor.raumregelung_soll_temperatur_eg_effektiv') | float(
+                states('input_number.raumregelung_soll_temperatur_eg') | float(22.0)
+              ) %}
+          {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
+          {% set base_offset = states('input_number.raumregelung_shift_basis_offset') | float(0.0) %}
+          {{ (base_offset + 2.2 * (t_soll - t_pred)) | round(2) }}
+        regeldifferenz_praediktiv_k: >
+          {% set t_soll = states('sensor.raumregelung_soll_temperatur_eg_effektiv') | float(
+                states('input_number.raumregelung_soll_temperatur_eg') | float(22.0)
+              ) %}
+          {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
+          {{ (t_soll - t_pred) | round(2) }}
+
+
+
 # ------------------------------------------------------------------------------
 # ROLLOS (Template Covers)
 # ------------------------------------------------------------------------------

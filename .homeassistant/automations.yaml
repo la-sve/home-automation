@@ -59,32 +59,6 @@
     target:
       entity_id: light.0x00158d000211e433
   mode: single
-- id: '1634413193653'
-  alias: ZirkulationspumpeEIN
-  description: ''
-  trigger:
-  - platform: time
-    at: 06:10
-  condition: []
-  action:
-  - type: turn_on
-    device_id: f43b952c08eae60c2e989b9d36793b17
-    entity_id: switch.29_b20837000000_pio_7
-    domain: switch
-  mode: single
-- id: '1634413864163'
-  alias: ZirkulationspumpeAUS
-  description: ''
-  trigger:
-  - platform: time
-    at: '21:50'
-  condition: []
-  action:
-  - type: turn_off
-    device_id: f43b952c08eae60c2e989b9d36793b17
-    entity_id: switch.29_b20837000000_pio_7
-    domain: switch
-  mode: single
 - id: '1637702834285'
   alias: Weihnachtsbeleuchtung EG und OG EIN (Arbeitstage)
   description: ''
@@ -486,7 +460,7 @@
       entity_id: switch.solarthermie_zirkulationspumpe_230v
   - delay:
       hours: 0
-      minutes: 5
+      minutes: 15
       seconds: 0
       milliseconds: 0
   - action: switch.turn_off
@@ -495,161 +469,228 @@
     target:
       entity_id: switch.solarthermie_zirkulationspumpe_230v
   mode: single
-# HANDTUCHHEIZKOERPER OG
-# 1. Manueller Modus aktiviert -> FBH-Ventil sofort schließen
 - id: og_bad_handtuch_manuell_aktiviert
-  alias: "OG Bad - Manueller Modus aktiviert"
+  alias: OG Bad - Manueller Modus aktiviert
   trigger:
-    - trigger: state
-      entity_id: input_boolean.og_bad_handtuch_manueller_modus
-      to: "on"
+  - trigger: state
+    entity_id: input_boolean.og_bad_handtuch_manueller_modus
+    to: 'on'
   action:
+  - action: switch.turn_off
+    target:
+      entity_id: switch.29_b90437000000_pio_6
+- id: og_bad_handtuch_heizstab_gestartet
+  alias: OG Bad - Heizstab Timer Start
+  trigger:
+  - trigger: state
+    entity_id: switch.29_b90437000000_pio_7
+    to: 'on'
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.og_bad_handtuch_manueller_modus
+      state: 'on'
+    then:
+    - action: timer.cancel
+      target:
+        entity_id: timer.og_bad_handtuch_abkuehl_timer
+    - action: timer.start
+      target:
+        entity_id: timer.og_bad_handtuch_heizstab_timer
     - action: switch.turn_off
       target:
         entity_id: switch.29_b90437000000_pio_6
-# 2. Heizstab eingeschaltet -> 30-Minuten-Heiztimer starten
-# Schutz: Wird der Heizstab eingeschaltet, OHNE dass der manuelle Modus aktiv ist,
-# schaltet er sich sofort wieder ab.
-- id: og_bad_handtuch_heizstab_gestartet
-  alias: "OG Bad - Heizstab Timer Start"
-  trigger:
-    - trigger: state
-      entity_id: switch.29_b90437000000_pio_7
-      to: "on"
-  action:
-    - if:
-        - condition: state
-          entity_id: input_boolean.og_bad_handtuch_manueller_modus
-          state: "on"
-      then:
-        # Falls die Abkühlzeit noch lief: sofort abbrechen und auf 30:00 zurücksetzen
-        - action: timer.cancel
-          target:
-            entity_id: timer.og_bad_handtuch_abkuehl_timer
-
-        # Heiztimer starten
-        - action: timer.start
-          target:
-            entity_id: timer.og_bad_handtuch_heizstab_timer
-
-        # FBH-Ventil sicherheitshalber geschlossen halten
-        - action: switch.turn_off
-          target:
-            entity_id: switch.29_b90437000000_pio_6
-      else:
-        # Sicherheit: Kein Heizstab ohne aktiven manuellen Modus
-        - action: switch.turn_off
-          target:
-            entity_id: switch.29_b90437000000_pio_7
-# 3. Heizstab-Laufzeit abgelaufen -> Heizstab aus & 30-Minuten-Abkühlung starten
-- id: og_bad_handtuch_heizstab_zeit_abgelaufen
-  alias: "OG Bad - Heizstab Zeit abgelaufen"
-  trigger:
-    - trigger: event
-      event_type: timer.finished
-      event_data:
-        entity_id: timer.og_bad_handtuch_heizstab_timer
-  action:
+    else:
     - action: switch.turn_off
       target:
         entity_id: switch.29_b90437000000_pio_7
-    - action: timer.start
-      target:
-        entity_id: timer.og_bad_handtuch_abkuehl_timer
-# 4. Vorzeitiges manuelles Ausschalten des Heizstabs abfangen
-- id: og_bad_handtuch_heizstab_vorzeitig_aus
-  alias: "OG Bad - Heizstab vorzeitig ausgeschaltet"
+- id: og_bad_handtuch_heizstab_zeit_abgelaufen
+  alias: OG Bad - Heizstab Zeit abgelaufen
   trigger:
-    - trigger: state
-      entity_id: switch.29_b90437000000_pio_7
-      to: "off"
-  condition:
-    - condition: state
+  - trigger: event
+    event_type: timer.finished
+    event_data:
       entity_id: timer.og_bad_handtuch_heizstab_timer
-      state: "active"
   action:
+  - action: switch.turn_off
+    target:
+      entity_id: switch.29_b90437000000_pio_7
+  - action: timer.start
+    target:
+      entity_id: timer.og_bad_handtuch_abkuehl_timer
+- id: og_bad_handtuch_heizstab_vorzeitig_aus
+  alias: OG Bad - Heizstab vorzeitig ausgeschaltet
+  trigger:
+  - trigger: state
+    entity_id: switch.29_b90437000000_pio_7
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: timer.og_bad_handtuch_heizstab_timer
+    state: active
+  action:
+  - action: timer.cancel
+    target:
+      entity_id: timer.og_bad_handtuch_heizstab_timer
+  - action: timer.start
+    target:
+      entity_id: timer.og_bad_handtuch_abkuehl_timer
+- id: eg_bad_handtuch_manuell_aktiviert
+  alias: EG Bad - Manueller Modus aktiviert
+  trigger:
+  - trigger: state
+    entity_id: input_boolean.eg_bad_handtuch_manueller_modus
+    to: 'on'
+  action:
+  - action: switch.turn_off
+    target:
+      entity_id: switch.29_c10437000000_pio_6
+- id: eg_bad_handtuch_heizstab_gestartet
+  alias: EG Bad - Heizstab Timer Start
+  trigger:
+  - trigger: state
+    entity_id: switch.29_c10437000000_pio_7
+    to: 'on'
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.eg_bad_handtuch_manueller_modus
+      state: 'on'
+    then:
     - action: timer.cancel
       target:
-        entity_id: timer.og_bad_handtuch_heizstab_timer
+        entity_id: timer.eg_bad_handtuch_abkuehl_timer
     - action: timer.start
       target:
-        entity_id: timer.og_bad_handtuch_abkuehl_timer
-# HANDTUCHHEIZKOERPER EG
-# 1. Manueller Modus aktiviert -> FBH-Ventil sofort schließen
-- id: eg_bad_handtuch_manuell_aktiviert
-  alias: "EG Bad - Manueller Modus aktiviert"
-  trigger:
-    - trigger: state
-      entity_id: input_boolean.eg_bad_handtuch_manueller_modus
-      to: "on"
-  action:
+        entity_id: timer.eg_bad_handtuch_heizstab_timer
     - action: switch.turn_off
       target:
         entity_id: switch.29_c10437000000_pio_6
-# 2. Heizstab eingeschaltet -> 30-Minuten-Heiztimer starten
-# Schutz: Wird der Heizstab eingeschaltet, OHNE dass der manuelle Modus aktiv ist,
-# schaltet er sich sofort wieder ab.
-- id: eg_bad_handtuch_heizstab_gestartet
-  alias: "EG Bad - Heizstab Timer Start"
-  trigger:
-    - trigger: state
-      entity_id: switch.29_c10437000000_pio_7
-      to: "on"
-  action:
-    - if:
-        - condition: state
-          entity_id: input_boolean.eg_bad_handtuch_manueller_modus
-          state: "on"
-      then:
-        # Falls die Abkühlzeit noch lief: sofort abbrechen und auf 30:00 zurücksetzen
-        - action: timer.cancel
-          target:
-            entity_id: timer.eg_bad_handtuch_abkuehl_timer
-
-        # Heiztimer starten
-        - action: timer.start
-          target:
-            entity_id: timer.eg_bad_handtuch_heizstab_timer
-
-        # FBH-Ventil sicherheitshalber geschlossen halten
-        - action: switch.turn_off
-          target:
-            entity_id: switch.29_c10437000000_pio_6
-      else:
-        # Sicherheit: Kein Heizstab ohne aktiven manuellen Modus
-        - action: switch.turn_off
-          target:
-            entity_id: switch.29_c10437000000_pio_7
-# 3. Heizstab-Laufzeit abgelaufen -> Heizstab aus & 30-Minuten-Abkühlung starten
-- id: eg_bad_handtuch_heizstab_zeit_abgelaufen
-  alias: "EG Bad - Heizstab Zeit abgelaufen"
-  trigger:
-    - trigger: event
-      event_type: timer.finished
-      event_data:
-        entity_id: timer.eg_bad_handtuch_heizstab_timer
-  action:
+    else:
     - action: switch.turn_off
       target:
         entity_id: switch.29_c10437000000_pio_7
-    - action: timer.start
-      target:
-        entity_id: timer.eg_bad_handtuch_abkuehl_timer
-# 4. Vorzeitiges manuelles Ausschalten des Heizstabs abfangen
-- id: eg_bad_handtuch_heizstab_vorzeitig_aus
-  alias: "EG Bad - Heizstab vorzeitig ausgeschaltet"
+- id: eg_bad_handtuch_heizstab_zeit_abgelaufen
+  alias: EG Bad - Heizstab Zeit abgelaufen
   trigger:
-    - trigger: state
-      entity_id: switch.29_c10437000000_pio_7
-      to: "off"
-  condition:
-    - condition: state
+  - trigger: event
+    event_type: timer.finished
+    event_data:
       entity_id: timer.eg_bad_handtuch_heizstab_timer
-      state: "active"
   action:
-    - action: timer.cancel
+  - action: switch.turn_off
+    target:
+      entity_id: switch.29_c10437000000_pio_7
+  - action: timer.start
+    target:
+      entity_id: timer.eg_bad_handtuch_abkuehl_timer
+- id: eg_bad_handtuch_heizstab_vorzeitig_aus
+  alias: EG Bad - Heizstab vorzeitig ausgeschaltet
+  trigger:
+  - trigger: state
+    entity_id: switch.29_c10437000000_pio_7
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: timer.eg_bad_handtuch_heizstab_timer
+    state: active
+  action:
+  - action: timer.cancel
+    target:
+      entity_id: timer.eg_bad_handtuch_heizstab_timer
+  - action: timer.start
+    target:
+      entity_id: timer.eg_bad_handtuch_abkuehl_timer
+- id: '1791137289670'
+  alias: WP - Quiet Mode Steuerung (WW & Nacht)
+  description: 'Aktiviert Quiet Mode 3 bei Nachtruhe oder Warmwasserbereitung.
+
+    Bei WW-Aufbereitung, weil zu hohe Leistung mit unserem WW-Speicher nicht funktioniert.
+    Wärmeübertragung nicht schnell genug.'
+  triggers:
+  - entity_id: schedule.nachtruhe_warmepumpe
+    trigger: state
+  - entity_id: sensor.panasonic_heat_pump_main_threeway_valve_state
+    trigger: state
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: schedule.nachtruhe_warmepumpe
+          state: 'on'
+        - condition: state
+          entity_id: sensor.panasonic_heat_pump_main_threeway_valve_state
+          state: Tank
+      sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.panasonic_heat_pump_main_quiet_mode_level
+        data:
+          option: '3'
+    default:
+    - action: select.select_option
       target:
-        entity_id: timer.eg_bad_handtuch_heizstab_timer
-    - action: timer.start
+        entity_id: select.panasonic_heat_pump_main_quiet_mode_level
+      data:
+        option: 'Off'
+  mode: restart
+- id: aquarea_praediktive_raumregelung_shift
+  alias: "Aquarea: Prädiktive Raumregelung (Heizkurven-Shift)"
+  description: >
+    Passt den Heizkurven-Shift (z1_heat_request_temp) anhand der prädiktiven
+    Raumtemperatur (Ist-Temperatur EG + 4h-Estrich-Wärmebilanz) an.
+    Beinhaltet Hysterese, 60 Minuten Mindest-Sperrzeit zur EEPROM-Schonung
+    sowie eine asymmetrische Rampe (Absenken sofort, Hochfahren max. +2 K pro Stunde).
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: sensor.raumregelung_empfohlener_shift
+      for:
+        minutes: 15
+    - platform: time_pattern
+      minutes: "/30"
+  condition:
+    # 1. Automatik-Schalter muss aktiv sein
+    - condition: state
+      entity_id: input_boolean.raumregelung_automatik_aktiv
+      state: "on"
+    # 2. Wärmepumpe muss im Heizbetrieb sein (Heat oder Heat+DHW)
+    - condition: template
+      value_template: >
+        {{ 'Heat' in states('select.panasonic_heat_pump_main_operating_mode_state') }}
+    # 3. Empfohlener Shift muss gültig sein und vom aktuell eingestellten Shift abweichen
+    - condition: template
+      value_template: >
+        {% set rec = states('sensor.raumregelung_empfohlener_shift') %}
+        {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp') %}
+        {{ rec not in ['unavailable', 'unknown', '']
+           and cur not in ['unavailable', 'unknown', '']
+           and (rec | int) != (cur | int) }}
+    # 4. Mindest-Sperrzeit: Letzte Änderung des Shifts muss mindestens 60 Minuten her sein
+    - condition: template
+      value_template: >
+        {% set last_chg = states.number.panasonic_heat_pump_main_z1_heat_request_temp.last_changed %}
+        {{ (now() - last_chg).total_seconds() >= 3600 }}
+  action:
+    - service: number.set_value
       target:
-        entity_id: timer.eg_bad_handtuch_abkuehl_timer
+        entity_id: number.panasonic_heat_pump_main_z1_heat_request_temp
+      data:
+        # Asymmetrische Nachführung:
+        # - Nach unten (Absenken, rec < cur): Darf sofort in einem Schritt auf den Ziel-Shift (z.B. -5 K) gehen.
+        # - Nach oben (Aufheizen, rec > cur): Maximal +2 K pro Schaltvorgang (max. +2 K / 60 Min.),
+        #   damit die Wärmepumpe nach der Nachtabsenkung sanft ohne Leistungsspitze hochmoduliert.
+        value: >
+          {% set rec = states('sensor.raumregelung_empfohlener_shift') | int(0) %}
+          {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp') | float(0) | round(0) | int %}
+          {% if rec > cur %}
+            {{ [[rec, cur + 2] | min, 5] | min }}
+          {% elif rec < cur %}
+            {{ [rec, -5] | max }}
+          {% else %}
+            {{ cur }}
+          {% endif %}
+

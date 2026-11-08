@@ -1,14 +1,29 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace_resources",
-    "data": {
-        "items": [
-            {
-                "url": "/local/mini-graph-card-bundle.js",
-                "type": "module",
-                "id": "be5a4ca8fd534e2fa5c2e3d339627280"
-            }
-        ]
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "url": "/local/mini-graph-card-bundle.js",
+        "type": "module",
+        "id": "be5a4ca8fd534e2fa5c2e3d339627280"
+      },
+      {
+        "id": "da55e956a1c544a196209708e072103d",
+        "url": "/local/apexcharts-card.js",
+        "type": "module"
+      },
+      {
+        "id": "5cfe5e34b86142278ab0380aa382f3a7",
+        "url": "/local/floorplan.js",
+        "type": "module"
+      },
+      {
+        "id": "7165dff2d653449e8153cf454f5ab5e0",
+        "url": "/local/card-mod.js",
+        "type": "module"
+      }
+    ]
+  }
 }

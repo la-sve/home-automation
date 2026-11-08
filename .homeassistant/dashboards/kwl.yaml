@@ -1,0 +1,241 @@
+# ==============================================================================
+# Home Assistant Dashboard: Kermi x-well N300 Lüftungssteuerung (KWL)
+# Reines Standard-Lovelace (ohne Custom Cards)
+# ==============================================================================
+# HINWEIS ZU ENTITY-IDS:
+# ESPHome generiert Entitäts-IDs standardmäßig mit dem Präfix des Gerätenamens.
+# Prüfe kurz unter Entwicklerwerkzeuge -> Zustände in Home Assistant, ob deine
+# Entitäten z.B. "sensor.lueftungssteuerung_..." oder "sensor.lueftungssteuerung_lan_..."
+# heißen, und passe bei Bedarf das Präfix per Suchen & Ersetzen an.
+# ==============================================================================
+
+title: Lüftungssteuerung
+views:
+  - title: Übersicht
+    path: uebersicht
+    icon: mdi:air-filter
+    type: sidebar
+    cards:
+      # ========================================================================
+      # HAUPT-SPALTE (LINKS / BREIT)
+      # ========================================================================
+
+      # 1. ZENTRALER STATUS & ARBITRIERUNG
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Anlagenstatus & Betriebsmodus
+            icon: mdi:state-machine
+            show_header_toggle: false
+            entities:
+              - entity: sensor.lueftungssteuerung_aktiver_regelungszustand
+                name: Aktiver Regelungszustand
+                icon: mdi:information-outline
+              - entity: sensor.lueftungssteuerung_regelungsgrund
+                name: Aktuelle Begründung
+                icon: mdi:comment-question-outline
+              - entity: sensor.lueftungssteuerung_aktive_prioritatsstufe
+                name: Aktive Prioritätsstufe (Prio 1–6)
+                icon: mdi:numeric
+              - type: divider
+              - entity: select.lueftungssteuerung_betriebsmodus
+                name: Betriebsmodus
+                icon: mdi:power-settings
+              - entity: select.lueftungssteuerung_luftungsstufe_vorwahl
+                name: Stufen-Vorwahl (Automatik)
+                icon: mdi:fan-speed-2
+
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: tile
+                entity: switch.lueftungssteuerung_ruhemodus
+                name: Ruhemodus
+                icon: mdi:weather-night
+                color: purple
+              - type: tile
+                entity: switch.lueftungssteuerung_intensivluftung_party_boost
+                name: Party-Boost (30 min)
+                icon: mdi:party-popper
+                color: amber
+
+      # 2. THERMODYNAMIK, WÄRMERÜCKGEWINNUNG & FEUCHTE
+      - type: vertical-stack
+        cards:
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: gauge
+                entity: sensor.lueftungssteuerung_warmetauscher_effektivitat
+                name: Rückwärmezahl (η_WRG)
+                unit: "%"
+                min: 0
+                max: 100
+                needle: true
+                severity:
+                  green: 70
+                  yellow: 40
+                  red: 0
+              - type: tile
+                entity: cover.lueftungssteuerung_bypass_klappe
+                name: Bypass-Klappe
+                icon: mdi:valve
+
+          - type: entities
+            title: Temperatur-Bilanz (Kermi x-well N300)
+            show_header_toggle: false
+            entities:
+              - entity: number.lueftungssteuerung_sommerkuhlung_schwellentemperatur
+                name: Sommerkühlung Schwelle (Abluft)
+                icon: mdi:thermometer-auto
+              - type: divider
+              - entity: sensor.lueftungssteuerung_temperatur_aussenluft_t1
+                name: T1 Außenluft (Ansaugung)
+                icon: mdi:thermometer-chevron-down
+              - entity: sensor.lueftungssteuerung_temperatur_zuluft_t2
+                name: T2 Zuluft (in Wohnräume)
+                icon: mdi:home-import-outline
+              - entity: sensor.lueftungssteuerung_temperatur_abluft_t3
+                name: T3 Abluft (aus Wohnräumen)
+                icon: mdi:home-export-outline
+              - entity: sensor.lueftungssteuerung_temperatur_fortluft_t4
+                name: T4 Fortluft (nach draußen)
+                icon: mdi:thermometer-chevron-up
+
+          - type: history-graph
+            title: Temperaturverlauf (letzte 24h)
+            hours_to_show: 24
+            entities:
+              - entity: sensor.lueftungssteuerung_temperatur_aussenluft_t1
+                name: T1 Außen
+              - entity: sensor.lueftungssteuerung_temperatur_zuluft_t2
+                name: T2 Zuluft
+              - entity: sensor.lueftungssteuerung_temperatur_abluft_t3
+                name: T3 Abluft
+              - entity: sensor.lueftungssteuerung_temperatur_fortluft_t4
+                name: T4 Fortluft
+
+          - type: entities
+            title: Feuchte- & Trocknungspotenzial (ΔAH)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.lueftungssteuerung_luftfeuchtigkeit_abluft
+                name: Relative Abluftfeuchte (Bad/Küche)
+                icon: mdi:water-percent
+              - entity: sensor.outdoor_humidity
+                name: Relative Außenfeuchte (HA Helfer)
+                icon: mdi:cloud-percent
+              - type: divider
+              - entity: sensor.lueftungssteuerung_absolute_feuchte_abluft
+                name: Absolute Feuchte Abluft
+                icon: mdi:water-opacity
+              - entity: sensor.lueftungssteuerung_absolute_feuchte_aussenluft
+                name: Absolute Feuchte Außenluft
+                icon: mdi:water-opacity
+
+      # 3. LÜFTER-DREHZAHLEN & WARTUNG
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Ventilatoren (ebmpapst EC 0-10V)
+            show_header_toggle: false
+            entities:
+              - entity: sensor.lueftungssteuerung_lufter_vorgabe_zuluft
+                name: Vorgabe Zuluft (Soll)
+                icon: mdi:fan-speed-2
+              - entity: sensor.lueftungssteuerung_drehzahl_zuluft
+                name: Drehzahl Zuluft (Ist)
+                icon: mdi:fan
+              - type: divider
+              - entity: sensor.lueftungssteuerung_lufter_vorgabe_abluft
+                name: Vorgabe Abluft (Soll)
+                icon: mdi:fan-speed-2
+              - entity: sensor.lueftungssteuerung_drehzahl_abluft
+                name: Drehzahl Abluft (Ist)
+                icon: mdi:fan
+              - type: divider
+              - entity: number.lueftungssteuerung_lan_lufter_offset_abluft_automatik
+                name: Abluft-Offset Automatik
+                icon: mdi:tune
+
+          # Nur im Wartungsmodus sichtbar: Manuelle Drehzahleinstellung
+          - type: conditional
+            conditions:
+              - entity: select.lueftungssteuerung_betriebsmodus
+                state: "Wartungsmodus"
+            card:
+              type: entities
+              title: Manuelle Lüftersteuerung (Wartung)
+              entities:
+                - entity: number.lueftungssteuerung_luftergeschwindigkeit_zuluft_wartung
+                  name: Zuluft Drehzahl (%)
+                - entity: number.lueftungssteuerung_luftergeschwindigkeit_abluft_wartung
+                  name: Abluft Drehzahl (%)
+
+      # ========================================================================
+      # SEITEN-SPALTE (RECHTS / SCHMAL)
+      # ========================================================================
+
+      # 4. SONDERZUSTÄNDE & INDIKATOREN
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Aktive Sonderfunktionen
+            show_header_toggle: false
+            entities:
+              - entity: binary_sensor.lueftungssteuerung_frostschutz_aktiv
+                name: Prio 3 Frostschutz / Abtauung
+                icon: mdi:snowflake-alert
+              - entity: binary_sensor.lueftungssteuerung_sommer_bypass_aktiv
+                name: Prio 5 Sommer-Bypass (Free Cooling)
+                icon: mdi:weather-sunset-down
+              - entity: binary_sensor.lueftungssteuerung_intensivluftung_aktiv
+                name: Prio 4 Bedarfs-Intensivlüftung
+                icon: mdi:weather-windy
+
+          # 5. HARDWARE-RELAIS & BYPASS DIREKTSTEUERUNG
+          - type: entities
+            title: Relais & Hardware-Aktoren
+            show_header_toggle: false
+            entities:
+              - entity: switch.lueftungssteuerung_relais_ventilatoren_schutz_r3
+                name: Schütz R3 (Lüfter 230V)
+                icon: mdi:flash
+              - entity: switch.lueftungssteuerung_relais_bypass_offnen_r1
+                name: Relais R1 (Klappe AUF)
+              - entity: switch.lueftungssteuerung_relais_bypass_schliessen_r2
+                name: Relais R2 (Klappe ZU)
+
+          # 6. SIMULATIONS- & TEST-PANEL
+          - type: entities
+            title: Simulation & Software-Test
+            show_header_toggle: false
+            entities:
+              - entity: switch.lueftungssteuerung_debug_simulations_modus
+                name: Simulations-Modus
+                icon: mdi:flask-test
+
+          # Die Test-Slider klappen automatisch auf, sobald der Simulationsmodus aktiv ist
+          - type: conditional
+            conditions:
+              - entity: switch.lueftungssteuerung_debug_simulations_modus
+                state: "on"
+            card:
+              type: entities
+              title: Simulations-Sollwerte (Test-Slider)
+              show_header_toggle: false
+              entities:
+                - entity: number.lueftungssteuerung_sim_t1_aussenluft
+                  name: Sim T1 Außenluft (°C)
+                - entity: number.lueftungssteuerung_sim_t2_zuluft
+                  name: Sim T2 Zuluft (°C)
+                - entity: number.lueftungssteuerung_sim_t3_abluft
+                  name: Sim T3 Abluft (°C)
+                - entity: number.lueftungssteuerung_sim_t4_fortluft
+                  name: Sim T4 Fortluft (°C)
+                - entity: number.lueftungssteuerung_sim_abluft_feuchtigkeit
+                  name: Sim Abluft-Feuchte (%)
+                - entity: number.lueftungssteuerung_sim_aussenluft_feuchtigkeit
+                  name: Sim Außen-Feuchte (%)

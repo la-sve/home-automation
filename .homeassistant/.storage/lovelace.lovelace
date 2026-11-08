@@ -7,7 +7,6 @@
       "views": [
         {
           "title": "Start",
-          "path": "start",
           "icon": "mdi:home",
           "theme": "",
           "visible": [
@@ -19,103 +18,197 @@
             }
           ],
           "badges": [],
-          "cards": [
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "script.rollos_eg_up"
-                },
-                {
-                  "entity": "script.rollos_eg_down"
-                },
-                {
-                  "entity": "script.rollos_og_up"
-                },
-                {
-                  "entity": "script.rollos_og_down"
-                },
-                {
-                  "entity": "script.rollos_og_sonne"
-                },
-                {
-                  "entity": "sensor.victron_batterie"
-                },
-                {
-                  "entity": "group.nachtlichter"
-                },
-                {
-                  "entity": "sensor.temp_terrasse_temperature",
-                  "name": "Außentemp. (Terrasse)"
-                }
-              ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.lueftungssteuerung_luftfeuchtigkeit_abluft",
-                  "name": "Abluft rel. Feuchte"
-                },
-                {
-                  "entity": "sensor.absolute_luftfeuchtigkeit_abluft",
-                  "name": "Abluft abs. Feuchte"
-                },
-                {
-                  "entity": "sensor.temp_terrasse_humidity",
-                  "name": "Terrasse rel. Feuchte"
-                },
-                {
-                  "entity": "sensor.absolute_luftfeuchtigkeit_terrasse",
-                  "name": "Terrasse abs. Feuchte"
-                },
-                {
-                  "entity": "sensor.temp_garage_humidity",
-                  "name": "Garage rel. Feuchte"
-                },
-                {
-                  "entity": "sensor.absolute_luftfeuchtigkeit_garage",
-                  "name": "Garage abs. Feuchte"
-                }
-              ]
-            }
-          ]
-        },
-        {
+          "cards": [],
           "type": "sections",
-          "max_columns": 4,
-          "title": "Garten",
-          "path": "garten",
-          "icon": "mdi:shovel",
           "sections": [
             {
               "type": "grid",
               "cards": [
                 {
                   "type": "heading",
-                  "heading": "Neuer Abschnitt"
+                  "heading": "Rollos",
+                  "heading_style": "title"
                 },
                 {
-                  "type": "entities",
-                  "entities": [
+                  "square": false,
+                  "type": "grid",
+                  "columns": 2,
+                  "cards": [
                     {
-                      "entity": "switch.bewaesserungsventil",
-                      "name": "Hochbeet-Links"
+                      "type": "tile",
+                      "entity": "script.rollos_eg_up",
+                      "name": "EG UP",
+                      "icon": "mdi:curtains",
+                      "color": "amber",
+                      "show_entity_picture": false,
+                      "hide_state": true,
+                      "vertical": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
                     },
                     {
-                      "entity": "script.bewaesserung1_test"
+                      "type": "tile",
+                      "entity": "script.rollos_eg_down",
+                      "name": "EG Down",
+                      "icon": "mdi:curtains-closed",
+                      "hide_state": true,
+                      "vertical": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
                     },
                     {
-                      "entity": "switch.bewaesserungsventil2",
-                      "name": "Hochbeet-Rechts"
+                      "type": "tile",
+                      "entity": "script.rollos_og_up",
+                      "name": "OG Up",
+                      "icon": "mdi:curtains",
+                      "hide_state": true,
+                      "vertical": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
                     },
                     {
-                      "entity": "script.bewaesserung_hochbeet_rechts_1min"
+                      "type": "tile",
+                      "entity": "script.rollos_og_down",
+                      "name": "OG Down",
+                      "icon": "mdi:curtains-closed",
+                      "hide_state": true,
+                      "vertical": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "script.rollos_og_sonne",
+                      "name": "Sonnenrollos Down",
+                      "show_entity_picture": false,
+                      "hide_state": true,
+                      "vertical": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "weather.forecast_home",
+                      "name": "Vorhersage",
+                      "icon": "",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "automation.abwesenheit_rollos_up",
+                      "name": "Abwesenheit Up",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "automation.abwesenheit_rollos_down",
+                      "name": "Abwesenheit Down",
+                      "icon": "",
+                      "vertical": false,
+                      "features_position": "bottom"
                     }
-                  ],
-                  "title": "Bewässerung",
-                  "show_header_toggle": false,
-                  "state_color": true
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Übersicht",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.victron_grid_meter_power_sum",
+                      "name": "Energieverbrauch",
+                      "icon": "mdi:lightning-bolt-circle",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.victron_batterie",
+                      "name": "Akku",
+                      "icon": "",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.victron_solar_eintrag_2",
+                      "name": "Solareintrag",
+                      "icon": "mdi:solar-power-variant",
+                      "color": "accent",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "switch.solarthermie_zirkulationspumpe_230v",
+                      "name": "WW-Zirkulation",
+                      "icon": "mdi:water-pump",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_heat_power_production",
+                      "name": "Heizleistung",
+                      "icon": "mdi:heating-coil",
+                      "color": "red",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_power_production",
+                      "name": "WW-Leistung",
+                      "icon": "mdi:lightbulb-cfl",
+                      "color": "red",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_temp",
+                      "name": "WW-Speicher",
+                      "icon": "mdi:thermometer-water",
+                      "color": "red",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.lueftungssteuerung_lufter_vorgabe_zuluft",
+                      "name": "Lüftungsleistung",
+                      "icon": "mdi:fan",
+                      "color": "indigo",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
                 }
               ]
             },
@@ -124,97 +217,427 @@
               "cards": [
                 {
                   "type": "heading",
+                  "heading": "Wetter",
                   "heading_style": "title"
                 },
                 {
-                  "type": "entities",
-                  "entities": [
-                    {
-                      "entity": "sensor.garage_temperatur",
-                      "name": "Temp (uC)"
-                    },
-                    {
-                      "entity": "sensor.temp_garage_temperature",
-                      "name": "Temp (zigbee)"
-                    },
-                    {
-                      "entity": "sensor.garage_luftfeuchtigkeit",
-                      "name": "Feuchte (uC)"
-                    },
-                    {
-                      "entity": "sensor.temp_garage_humidity",
-                      "name": "Feuchte (zigbee)"
-                    },
-                    {
-                      "entity": "sensor.garage_gefilterte_luftfeuchtigkeit",
-                      "name": "Feuchte (Filter)"
-                    }
-                  ],
-                  "title": "Garage"
-                }
-              ]
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "heading",
-                  "heading_style": "title"
+                  "type": "weather-forecast",
+                  "entity": "weather.forecast_home",
+                  "show_forecast": false
                 },
                 {
-                  "type": "entities",
-                  "entities": [
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
                     {
+                      "type": "tile",
                       "entity": "sensor.temp_terrasse_temperature",
-                      "name": "Terrasse"
+                      "name": "Außen (Terrasse)",
+                      "icon": "",
+                      "color": "pink",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
+                      "type": "tile",
+                      "entity": "sensor.mittlere_temperatur_eg",
+                      "name": "EG Temp",
+                      "icon": "mdi:home-thermometer",
+                      "color": "pink",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
                       "entity": "sensor.temp_terrasse_humidity",
-                      "name": "Terrasse"
+                      "name": "Außen (Terrasse)",
+                      "icon": "mdi:cloud-percent-outline",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
-                      "entity": "sensor.solarthermie_kollektor_temperatur",
-                      "name": "Kollektor"
+                      "type": "tile",
+                      "entity": "sensor.lueftungssteuerung_luftfeuchtigkeit_abluft",
+                      "name": "Abluft %",
+                      "icon": "mdi:home-percent-outline",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
-                      "entity": "sensor.lueftungssteuerung_temperatur_aussenluft_t1",
-                      "name": "Lüftungssensor"
+                      "type": "tile",
+                      "entity": "sensor.absolute_luftfeuchtigkeit_terrasse",
+                      "name": "Außen (Terrasse)",
+                      "icon": "mdi:cloud-percent",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.absolute_luftfeuchtigkeit_abluft",
+                      "name": "Abluft",
+                      "icon": "mdi:home-percent",
+                      "hide_state": false,
+                      "vertical": false,
+                      "features_position": "bottom"
                     }
-                  ],
-                  "title": "Außen"
+                  ]
                 }
               ]
             }
+          ]
+        },
+        {
+          "icon": "mdi:heating-coil",
+          "title": "Gastherme",
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.mittlere_temperatur_eg",
+              "name": "Haus"
+            }
           ],
-          "cards": []
+          "cards": [],
+          "type": "sections",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Erdgeschoss",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff80ce501603_temperature",
+                      "name": "Hauswirtschaftsr (HWRA)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff9a3a501603_temperature",
+                      "name": "Arbeitszimmer (ARBE)"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff380fb41603_temperature",
+                      "name": "Wohnzimmer (WOHN)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ffcbed531604_temperature",
+                      "name": "Küche (KUEC)"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff5304511603_temperature",
+                      "name": "WC (WCEG)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ffa9edb31605_temperature",
+                      "name": "Flur (FLUR)"
+                    }
+                  ]
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.hauswirtschaftsraum"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.wceg"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.handtucheg"
+                    }
+                  ]
+                },
+                {
+                  "type": "entities",
+                  "title": "Handtuchheizung EG",
+                  "entities": [
+                    {
+                      "entity": "input_boolean.eg_bad_handtuch_manueller_modus",
+                      "name": "Manueller Modus (FBH sperren)"
+                    },
+                    {
+                      "entity": "switch.29_c10437000000_pio_7",
+                      "name": "Zusatzheizung (Heizstab)"
+                    },
+                    {
+                      "entity": "timer.eg_bad_handtuch_heizstab_timer",
+                      "name": "Restzeit Heizstab"
+                    },
+                    {
+                      "entity": "timer.eg_bad_handtuch_abkuehl_timer",
+                      "name": "Restzeit Abkühlung"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "entity": "switch.29_c10437000000_pio_6",
+                      "name": "FBH-Ventil Status"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "entity": "sensor.eg_bad_handtuch_heizstab_energie"
+                    }
+                  ],
+                  "show_header_toggle": false
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Obergeschoss"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff3b2a511603_temperature",
+                      "name": "Zimmer (KID1)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff0f3e541604_temperature",
+                      "name": "Zimmer (KID2)"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ffe302511603_temperature",
+                      "name": "Bibliothek (BIBO)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ffc27cb41603_temperature",
+                      "name": "Bad (WCOG)"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff0dcf501603_temperature",
+                      "name": "Ankleide (ANKL)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff3bc3471603_temperature",
+                      "name": "Schlafzimmer (SCHL)"
+                    }
+                  ]
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.sina"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.malte"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.ankleide"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.schlafzimmer"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.wcog"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.handtuchog"
+                    }
+                  ]
+                },
+                {
+                  "type": "entities",
+                  "title": "Handtuchheizung OG",
+                  "entities": [
+                    {
+                      "entity": "input_boolean.og_bad_handtuch_manueller_modus",
+                      "name": "Manueller Modus (FBH sperren)"
+                    },
+                    {
+                      "entity": "switch.29_b90437000000_pio_7",
+                      "name": "Zusatzheizung (Heizstab)"
+                    },
+                    {
+                      "entity": "timer.og_bad_handtuch_heizstab_timer",
+                      "name": "Restzeit Heizstab"
+                    },
+                    {
+                      "entity": "timer.og_bad_handtuch_abkuehl_timer",
+                      "name": "Restzeit Abkühlung"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "entity": "switch.29_b90437000000_pio_6",
+                      "name": "FBH-Ventil Status"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "entity": "sensor.og_bad_handtuch_heizstab_energie"
+                    }
+                  ],
+                  "show_header_toggle": false
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Dachgeschoss"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff5ad9501603_temperature",
+                      "name": "Studio (STUD)",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.28_ff4777b41603_temperature",
+                      "name": "Galerie (GALE)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "theme": "Backend-selected",
           "title": "Lüftung",
           "path": "luftung",
           "icon": "mdi:air-conditioner",
-          "badges": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "select.lueftungssteuerung_betriebsmodus",
+              "name": "Betriebsmodus"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.lueftungssteuerung_ruhemodus",
+              "name": "Ruhemodus"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.lueftungssteuerung_intensivluftung_party_boost",
+              "name": "Boost"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "cover.lueftungssteuerung_bypass_klappe",
+              "name": "Bypass"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "binary_sensor.lueftungssteuerung_frostschutz_aktiv",
+              "name": "Frostschutz"
+            }
+          ],
           "cards": [
             {
               "type": "entities",
               "entities": [
                 {
-                  "entity": "switch.nilan_system_off"
+                  "entity": "number.lueftungssteuerung_sommerkuhlung_schwellentemperatur",
+                  "name": "Kühlmodus bei"
                 },
                 {
-                  "entity": "switch.nilan_pause"
+                  "entity": "sensor.lueftungssteuerung_aktiver_regelungszustand",
+                  "name": "Modus"
+                },
+                {
+                  "entity": "sensor.lueftungssteuerung_warmetauscher_effektivitat",
+                  "name": "Wärmetauscher"
                 },
                 {
                   "entity": "sensor.lueftungssteuerung_luftfeuchtigkeit_abluft",
                   "name": "Luftfeuchtigkeit"
                 },
                 {
-                  "entity": "sensor.lueftungssteuerung_drehzahl_zuluft",
-                  "name": "Zuluftventilator"
-                },
-                {
-                  "entity": "sensor.lueftungssteuerung_drehzahl_abluft",
-                  "name": "Abluftventilator"
+                  "entity": "sensor.lueftungssteuerung_lufter_vorgabe_zuluft",
+                  "name": "Zuluft-Vorgabe"
                 }
               ],
               "title": "Lüftung"
@@ -237,134 +660,9 @@
                 {
                   "entity": "sensor.lueftungssteuerung_temperatur_fortluft_t4",
                   "name": "Fortluft (Nach draußen T4)"
-                },
-                {
-                  "entity": "sensor.nilan_bypass_state"
                 }
               ],
               "title": "Lüftung Temperaturen"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "number.lueftungssteuerung_luftergeschwindigkeit_vorgabe_automatik",
-                  "name": "Leistung"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "theme": "Backend-selected",
-          "icon": "mdi:heating-coil",
-          "title": "Gastherme",
-          "path": "gastherme",
-          "badges": [],
-          "cards": [
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "switch.solarthermie_zirkulationspumpe_230v"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_aussentemperatur",
-                  "name": "Außentemperatur"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_vorlauftemperatur",
-                  "name": "Vorlauftemperatur"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_ww_speichertemperatur",
-                  "name": "Warmwasser"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_solarkollektor_temperatur",
-                  "name": "Solarkollektor-Temperatur"
-                },
-                {
-                  "entity": "sensor.vscotho1_200_solarenergie_erzeugung_heute",
-                  "name": "Solarenergie-Erzeugung Heute"
-                },
-                {
-                  "entity": "binary_sensor.vscotho1_200_solarpumpe",
-                  "name": "Solar Pumpe "
-                }
-              ]
-            },
-            {
-              "type": "entities",
-              "title": "Handtuchheizung OG",
-              "entities": [
-                {
-                  "entity": "input_boolean.og_bad_handtuch_manueller_modus",
-                  "name": "Manueller Modus (FBH sperren)"
-                },
-                {
-                  "entity": "switch.29_b90437000000_pio_7",
-                  "name": "Zusatzheizung (Heizstab)"
-                },
-                {
-                  "entity": "timer.og_bad_handtuch_heizstab_timer",
-                  "name": "Restzeit Heizstab"
-                },
-                {
-                  "entity": "timer.og_bad_handtuch_abkuehl_timer",
-                  "name": "Restzeit Abkühlung"
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "entity": "switch.29_b90437000000_pio_6",
-                  "name": "FBH-Ventil Status"
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "entity": "sensor.og_bad_handtuch_heizstab_energie"
-                }
-              ],
-              "show_header_toggle": false
-            },
-            {
-              "type": "entities",
-              "title": "Handtuchheizung EG",
-              "entities": [
-                {
-                  "entity": "input_boolean.eg_bad_handtuch_manueller_modus",
-                  "name": "Manueller Modus (FBH sperren)"
-                },
-                {
-                  "entity": "switch.29_c10437000000_pio_7",
-                  "name": "Zusatzheizung (Heizstab)"
-                },
-                {
-                  "entity": "timer.eg_bad_handtuch_heizstab_timer",
-                  "name": "Restzeit Heizstab"
-                },
-                {
-                  "entity": "timer.eg_bad_handtuch_abkuehl_timer",
-                  "name": "Restzeit Abkühlung"
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "entity": "switch.29_c10437000000_pio_6",
-                  "name": "FBH-Ventil Status"
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "entity": "sensor.eg_bad_handtuch_heizstab_energie"
-                }
-              ],
-              "show_header_toggle": false
             }
           ]
         },
@@ -387,25 +685,16 @@
                   "type": "entities",
                   "entities": [
                     {
-                      "entity": "switch.solar_regler_power"
+                      "entity": "sensor.solarthermie_aktuelle_pumpenleistung",
+                      "name": "Pumpenleistung"
                     },
                     {
-                      "entity": "number.solarthermie_maximaltemperatur_speicher"
+                      "entity": "number.solarthermie_maximaltemperatur_speicher",
+                      "name": "Maximaltemperatur"
                     },
                     {
-                      "entity": "number.solarthermie_maximale_pwm_leistung"
-                    },
-                    {
-                      "entity": "sensor.solarthermie_kollektor_temperatur"
-                    },
-                    {
-                      "entity": "sensor.solarthermie_speicher_temperatur"
-                    },
-                    {
-                      "entity": "sensor.temp_heizung_temperature"
-                    },
-                    {
-                      "entity": "sensor.solarthermie_aktuelle_pumpenleistung"
+                      "entity": "number.solarthermie_maximale_pwm_leistung",
+                      "name": "Max. Pumpenleistung"
                     }
                   ]
                 },
@@ -415,22 +704,24 @@
                   "hours_to_show": 43,
                   "entities": [
                     {
-                      "entity": "sensor.solarthermie_kollektor_speicher_differenz"
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_temp",
+                      "name": "WP-Speicher"
                     },
                     {
-                      "entity": "sensor.solarthermie_aktuelle_pumpenleistung"
+                      "entity": "sensor.solarthermie_speicher_temperatur",
+                      "name": "Speicher (unten)"
                     },
                     {
-                      "entity": "sensor.solarthermie_kollektor_temperatur"
+                      "entity": "sensor.panasonic_heat_pump_main_main_outlet_temp",
+                      "name": "Vorlauf"
                     },
                     {
-                      "entity": "sensor.solarthermie_speicher_temperatur"
+                      "entity": "switch.solarthermie_solarpumpe_230v",
+                      "name": "State"
                     },
                     {
-                      "entity": "switch.solarthermie_solarpumpe_230v"
-                    },
-                    {
-                      "entity": "switch.solarthermie_solarregelung_wartungsmodus"
+                      "entity": "sensor.panasonic_heat_pump_main_threeway_valve_state",
+                      "name": "WP"
                     }
                   ]
                 }
@@ -493,147 +784,897 @@
               ]
             }
           ],
+          "cards": [],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.solar_regler_power",
+              "name": "Regeler",
+              "icon": "mdi:power"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.solarthermie_kollektor_temperatur",
+              "name": "Kollektor"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.solarthermie_speicher_temperatur",
+              "name": "Speicher Solar"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.panasonic_heat_pump_main_dhw_temp",
+              "name": "Speicher WP"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.solarthermie_zirkulationspumpe_230v",
+              "name": "WW-Zirkulation",
+              "icon": "mdi:water-pump"
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Garten",
+          "path": "garten",
+          "icon": "mdi:shovel",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Hochbeet-Bewässerung"
+                },
+                {
+                  "color": "state",
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "switch.bewaesserungsventil",
+                      "name": "Hochbeet-Links"
+                    },
+                    {
+                      "entity": "script.bewaesserung1_test"
+                    },
+                    {
+                      "entity": "switch.bewaesserungsventil2",
+                      "name": "Hochbeet-Rechts"
+                    },
+                    {
+                      "entity": "script.bewaesserung_hochbeet_rechts_1min"
+                    }
+                  ],
+                  "show_header_toggle": false
+                },
+                {
+                  "type": "heading",
+                  "heading": "Terrassensteckdose (2fach)"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "switch.steckdose_outdoor_l1",
+                      "name": "Mowi / W-Stern",
+                      "icon": "mdi:power-socket-de",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "switch.steckdose_outdoor_l2",
+                      "name": "Palmen",
+                      "icon": "mdi:power-socket-de",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.steckdose_outdoor_power",
+                      "name": "Momentan",
+                      "icon": "mdi:lightning-bolt",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.steckdose_outdoor_energy",
+                      "name": "Gesamt (ca. -81)",
+                      "icon": "mdi:transmission-tower",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Garage",
+                  "heading_style": "title",
+                  "icon": "mdi:garage-variant"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.garage_temperatur",
+                      "name": "uC",
+                      "icon": "mdi:thermometer",
+                      "color": "blue-grey",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_garage_temperature",
+                      "name": "Zigbee",
+                      "icon": "mdi:thermometer-bluetooth",
+                      "color": "blue",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.garage_luftfeuchtigkeit",
+                      "name": "uC",
+                      "icon": "mdi:water-percent",
+                      "color": "blue-grey",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_garage_humidity",
+                      "name": "Zigbee",
+                      "color": "blue",
+                      "card_mod": {
+                        "style": "ha-card {\n  {% if states('sensor.temp_garage_humidity') | float(0) >= 75 %}\n    background: var(--red-color, #db4437) !important;\n    --primary-text-color: #ffffff !important;\n    --secondary-text-color: rgba(255, 255, 255, 0.85) !important;\n  {% endif %}\n}\n"
+                      },
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.garage_gefilterte_luftfeuchtigkeit",
+                      "name": "uC",
+                      "icon": "",
+                      "color": "blue-grey",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.absolute_luftfeuchtigkeit_garage",
+                      "name": "Absolut",
+                      "icon": "mdi:water-percent-alert",
+                      "color": "blue",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Außenluft",
+                  "heading_style": "title",
+                  "icon": "mdi:gate"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_terrasse_temperature",
+                      "name": "Terrasse",
+                      "icon": "mdi:thermometer",
+                      "color": "blue-grey",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.absolute_luftfeuchtigkeit_terrasse",
+                      "name": "Terrasse",
+                      "icon": "mdi:home-percent",
+                      "color": "blue",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.lueftungssteuerung_temperatur_aussenluft_t1",
+                      "name": "Lueftungssensor",
+                      "icon": "mdi:home-roof",
+                      "color": "blue-grey",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_terrasse_humidity",
+                      "name": "Terrasse",
+                      "icon": "mdi:home-percent-outline",
+                      "color": "blue",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.solarthermie_kollektor_temperatur",
+                      "name": "Kollektor",
+                      "icon": "mdi:solar-power-variant",
+                      "color": "purple",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title",
+                  "heading": "Garage lüften?"
+                },
+                {
+                  "type": "history-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.temp_garage_temperature",
+                      "name": "Garage",
+                      "color": "green"
+                    },
+                    {
+                      "entity": "sensor.temp_terrasse_temperature",
+                      "name": "Außen",
+                      "color": "red"
+                    },
+                    {
+                      "entity": "sensor.absolute_luftfeuchtigkeit_garage",
+                      "name": "Garage",
+                      "color": "green"
+                    },
+                    {
+                      "entity": "sensor.absolute_luftfeuchtigkeit_terrasse",
+                      "name": "Außen",
+                      "color": "red"
+                    }
+                  ],
+                  "hours_to_show": 12,
+                  "expand_legend": false
+                }
+              ]
+            }
+          ],
           "cards": []
         },
         {
-          "theme": "Backend-selected",
-          "title": "Heizen EG",
-          "path": "heizen-eg",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "icon": "mdi:home-floor-0",
+          "type": "sections",
+          "max_columns": 4,
+          "icon": "mdi:heat-pump-outline",
+          "path": "wp",
+          "title": "WP",
           "badges": [
             {
-              "entity": "sensor.28_ff80ce501603_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.panasonic_heat_pump_main_heat_power_consumption",
+              "icon": "mdi:flash",
+              "color": "yellow",
+              "name": "Heizen"
             },
             {
-              "entity": "sensor.28_ff9a3a501603_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.panasonic_heat_pump_main_dhw_power_consumption",
+              "name": "WW",
+              "color": "yellow"
             },
             {
-              "entity": "sensor.28_ff380fb41603_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "number.panasonic_heat_pump_main_z1_heat_request_temp",
+              "name": "Shift Heizkurve",
+              "icon": "mdi:plus-minus-variant"
             },
             {
-              "entity": "sensor.28_ffcbed531604_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.panasonic_heat_pump_main_force_dhw_state",
+              "name": "Aufladen",
+              "icon": "mdi:water-thermometer",
+              "color": "deep-purple"
             },
             {
-              "entity": "sensor.28_ff5304511603_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.panasonic_heat_pump_main_main_outlet_temp",
+              "name": "Vorlauf",
+              "icon": "mdi:home-import-outline",
+              "show_entity_picture": false,
+              "color": "red"
             },
             {
-              "entity": "sensor.28_ffa9edb31605_temperature"
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.panasonic_heat_pump_main_main_inlet_temp",
+              "name": "Rücklauf",
+              "icon": "mdi:home-export-outline"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "switch.panasonic_heat_pump_main_heatpump_state",
+              "name": "Status",
+              "icon": "mdi:power"
             }
           ],
-          "cards": [
+          "sections": [
             {
-              "type": "thermostat",
-              "entity": "climate.hauswirtschaftsraum"
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Einstellungen"
+                },
+                {
+                  "type": "tile",
+                  "entity": "select.panasonic_heat_pump_main_operating_mode_state",
+                  "name": "Heizungssteuerung",
+                  "vertical": false,
+                  "features": [
+                    {
+                      "type": "climate-hvac-modes",
+                      "hvac_modes": [
+                        "off",
+                        "cool",
+                        "heat",
+                        "auto"
+                      ]
+                    }
+                  ],
+                  "features_position": "bottom"
+                },
+                {
+                  "type": "heading",
+                  "heading": "Kühlen Einstellungen"
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.kuehlung_bodentemperatur",
+                  "name": "Bodentemperatur",
+                  "icon": "mdi:thermometer-water",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "buttons"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.kuehlung_aktivierung",
+                  "name": "Kühlaktivierung",
+                  "icon": "mdi:thermometer-alert",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "buttons"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "input_number.solarueberschuss_schwellwert",
+                  "name": "Solarüberschuss",
+                  "icon": "mdi:solar-power",
+                  "features": [
+                    {
+                      "type": "numeric-input",
+                      "style": "buttons"
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "type": "thermostat",
-              "entity": "climate.wceg"
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Prozesswerte"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.mittlere_temperatur_eg",
+                      "name": "Erdgeschoss",
+                      "color": "amber",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_outside_temp",
+                      "name": "Aussen",
+                      "color": "green"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_main_outlet_temp",
+                      "name": "Vorlauf",
+                      "color": "red",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_main_target_temp",
+                      "name": "Vorlauf Ziel",
+                      "icon": "mdi:flag-checkered",
+                      "color": "orange",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_main_inlet_temp",
+                      "name": "Rücklauf",
+                      "color": "blue",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "number.panasonic_heat_pump_main_heat_delta",
+                      "name": "Vorlauf - Delta",
+                      "icon": "mdi:flag-checkered",
+                      "color": "orange",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_heizung_temperature",
+                      "name": "Vorlauf - OG",
+                      "icon": "mdi:flag-checkered",
+                      "color": "orange",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_cop",
+                      "name": "COP",
+                      "icon": "mdi:alarm-panel-outline",
+                      "color": "purple",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Zusatzheizung Bäder"
+                },
+                {
+                  "square": false,
+                  "type": "grid",
+                  "columns": 2,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "climate.wceg",
+                      "name": "WC EG",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.handtucheg",
+                      "name": "WC EG Handtuch",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "timer.eg_bad_handtuch_heizstab_timer",
+                      "name": "WC EG Heizstab",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "input_boolean.eg_bad_handtuch_manueller_modus",
+                      "name": "Handbetrieb",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.wcog",
+                      "name": "WC OG",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.handtuchog",
+                      "name": "WC OG Handtuch",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "timer.og_bad_handtuch_heizstab_timer",
+                      "name": "WC OG Heizstab",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "input_boolean.og_bad_handtuch_manueller_modus",
+                      "name": "Handbetrieb",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Weitere geregelte Räume"
+                },
+                {
+                  "square": false,
+                  "type": "grid",
+                  "columns": 2,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "climate.hauswirtschaftsraum",
+                      "name": "HWR",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.ankleide",
+                      "name": "Ankleide",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.malte",
+                      "name": "Malte",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.sina",
+                      "name": "Sina",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "climate.schlafzimmer",
+                      "name": "Schlafzimmer",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Warmwasser"
+                },
+                {
+                  "square": false,
+                  "type": "grid",
+                  "columns": 2,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_threeway_valve_state",
+                      "name": "Aktiver Heizkreis",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_temp",
+                      "name": "Speicher Temp",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "thermostat",
+                      "entity": "water_heater.panasonic_heat_pump_main_dhw_target_temp"
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "type": "thermostat",
-              "entity": "climate.handtucheg"
-            }
-          ]
-        },
-        {
-          "theme": "Backend-selected",
-          "title": "Heizen OG",
-          "path": "heizen-og",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Energie & Effizienz"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_heat_power_consumption",
+                      "name": "Heizen-Verbrauch",
+                      "color": "amber"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_power_consumption",
+                      "name": "WW-Verbrauch",
+                      "color": "amber"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_heat_power_production",
+                      "name": "Heizen-Leistung",
+                      "color": "light-blue"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_dhw_power_production",
+                      "name": "WW-Erzeugung",
+                      "color": "light-blue"
+                    },
+                    {
+                      "type": "statistic",
+                      "entity": "sensor.aquarea_heat_power_consumed_total",
+                      "name": "Heizen-Verbrauch",
+                      "period": {
+                        "calendar": {
+                          "period": "day"
+                        }
+                      },
+                      "stat_type": "change"
+                    },
+                    {
+                      "type": "statistic",
+                      "entity": "sensor.aquarea_dhw_power_consumed_total",
+                      "name": "WW-Verbrauch",
+                      "period": {
+                        "calendar": {
+                          "period": "day"
+                        }
+                      },
+                      "stat_type": "change"
+                    }
+                  ]
+                },
+                {
+                  "type": "history-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.panasonic_heat_pump_main_main_outlet_temp",
+                      "name": "Vorlauf",
+                      "color": "red"
+                    },
+                    {
+                      "entity": "sensor.panasonic_heat_pump_main_main_inlet_temp",
+                      "name": "Rücklauf",
+                      "color": "blue"
+                    },
+                    {
+                      "entity": "sensor.panasonic_heat_pump_main_outside_temp",
+                      "name": "Außen",
+                      "color": "grey"
+                    },
+                    {
+                      "entity": "sensor.mittlere_temperatur_eg",
+                      "name": "EG",
+                      "color": "green"
+                    },
+                    {
+                      "entity": "sensor.panasonic_heat_pump_main_z1_water_target_temp",
+                      "name": "Vorl.SP",
+                      "color": "accent"
+                    }
+                  ],
+                  "title": "Temperaturverlauf",
+                  "hours_to_show": 24,
+                  "expand_legend": false
+                }
+              ]
             },
             {
-              "user": "675cd8bf137e4693a41a12558f448a73"
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Aggregate & Details"
+                },
+                {
+                  "type": "heading",
+                  "heading": "Umwälzpumpe"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "binary_sensor.panasonic_heat_pump_main_pump_duty",
+                      "name": "Pumpe",
+                      "color": "orange",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_pump_speed",
+                      "name": "Drehzahl"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_pump_flow",
+                      "name": "Durchfluss",
+                      "color": "light-blue"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Kältemaschine"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_compressor_freq",
+                      "name": "Frequenz"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_fan1_motor_speed",
+                      "name": "Lüfter",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_operations_counter",
+                      "name": "Starts heute",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_operations_counter",
+                      "name": "Starts",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_stats_2",
+                      "name": "Laufzeit",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Heizstab"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "binary_sensor.panasonic_heat_pump_main_internal_heater_state",
+                      "name": "Heizzeit",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.panasonic_heat_pump_main_internal_heater_state",
+                      "name": "Leistung",
+                      "color": "amber"
+                    }
+                  ]
+                },
+                {
+                  "type": "statistics-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.aquarea_dhw_power_consumed_total",
+                      "name": "Warmwasser",
+                      "color": "primary"
+                    },
+                    {
+                      "entity": "sensor.aquarea_heat_power_consumed_total",
+                      "name": "Heizen",
+                      "color": "deep-orange"
+                    }
+                  ],
+                  "days_to_show": 5,
+                  "period": "day",
+                  "chart_type": "bar-stack",
+                  "stat_types": [
+                    "change"
+                  ]
+                }
+              ]
             }
           ],
-          "icon": "mdi:home-floor-1",
-          "badges": [
-            {
-              "entity": "sensor.28_ff3b2a511603_temperature"
-            },
-            {
-              "entity": "sensor.28_ff0f3e541604_temperature"
-            },
-            {
-              "entity": "sensor.28_ffe302511603_temperature"
-            },
-            {
-              "entity": "sensor.28_ffc27cb41603_temperature"
-            },
-            {
-              "entity": "sensor.28_ff0dcf501603_temperature"
-            },
-            {
-              "entity": "sensor.28_ff3bc3471603_temperature"
-            }
-          ],
-          "cards": [
-            {
-              "type": "thermostat",
-              "entity": "climate.wcog"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.sina"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.malte"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.handtuchog"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.ankleide"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.schlafzimmer"
-            }
-          ]
-        },
-        {
-          "theme": "Backend-selected",
-          "title": "Heizen DG",
-          "path": "heizen-dg",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "icon": "mdi:home-floor-2",
-          "badges": [
-            {
-              "entity": "sensor.28_ff4777b41603_temperature"
-            },
-            {
-              "entity": "sensor.28_ff5ad9501603_temperature"
-            }
-          ],
-          "cards": [
-            {
-              "type": "thermostat",
-              "entity": "climate.studio"
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.galerie"
-            }
-          ]
+          "cards": []
         },
         {
           "theme": "Backend-selected",

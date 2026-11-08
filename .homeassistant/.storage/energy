@@ -17,20 +17,6 @@
         "number_energy_price_export": null
       },
       {
-        "type": "gas",
-        "stat_energy_from": "sensor.vicare_heating_gas_consumption_today",
-        "stat_cost": null,
-        "entity_energy_price": null,
-        "number_energy_price": null
-      },
-      {
-        "type": "gas",
-        "stat_energy_from": "sensor.vicare_hot_water_gas_consumption_today",
-        "stat_cost": null,
-        "entity_energy_price": null,
-        "number_energy_price": null
-      },
-      {
         "type": "solar",
         "stat_energy_from": "sensor.victron_solar_gesamteintrag",
         "config_entry_solar_forecast": null
@@ -109,6 +95,16 @@
       },
       {
         "stat_consumption": "sensor.tasmota_2_energy_total"
+      },
+      {
+        "stat_consumption": "sensor.aquarea_heat_power_consumed_total",
+        "stat_rate": "sensor.panasonic_heat_pump_main_heat_power_consumption",
+        "name": "WP Heizen"
+      },
+      {
+        "stat_consumption": "sensor.aquarea_dhw_power_consumed_total",
+        "stat_rate": "sensor.panasonic_heat_pump_main_dhw_power_consumption",
+        "name": "WP Warmwasser"
       }
     ],
     "device_consumption_water": []

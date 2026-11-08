@@ -1,0 +1,427 @@
+title: Regelung
+views:
+  - title: Übersicht
+    path: waermepumpe-blockdiagramm
+    icon: mdi:code-block-brackets
+    type: panel
+    cards:
+      - type: custom:floorplan-card
+        config:
+          image: /local/aquarea_sl_raum.svg?v=17
+          stylesheet: /local/aquarea_sl.css?v=1   # <-- Hier die CSS-Datei verknüpfen!
+          rules: !include aquarea_sl_raum.yaml
+  - title: WP-Raumregelung
+    path: waermepumpe-raumregelung
+    icon: mdi:heat-pump-outline
+    type: sections
+    max_columns: 3
+    sections:
+      # ======================================================================
+      # SEKTION 1: Schnellsteuerung & Regler-Status
+      # ======================================================================
+      - type: grid
+        cards:
+          - type: heading
+            heading: Steuerung & Shift-Regler
+            heading_style: title
+            icon: mdi:tune-variant
+
+          - type: tile
+            entity: input_boolean.raumregelung_automatik_aktiv
+            name: Shift-Automatik
+            icon: mdi:robot-happy
+            color: green
+            features:
+              - type: toggle
+            grid_options:
+              columns: 6
+              rows: 2
+
+          - type: tile
+            entity: select.panasonic_heat_pump_main_operating_mode_state
+            name: Betriebsmodus WP
+            icon: mdi:heat-pump
+            color: orange
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.panasonic_heat_pump_main_threeway_valve_state
+            name: 3-Wege-Ventil (Room/Tank)
+            icon: mdi:valve
+            color: blue
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: input_number.raumregelung_soll_temperatur_eg
+            name: Soll-Temperatur EG
+            icon: mdi:home-thermometer
+            color: red
+            features:
+              - type: numeric-input
+                style: buttons
+            grid_options:
+              columns: 12
+              rows: 2
+
+          - type: tile
+            entity: number.panasonic_heat_pump_main_z1_heat_request_temp
+            name: Aktiver WP-Shift (±5 K)
+            icon: mdi:plus-minus-variant
+            color: deep-orange
+            features:
+              - type: numeric-input
+                style: buttons
+            grid_options:
+              columns: 6
+              rows: 2
+
+          - type: tile
+            entity: sensor.raumregelung_empfohlener_shift
+            name: Empfohlener Shift (Regler)
+            icon: mdi:calculator-variant
+            color: indigo
+            grid_options:
+              columns: 6
+              rows: 2
+
+          - type: markdown
+            title: Live-Diagnose Zustandsregler
+            content: |
+              {%- set t_soll = states('sensor.raumregelung_soll_temperatur_eg_effektiv') | float(states('input_number.raumregelung_soll_temperatur_eg') | float(22.0)) -%}
+              {%- set modus = state_attr('sensor.raumregelung_soll_temperatur_eg_effektiv', 'modus') | default('Tagbetrieb', true) -%}
+              {%- set t_ist = states('sensor.mittlere_temperatur_eg') | float(22.0) -%}
+              {%- set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) -%}
+              {%- set dt_est = states('sensor.temperatur_eg_estrich_vorhalt_4h') | float(0.0) -%}
+              {%- set q_4h = state_attr('sensor.temperatur_eg_pradiktiv', 'q_estrich_4h_kwh') | float(0.0) -%}
+              {%- set u_raw = state_attr('sensor.raumregelung_empfohlener_shift', 'stellgroesse_ungerundet') | float(0.0) -%}
+              {%- set u_rec = states('sensor.raumregelung_empfohlener_shift') | int(0) -%}
+              {%- set u_wp = states('number.panasonic_heat_pump_main_z1_heat_request_temp') | int(0) -%}
+              | Größe | Aktueller Wert |
+              | :--- | ---: |
+              | **Aktiver Modus / Soll effektiv** | `{{ modus }}` (`{{ '%.2f' | format(t_soll) }} °C`) |
+              | **Regeldifferenz (T_Soll,eff - T_präd)** | `{{ '%+.2f' | format(t_soll - t_pred) }} K` |
+              | **Estrich-Puffer (letzte 4h)** | `{{ '%+.2f' | format(dt_est) }} K` (`{{ '%+.2f' | format(q_4h) }} kWh`) |
+              | **Stellgröße ungerundet (u_raw)** | `{{ '%+.2f' | format(u_raw) }} K` |
+              | **Shift (Empfohlen / Aktiv an WP)** | **`{{ '%+d' | format(u_rec) }} K`** / **`{{ '%+d' | format(u_wp) }} K`** |
+            grid_options:
+              columns: 12
+
+          - type: entities
+            title: Regler-Parameter & Automation
+            show_header_toggle: false
+            entities:
+              - entity: input_number.raumregelung_shift_basis_offset
+                name: Basis-Shift Offset (0 K bei neuer Heizkurve)
+              - entity: automation.aquarea_pradiktive_raumregelung_heizkurven_shift
+                name: Automation Shift-Nachführung
+                secondary_info: last-triggered
+            grid_options:
+              columns: 12
+
+      # ======================================================================
+      # SEKTION 1b: Nachtabsenkung & Zeitfenster (mit 4h-Estrich-Vorlauf)
+      # ======================================================================
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nachtabsenkung & Zeitfenster
+            heading_style: title
+            icon: mdi:weather-night
+
+          - type: tile
+            entity: input_boolean.raumregelung_nachtabsenkung_aktiv
+            name: Nachtabsenkung aktiv
+            icon: mdi:weather-night-partly-cloudy
+            color: indigo
+            features:
+              - type: toggle
+            grid_options:
+              columns: 6
+              rows: 2
+
+          - type: tile
+            entity: sensor.raumregelung_soll_temperatur_eg_effektiv
+            name: Soll-Temperatur effektiv
+            icon: mdi:thermometer-auto
+            color: deep-purple
+            grid_options:
+              columns: 6
+              rows: 2
+
+          - type: tile
+            entity: input_number.raumregelung_nachtabsenkung_delta_t
+            name: Absenkung ΔT (Nacht)
+            icon: mdi:thermometer-chevron-down
+            color: blue
+            features:
+              - type: numeric-input
+                style: buttons
+            grid_options:
+              columns: 12
+              rows: 2
+
+          - type: entities
+            title: Zeitfenster Nachtabsenkung
+            show_header_toggle: false
+            entities:
+              - entity: input_datetime.raumregelung_nachtabsenkung_start
+                name: Beginn Absenkung (Empfehlung ~19:00 Uhr wegen 4h Estrich)
+              - entity: input_datetime.raumregelung_nachtabsenkung_ende
+                name: Ende Absenkung (Empfehlung ~04:30 Uhr bzw. 08:00 Uhr für PV)
+            grid_options:
+              columns: 12
+  - title: WP-Waermebilanz
+    path: waermepumpe-waermebilanz
+    icon: mdi:scale-balance
+    type: sections
+    max_columns: 3
+    sections:
+      # ======================================================================
+      # SEKTION 2: Raumtemperatur & 4h-Estrich-Prädiktion
+      # ======================================================================
+      - type: grid
+        cards:
+          - type: heading
+            heading: Raumtemperatur & Prädiktion
+            heading_style: title
+            icon: mdi:thermometer-lines
+
+          - type: tile
+            entity: sensor.mittlere_temperatur_eg
+            name: Raumtemperatur EG (Ist)
+            icon: mdi:home-thermometer-outline
+            color: blue
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.temperatur_eg_pradiktiv
+            name: Temperatur EG (Prädiktiv 4h)
+            icon: mdi:crystal-ball
+            color: purple
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: gauge
+            entity: sensor.temperatur_eg_estrich_vorhalt_4h
+            name: 4h-Estrich-Puffer (ΔT im Boden unterwegs)
+            unit: K
+            min: -0.8
+            max: 0.8
+            needle: true
+            segments:
+              - from: -0.8
+                color: "#2196f3"
+              - from: -0.25
+                color: "#4caf50"
+              - from: 0.25
+                color: "#ff9800"
+              - from: 0.55
+                color: "#f44336"
+            grid_options:
+              columns: 12
+
+          - type: history-graph
+            title: Temperaturverlauf (Soll effektiv vs. Ist vs. Prädiktiv) – 24h
+            hours_to_show: 24
+            entities:
+              - entity: sensor.raumregelung_soll_temperatur_eg_effektiv
+                name: Soll (effektiv)
+              - entity: sensor.mittlere_temperatur_eg
+                name: EG Ist
+              - entity: sensor.temperatur_eg_pradiktiv
+                name: EG Prädiktiv (inkl. Estrich)
+            grid_options:
+              columns: 12
+
+          - type: history-graph
+            title: Heizkurven-Shift & Estrich-Vorhalt – 24h
+            hours_to_show: 24
+            entities:
+              - entity: number.panasonic_heat_pump_main_z1_heat_request_temp
+                name: Aktiver WP-Shift
+              - entity: sensor.raumregelung_empfohlener_shift
+                name: Empfohlener Shift
+              - entity: sensor.temperatur_eg_estrich_vorhalt_4h
+                name: Estrich-Vorhalt ΔT
+            grid_options:
+              columns: 12
+
+      # ======================================================================
+      # SEKTION 3: Leistungs- & Wärmebilanz (1R1C-Gebäudemodell)
+      # ======================================================================
+      - type: grid
+        cards:
+          - type: heading
+            heading: Leistungs- & Wärmebilanz (Haus)
+            heading_style: title
+            icon: mdi:scale-balance
+
+          - type: gauge
+            entity: sensor.warmebilanz_netto_leistung_4h_mittel
+            name: Netto-Wärmebilanz (4h-Mittelwert)
+            unit: W
+            min: -1500
+            max: 1500
+            needle: true
+            segments:
+              - from: -1500
+                color: "#2196f3"
+              - from: -300
+                color: "#4caf50"
+              - from: 300
+                color: "#ff9800"
+              - from: 800
+                color: "#f44336"
+            grid_options:
+              columns: 12
+
+          - type: tile
+            entity: sensor.aquarea_heizleistung_raum_kalorimetrisch
+            name: Heizleistung WP (Raum)
+            icon: mdi:radiator
+            color: red
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.warmebilanz_solarer_gewinn_raum
+            name: Solarer Gewinn (Fenster)
+            icon: mdi:weather-sunny
+            color: amber
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.warmebilanz_verlustleistung_haus
+            name: Wärmeverlust Haus (H·ΔT)
+            icon: mdi:home-export-outline
+            color: blue
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.warmebilanz_netto_leistung
+            name: Netto-Bilanz (aktuell)
+            icon: mdi:swap-vertical-bold
+            color: green
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: history-graph
+            title: Wärmeströme im Gebäude (Heizung, Solar, Verlust, Netto) – 24h
+            hours_to_show: 24
+            entities:
+              - entity: sensor.aquarea_heizleistung_raum_kalorimetrisch
+                name: Heizleistung WP
+              - entity: sensor.warmebilanz_solarer_gewinn_raum
+                name: Solarer Gewinn
+              - entity: sensor.warmebilanz_verlustleistung_haus
+                name: Wärmeverlust Haus
+              - entity: sensor.warmebilanz_netto_leistung_4h_mittel
+                name: Netto-Bilanz (4h-Mittel)
+            grid_options:
+              columns: 12
+
+      # ======================================================================
+      # SEKTION 4: Aquarea Hydraulik & Heizkurven-Stützpunkte
+      # ======================================================================
+      - type: grid
+        cards:
+          - type: heading
+            heading: Aquarea Hydraulik & Heizkurve
+            heading_style: title
+            icon: mdi:pipe-valve
+
+          - type: tile
+            entity: sensor.panasonic_heat_pump_main_main_target_temp
+            name: Vorlauf-Soll (WP)
+            icon: mdi:thermometer-check
+            color: deep-orange
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.panasonic_heat_pump_main_main_outlet_temp
+            name: Vorlauf-Ist (VL)
+            icon: mdi:thermometer-chevron-up
+            color: red
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.panasonic_heat_pump_main_main_inlet_temp
+            name: Rücklauf-Ist (RL)
+            icon: mdi:thermometer-chevron-down
+            color: blue
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.panasonic_heat_pump_main_pump_flow
+            name: Volumenstrom FBH
+            icon: mdi:water-pump
+            color: cyan
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.temp_terrasse_temperature
+            name: Außentemperatur (Terrasse)
+            icon: mdi:thermometer
+            color: teal
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.lueftungssteuerung_temperatur_abluft_t3
+            name: Abluft KWL (Haus-Referenz)
+            icon: mdi:air-filter
+            color: green
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: history-graph
+            title: Hydraulik (Vorlauf-Soll, Vorlauf-Ist, Rücklauf-Ist) – 24h
+            hours_to_show: 24
+            entities:
+              - entity: sensor.panasonic_heat_pump_main_main_target_temp
+                name: VL-Soll
+              - entity: sensor.panasonic_heat_pump_main_main_outlet_temp
+                name: VL-Ist
+              - entity: sensor.panasonic_heat_pump_main_main_inlet_temp
+                name: RL-Ist
+            grid_options:
+              columns: 12
+
+          - type: entities
+            title: Heizkurven-Stützpunkte (Aquarea Zone 1)
+            show_header_toggle: false
+            entities:
+              - entity: number.panasonic_heat_pump_main_z1_heat_curve_target_low_temp
+                name: Vorlauf-Soll bei +15 °C (Empfehlung 25 °C)
+              - entity: number.panasonic_heat_pump_main_z1_heat_curve_outside_high_temp
+                name: Außentemperatur Warm (Stützpunkt 2)
+              - entity: number.panasonic_heat_pump_main_z1_heat_curve_target_high_temp
+                name: Vorlauf-Soll bei -10 °C (Empfehlung 34 °C)
+              - entity: number.panasonic_heat_pump_main_z1_heat_curve_outside_low_temp
+                name: Außentemperatur Kalt (Stützpunkt 1)
+            grid_options:
+              columns: 12
+

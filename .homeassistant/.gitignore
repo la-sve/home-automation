@@ -1,7 +1,12 @@
 *.db
 *.log
 .cloud
+.cache
 blueprints
 deps
 tts
 .storage/tmp*
+backups
+custom_components/aquarea/*
+custom_components/divoom_pixoo/*
+custom_components/emporia_vue/*

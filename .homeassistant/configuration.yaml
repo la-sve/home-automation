@@ -82,6 +82,24 @@ command_line:
 # ------------------------------------------------------------------------------
 # HELFER HANDTUCHHEIZKOERPER OG (Modus & Timer)
 # ------------------------------------------------------------------------------
+lovelace:
+  dashboards:
+    regelung-yaml:
+      mode: yaml
+      title: "Aquarea SL"
+      icon: mdi:heat-pump-outline
+      show_in_sidebar: true
+      filename: dashboards/aquarea.yaml
+    kwl-dashboard:
+      mode: yaml
+      title: Lüftung
+      icon: mdi:air-filter
+      show_in_sidebar: true
+      filename: dashboards/kwl.yaml
+
+# ------------------------------------------------------------------------------
+# HELFER HANDTUCHHEIZKOERPER OG (Modus & Timer)
+# ------------------------------------------------------------------------------
 input_boolean:
   # Einziger Modus-Schalter:
   # OFF = Automatikmodus (Thermostat regelt FBH)
@@ -92,6 +110,32 @@ input_boolean:
   eg_bad_handtuch_manueller_modus:
     name: "EG Bad Handtuch - Manueller Modus"
     icon: mdi:hand-back-right
+  # AQUAREA
+  raumregelung_automatik_aktiv:
+    name: "Raumregelung Automatik (Shift) aktiv"
+    initial: true
+    icon: mdi:robot-happy
+  # AQUAREA
+  raumregelung_nachtabsenkung_aktiv:
+    name: "Raumregelung Nachtabsenkung aktiv"
+    initial: true
+    icon: mdi:weather-night-partly-cloudy
+
+input_datetime:
+  # AQUAREA
+  raumregelung_nachtabsenkung_start:
+    name: "Raumregelung Nachtabsenkung Start"
+    has_date: false
+    has_time: true
+    initial: "19:00:00"
+    icon: mdi:clock-start
+  # AQUAREA
+  raumregelung_nachtabsenkung_ende:
+    name: "Raumregelung Nachtabsenkung Ende"
+    has_date: false
+    has_time: true
+    initial: "04:30:00"
+    icon: mdi:clock-end
 
 timer:
   # Laufzeit für den elektrischen Heizstab
@@ -119,6 +163,37 @@ timer:
     restore: true
 # ------------------------------------------------------------------------------
 
+input_number:
+  # AQUAREA
+  raumregelung_soll_temperatur_eg:
+    name: "Raumregelung Soll-Temperatur EG"
+    min: 19.0
+    max: 24.0
+    step: 0.1
+    initial: 22.0
+    unit_of_measurement: "°C"
+    icon: mdi:home-thermometer
+  # AQUAREA
+  raumregelung_shift_basis_offset:
+    name: "Raumregelung Basis-Shift Offset"
+    # Solange die Heizkurve an der Aquarea noch auf 40°C / 26°C steht: -3.0 K
+    # Sobald die Heizkurve auf 34°C (-10°C) / 25°C (+15°C) angepasst wurde: 0.0 K
+    min: -5.0
+    max: 5.0
+    step: 0.5
+    initial: 0.0
+    unit_of_measurement: "K"
+    icon: mdi:tune-vertical
+  # AQUAREA
+  raumregelung_nachtabsenkung_delta_t:
+    name: "Raumregelung Nachtabsenkung Delta T"
+    # Mit Kp = 2.2 K/K bewirken 2.5 K Absenkung (-5.5 K Stellgröße) den vollen WP-Shift von -5 K
+    min: 0.0
+    max: 3.0
+    step: 0.1
+    initial: 2.5
+    unit_of_measurement: "K"
+    icon: mdi:weather-night
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -520,7 +595,16 @@ sensor:
     unit_prefix: k        # Rechnet W in kW um
     unit_time: h          # Ergibt zusammen kWh
     method: left          # SEHR WICHTIG bei Ein/Aus-Schaltlasten!
-
+  # AQUAREA
+  - platform: statistics
+    name: "Wärmebilanz Netto-Leistung 4h Mittel"
+    unique_id: waermebilanz_netto_leistung_4h_mittel
+    entity_id: sensor.warmebilanz_netto_leistung
+    state_characteristic: average_linear
+    max_age:
+      hours: 4
+    sampling_size: 500
+    precision: 1
 
 # Add "Lovelace Mini Graph Card"
 # https://github.com/kalkih/mini-graph-card
