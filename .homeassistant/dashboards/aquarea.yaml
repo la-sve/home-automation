@@ -123,12 +123,12 @@ views:
               columns: 12
 
       # ======================================================================
-      # SEKTION 1b: Nachtabsenkung & Zeitfenster (mit 4h-Estrich-Vorlauf)
+      # SEKTION 1b: Nachtabsenkung & Tag-Sinus-Kurve (mit 4h-Estrich-Vorlauf)
       # ======================================================================
       - type: grid
         cards:
           - type: heading
-            heading: Nachtabsenkung & Zeitfenster
+            heading: Nachtabsenkung & Tag-Sinus-Kurve
             heading_style: title
             icon: mdi:weather-night
 
@@ -161,7 +161,19 @@ views:
               - type: numeric-input
                 style: buttons
             grid_options:
-              columns: 12
+              columns: 6
+              rows: 2
+
+          - type: tile
+            entity: input_number.raumregelung_tag_sinus_amplitude
+            name: Tag-Sinus Amplitude
+            icon: mdi:sine-wave
+            color: amber
+            features:
+              - type: numeric-input
+                style: buttons
+            grid_options:
+              columns: 6
               rows: 2
 
           - type: entities
@@ -171,7 +183,7 @@ views:
               - entity: input_datetime.raumregelung_nachtabsenkung_start
                 name: Beginn Absenkung (Empfehlung ~19:00 Uhr wegen 4h Estrich)
               - entity: input_datetime.raumregelung_nachtabsenkung_ende
-                name: Ende Absenkung (Empfehlung ~04:30 Uhr bzw. 08:00 Uhr für PV)
+                name: Ende Absenkung (Empfehlung ~03:30 Uhr wegen 4h Estrich)
             grid_options:
               columns: 12
   - title: WP-Waermebilanz
@@ -397,6 +409,42 @@ views:
               columns: 6
               rows: 1
 
+          - type: tile
+            entity: sensor.aquarea_cop_heizen_1h
+            name: COP Heizen (1h-Mittel)
+            icon: mdi:gauge
+            color: light-green
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.aquarea_cop_warmwasser_1h
+            name: COP Warmwasser (1h-Mittel)
+            icon: mdi:water-boiler
+            color: amber
+            grid_options:
+              columns: 6
+              rows: 1
+              
+          - type: tile
+            entity: sensor.aquarea_starts_heute
+            name: Starts heute
+            icon: mdi:counter
+            color: orange
+            grid_options:
+              columns: 6
+              rows: 1
+
+          - type: tile
+            entity: sensor.aquarea_enteisungen_heute
+            name: Enteisungen heute
+            icon: mdi:snowflake-melt
+            color: light-blue
+            grid_options:
+              columns: 6
+              rows: 1
+
           - type: history-graph
             title: Hydraulik (Vorlauf-Soll, Vorlauf-Ist, Rücklauf-Ist) – 24h
             hours_to_show: 24
@@ -407,6 +455,22 @@ views:
                 name: VL-Ist
               - entity: sensor.panasonic_heat_pump_main_main_inlet_temp
                 name: RL-Ist
+            grid_options:
+              columns: 12
+
+          - type: statistics-graph
+            title: Arbeitszahl / COP je Tag (Warmwasser vs. Heizen)
+            chart_type: bar
+            period: day
+            days_to_show: 7
+            stat_types:
+              - mean
+            hide_legend: false
+            entities:
+              - entity: sensor.aquarea_cop_warmwasser_1h
+                name: Warmwasser
+              - entity: sensor.aquarea_cop_heizen_1h
+                name: Heizen
             grid_options:
               columns: 12
 

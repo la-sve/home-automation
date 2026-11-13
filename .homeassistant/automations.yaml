@@ -147,17 +147,17 @@
 - id: '1638738277247'
   alias: Heizung Schlafzimmer AUS
   description: ''
-  trigger:
-  - platform: time
-    at: '20:30'
-  condition: []
-  action:
-  - service: climate.turn_off
-    target:
+  triggers:
+  - at: '18:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - target:
       entity_id:
       - climate.sina
       - climate.malte
       - climate.schlafzimmer
+    action: climate.turn_off
   mode: single
 - id: '1638738533068'
   alias: Heizung Schlafzimmer EIN
@@ -638,59 +638,47 @@
         option: 'Off'
   mode: restart
 - id: aquarea_praediktive_raumregelung_shift
-  alias: "Aquarea: Prädiktive Raumregelung (Heizkurven-Shift)"
-  description: >
-    Passt den Heizkurven-Shift (z1_heat_request_temp) anhand der prädiktiven
-    Raumtemperatur (Ist-Temperatur EG + 4h-Estrich-Wärmebilanz) an.
-    Beinhaltet Hysterese, 60 Minuten Mindest-Sperrzeit zur EEPROM-Schonung
-    sowie eine asymmetrische Rampe (Absenken sofort, Hochfahren max. +2 K pro Stunde).
+  alias: 'Aquarea: Prädiktive Raumregelung (Heizkurven-Shift)'
+  description: 'Passt den Heizkurven-Shift (z1_heat_request_temp) anhand der prädiktiven
+    Raumtemperatur (Ist-Temperatur EG + 4h-Estrich-Wärmebilanz) an. Beinhaltet Hysterese,
+    60 Minuten Mindest-Sperrzeit zur EEPROM-Schonung sowie eine asymmetrische Rampe
+    (Absenken sofort, Hochfahren max. +2 K pro Stunde).
+
+    '
   mode: single
   trigger:
-    - platform: state
-      entity_id: sensor.raumregelung_empfohlener_shift
-      for:
-        minutes: 15
-    - platform: time_pattern
-      minutes: "/30"
+  - platform: state
+    entity_id: sensor.raumregelung_empfohlener_shift
+    for:
+      minutes: 15
+  - platform: time_pattern
+    minutes: /30
   condition:
-    # 1. Automatik-Schalter muss aktiv sein
-    - condition: state
-      entity_id: input_boolean.raumregelung_automatik_aktiv
-      state: "on"
-    # 2. Wärmepumpe muss im Heizbetrieb sein (Heat oder Heat+DHW)
-    - condition: template
-      value_template: >
-        {{ 'Heat' in states('select.panasonic_heat_pump_main_operating_mode_state') }}
-    # 3. Empfohlener Shift muss gültig sein und vom aktuell eingestellten Shift abweichen
-    - condition: template
-      value_template: >
-        {% set rec = states('sensor.raumregelung_empfohlener_shift') %}
-        {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp') %}
-        {{ rec not in ['unavailable', 'unknown', '']
-           and cur not in ['unavailable', 'unknown', '']
-           and (rec | int) != (cur | int) }}
-    # 4. Mindest-Sperrzeit: Letzte Änderung des Shifts muss mindestens 60 Minuten her sein
-    - condition: template
-      value_template: >
-        {% set last_chg = states.number.panasonic_heat_pump_main_z1_heat_request_temp.last_changed %}
-        {{ (now() - last_chg).total_seconds() >= 3600 }}
-  action:
-    - service: number.set_value
-      target:
-        entity_id: number.panasonic_heat_pump_main_z1_heat_request_temp
-      data:
-        # Asymmetrische Nachführung:
-        # - Nach unten (Absenken, rec < cur): Darf sofort in einem Schritt auf den Ziel-Shift (z.B. -5 K) gehen.
-        # - Nach oben (Aufheizen, rec > cur): Maximal +2 K pro Schaltvorgang (max. +2 K / 60 Min.),
-        #   damit die Wärmepumpe nach der Nachtabsenkung sanft ohne Leistungsspitze hochmoduliert.
-        value: >
-          {% set rec = states('sensor.raumregelung_empfohlener_shift') | int(0) %}
-          {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp') | float(0) | round(0) | int %}
-          {% if rec > cur %}
-            {{ [[rec, cur + 2] | min, 5] | min }}
-          {% elif rec < cur %}
-            {{ [rec, -5] | max }}
-          {% else %}
-            {{ cur }}
-          {% endif %}
+  - condition: state
+    entity_id: input_boolean.raumregelung_automatik_aktiv
+    state: 'on'
+  - condition: template
+    value_template: '{{ ''Heat'' in states(''select.panasonic_heat_pump_main_operating_mode_state'')
+      }}
 
+      '
+  - condition: template
+    value_template: "{% set rec = states('sensor.raumregelung_empfohlener_shift')
+      %} {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp')
+      %} {{ rec not in ['unavailable', 'unknown', '']\n   and cur not in ['unavailable',
+      'unknown', '']\n   and (rec | int) != (cur | int) }}\n"
+  - condition: template
+    value_template: '{% set last_chg = states.number.panasonic_heat_pump_main_z1_heat_request_temp.last_changed
+      %} {{ (now() - last_chg).total_seconds() >= 3600 }}
+
+      '
+  action:
+  - service: number.set_value
+    target:
+      entity_id: number.panasonic_heat_pump_main_z1_heat_request_temp
+    data:
+      value: "{% set rec = states('sensor.raumregelung_empfohlener_shift') | int(0)
+        %} {% set cur = states('number.panasonic_heat_pump_main_z1_heat_request_temp')
+        | float(0) | round(0) | int %} {% if rec > cur %}\n  {{ [[rec, cur + 2] |
+        min, 5] | min }}\n{% elif rec < cur %}\n  {{ [rec, -5] | max }}\n{% else %}\n
+        \ {{ cur }}\n{% endif %}\n"

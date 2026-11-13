@@ -317,7 +317,8 @@
                 {
                   "type": "heading",
                   "heading": "Erdgeschoss",
-                  "heading_style": "title"
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-0"
                 },
                 {
                   "type": "grid",
@@ -424,7 +425,9 @@
               "cards": [
                 {
                   "type": "heading",
-                  "heading": "Obergeschoss"
+                  "heading": "Obergeschoss",
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-1"
                 },
                 {
                   "type": "grid",
@@ -543,7 +546,9 @@
               "cards": [
                 {
                   "type": "heading",
-                  "heading": "Dachgeschoss"
+                  "heading": "Dachgeschoss",
+                  "heading_style": "title",
+                  "icon": "mdi:home-roof"
                 },
                 {
                   "type": "grid",
@@ -561,6 +566,31 @@
                       "type": "tile",
                       "entity": "sensor.28_ff4777b41603_temperature",
                       "name": "Galerie (GALE)"
+                    }
+                  ]
+                },
+                {
+                  "type": "heading",
+                  "heading": "Sauna",
+                  "heading_style": "title",
+                  "icon": "mdi:fireplace"
+                },
+                {
+                  "type": "grid",
+                  "columns": 2,
+                  "square": false,
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "sensor.temp_sauna_temperature",
+                      "name": "Innentemperatur",
+                      "vertical": false,
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "light.gallerie_ambient",
+                      "name": "Ambient-Light"
                     }
                   ]
                 }
@@ -906,6 +936,22 @@
                       "vertical": false,
                       "features_position": "bottom"
                     }
+                  ]
+                },
+                {
+                  "type": "statistics-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.steckdose_outdoor_energy",
+                      "name": "Verbrauch Terrasse",
+                      "color": "primary"
+                    }
+                  ],
+                  "days_to_show": 5,
+                  "period": "day",
+                  "chart_type": "bar-stack",
+                  "stat_types": [
+                    "change"
                   ]
                 }
               ]
@@ -1853,6 +1899,7 @@
               ]
             },
             {
+              "color": "state",
               "type": "entities",
               "entities": [
                 {
@@ -1860,12 +1907,12 @@
                   "name": "Außen Weihnachtsstern"
                 },
                 {
-                  "entity": "light.0x00158d000211e433"
+                  "entity": "light.0x00158d000211e433",
+                  "name": "Zigbee-Nachtlicht-Bibo"
                 }
               ],
               "title": "Zigbee",
-              "show_header_toggle": false,
-              "state_color": true
+              "show_header_toggle": false
             }
           ]
         },
@@ -1928,6 +1975,37 @@
               "title": "Tagesverbrauch"
             }
           ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Media",
+          "path": "media",
+          "icon": "mdi:multimedia",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Sonos Schlafzimmer"
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.hauptschlafzimmer"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "script.sonos_sleep_60_min"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "cards": []
         },
         {
           "title": "Sonstiges",
@@ -2051,35 +2129,6 @@
           ]
         },
         {
-          "type": "sections",
-          "max_columns": 4,
-          "icon": "mdi:fireplace",
-          "path": "sauna",
-          "title": "Sauna",
-          "sections": [
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "heading",
-                  "heading": "Neuer Abschnitt"
-                },
-                {
-                  "type": "entities",
-                  "entities": [
-                    {
-                      "entity": "sensor.temp_sauna_temperature"
-                    },
-                    {
-                      "entity": "light.gallerie_ambient"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
           "title": "Flask-test",
           "path": "flask-test",
           "visible": [
@@ -2134,60 +2183,6 @@
               "smoothing": true,
               "line_width": 2,
               "font_size": 80
-            }
-          ]
-        },
-        {
-          "title": "Statistik",
-          "path": "statistik",
-          "visible": [
-            {
-              "user": "4a62ad8b8fbe41ffb1eb5bbee9d1b537"
-            },
-            {
-              "user": "675cd8bf137e4693a41a12558f448a73"
-            }
-          ],
-          "badges": [],
-          "cards": [
-            {
-              "type": "statistics-graph",
-              "entities": [
-                "sensor.28_ff5ad9501603_temperature",
-                "sensor.28_ff3bc3471603_temperature"
-              ],
-              "days_to_show": 30,
-              "title": "Temperaturtest"
-            },
-            {
-              "type": "media-control",
-              "entity": "media_player.hauptschlafzimmer"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "script.sonos_sleep_60_min"
-                }
-              ],
-              "title": "Sonos Steuerung"
-            },
-            {
-              "title": "Verlauf",
-              "type": "history-graph",
-              "hours_to_show": 3617,
-              "entities": [
-                "sensor.temp_heizung_temperature",
-                "sensor.vscotho1_200_aussentemperatur",
-                "sensor.temp_terrasse_temperature",
-                "sensor.vscotho1_200_vorlauftemperatur",
-                "sensor.vscotho1_200_ww_speichertemperatur",
-                "sensor.vscotho1_200_solarspeicher_temperatur",
-                "sensor.vscotho1_200_kesseltemperatur",
-                "sensor.vscotho1_200_solarkollektor_temperatur",
-                "sensor.vscotho1_200_heizung_gasverbrauch_heute",
-                "sensor.vscotho1_200_ww_gasverbrauch_heute"
-              ]
             }
           ]
         }

@@ -278,7 +278,7 @@
           {% set p_net_4h = states('sensor.warmebilanz_netto_leistung_4h_mittel') | float(0) %}
           {{ ((p_net_4h * 4.0) / 1000.0) | round(2) }}
 
-    # 7. Effektive Soll-Temperatur EG (inkl. zeitgesteuerter Nachtabsenkung)
+    # 7. Effektive Soll-Temperatur EG (inkl. zeitgesteuerter Nachtabsenkung & sinusförmiger Tag-Überhöhung)
     - name: "Raumregelung Soll-Temperatur EG Effektiv"
       unique_id: raumregelung_soll_temperatur_eg_effektiv
       unit_of_measurement: "°C"
@@ -288,45 +288,62 @@
       state: >
         {% set t_soll_tag = states('input_number.raumregelung_soll_temperatur_eg') | float(22.0) %}
         {% set dt_nacht = states('input_number.raumregelung_nachtabsenkung_delta_t') | float(2.5) %}
+        {% set a_sinus = states('input_number.raumregelung_tag_sinus_amplitude') | float(0.6) %}
         {% set nav_on = is_state('input_boolean.raumregelung_nachtabsenkung_aktiv', 'on') %}
         {% set now_str = now().strftime('%H:%M:%S') %}
         {% set start_str = states('input_datetime.raumregelung_nachtabsenkung_start') %}
         {% set end_str = states('input_datetime.raumregelung_nachtabsenkung_ende') %}
         {% if start_str in ['unknown', 'unavailable', ''] %}{% set start_str = '19:00:00' %}{% endif %}
-        {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '04:30:00' %}{% endif %}
+        {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '03:30:00' %}{% endif %}
         {% if start_str <= end_str %}
           {% set in_window = (start_str <= now_str < end_str) %}
         {% else %}
           {% set in_window = (now_str >= start_str or now_str < end_str) %}
         {% endif %}
-        {% if nav_on and in_window %}
+        {% if not nav_on %}
+          {{ t_soll_tag | round(2) }}
+        {% elif in_window %}
           {{ (t_soll_tag - dt_nacht) | round(2) }}
         {% else %}
-          {{ t_soll_tag | round(2) }}
+          {# Halbsinus-Bogen im Tagfenster von t_Ende bis t_Start:
+              Startet am Morgenrand bei -0.25*A, erreicht mittags +1.0*A und endet abends bei -0.25*A #}
+          {% set now_min = now().hour * 60 + now().minute %}
+          {% set s_parts = start_str.split(':') %}
+          {% set e_parts = end_str.split(':') %}
+          {% set start_min = (s_parts[0] | int(19)) * 60 + (s_parts[1] | int(0)) %}
+          {% set end_min = (e_parts[0] | int(3)) * 60 + (e_parts[1] | int(30)) %}
+          {% set day_len = (start_min - end_min) if start_min > end_min else (1440 - end_min + start_min) %}
+          {% set elapsed = (now_min - end_min) if now_min >= end_min else (1440 - end_min + now_min) %}
+          {% set x = [[0.0, elapsed / ([day_len, 1] | max)] | max, 1.0] | min %}
+          {% set dt_sinus = a_sinus * (1.25 * sin(pi * x) - 0.25) %}
+          {{ (t_soll_tag + dt_sinus) | round(2) }}
         {% endif %}
       attributes:
         modus: >
           {% set nav_on = is_state('input_boolean.raumregelung_nachtabsenkung_aktiv', 'on') %}
+          {% set a_sinus = states('input_number.raumregelung_tag_sinus_amplitude') | float(0.6) %}
           {% set now_str = now().strftime('%H:%M:%S') %}
           {% set start_str = states('input_datetime.raumregelung_nachtabsenkung_start') %}
           {% set end_str = states('input_datetime.raumregelung_nachtabsenkung_ende') %}
           {% if start_str in ['unknown', 'unavailable', ''] %}{% set start_str = '19:00:00' %}{% endif %}
-          {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '04:30:00' %}{% endif %}
+          {% if end_str in ['unknown', 'unavailable', ''] %}{% set end_str = '03:30:00' %}{% endif %}
           {% if start_str <= end_str %}
             {% set in_window = (start_str <= now_str < end_str) %}
           {% else %}
             {% set in_window = (now_str >= start_str or now_str < end_str) %}
           {% endif %}
           {% if not nav_on %}
-            Tagbetrieb (Nachtabsenkung aus)
+            Tagbetrieb (konstant)
           {% elif in_window %}
             Nachtabsenkung aktiv
+          {% elif a_sinus > 0 %}
+            Tagbetrieb (Sinus-Kurve)
           {% else %}
             Tagbetrieb
           {% endif %}
 
     # 8. Berechneter Heizkurven-Shift (ungerundet mit Hysterese-Schwelle -> ganzzahliger Ziel-Shift)
-    #    Verstärkungsfaktor Kp = 2.2 K Vorlauf / K Raumtemperatur-Abweichung
+    #    Verstärkungsfaktor Kp = 3.5 K Vorlauf / K Raumtemperatur-Abweichung
     - name: "Raumregelung Empfohlener Shift"
       unique_id: raumregelung_empfohlener_shift
       unit_of_measurement: "K"
@@ -338,7 +355,7 @@
         {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
         {% set base_offset = states('input_number.raumregelung_shift_basis_offset') | float(0.0) %}
         {% set cur_shift = states('number.panasonic_heat_pump_main_z1_heat_request_temp') | float(0.0) | round(0) %}
-        {% set kp = 2.2 %}
+        {% set kp = 3.5 %}
         {% set u_raw = base_offset + kp * (t_soll - t_pred) %}
         {# Hysterese: Wechsel auf neue Stufe erst ab 0.65 K Abstand zur aktuellen Stufe (statt 0.50 K) #}
         {% set diff = u_raw - cur_shift %}
@@ -357,13 +374,150 @@
               ) %}
           {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
           {% set base_offset = states('input_number.raumregelung_shift_basis_offset') | float(0.0) %}
-          {{ (base_offset + 2.2 * (t_soll - t_pred)) | round(2) }}
+          {{ (base_offset + 3.5 * (t_soll - t_pred)) | round(2) }}
         regeldifferenz_praediktiv_k: >
           {% set t_soll = states('sensor.raumregelung_soll_temperatur_eg_effektiv') | float(
                 states('input_number.raumregelung_soll_temperatur_eg') | float(22.0)
               ) %}
           {% set t_pred = states('sensor.temperatur_eg_pradiktiv') | float(22.0) %}
           {{ (t_soll - t_pred) | round(2) }}
+    # 9. Ausreißerfreier COP Heizen (1h-Fenster, hält letzten gültigen Wert bei Heizpause)
+    - name: "Aquarea COP Heizen 1h"
+      unique_id: aquarea_cop_heizen_1h
+      state_class: measurement
+      icon: mdi:gauge
+      state: >
+        {% set p_th = states('sensor.aquarea_heizleistung_thermisch_1h_mittel') | float(0) %}
+        {% set p_el = states('sensor.aquarea_heizleistung_elektrisch_1h_mittel') | float(0) %}
+        {% set q_th_tot = states('sensor.aquarea_heat_power_produced_total') | float(840.0) %}
+        {% set w_el_tot = states('sensor.aquarea_heat_power_consumed_total') | float(187.0) %}
+        {% set jaz_fallback = (q_th_tot / w_el_tot) if w_el_tot > 1.0 else 4.5 %}
+        {% set prev = this.state | float(jaz_fallback) if this is defined and this.state not in ['unknown', 'unavailable', ''] else jaz_fallback %}
+        {# Aktualisierung nur bei nennenswertem Heizbetrieb im 1h-Fenster (>= 100 W el. & >= 300 W th.),
+            verhindert Ausreißer am Fensterrand sowie beim Umschalten/Nachlauf #}
+        {% if p_el >= 100.0 and p_th >= 300.0 %}
+          {% set cop_raw = p_th / p_el %}
+          {{ [[1.5, cop_raw] | max, 7.5] | min | round(2) }}
+        {% else %}
+          {{ prev | round(2) }}
+        {% endif %}
+      attributes:
+        jaz_heizen_gesamt: >
+          {% set q_th = states('sensor.aquarea_heat_power_produced_total') | float(0) %}
+          {% set w_el = states('sensor.aquarea_heat_power_consumed_total') | float(0) %}
+          {{ (q_th / w_el) | round(2) if w_el > 1.0 else 0.0 }}
+        p_th_1h_w: "{{ states('sensor.aquarea_heizleistung_thermisch_1h_mittel') | float(0) | round(0) }}"
+        p_el_1h_w: "{{ states('sensor.aquarea_heizleistung_elektrisch_1h_mittel') | float(0) | round(0) }}"
+
+    # 10. Ausreißerfreier COP Warmwasser (1h-Fenster, hält letzten gültigen Wert nach Ende der WW-Ladung)
+    - name: "Aquarea COP Warmwasser 1h"
+      unique_id: aquarea_cop_warmwasser_1h
+      state_class: measurement
+      icon: mdi:water-boiler
+      state: >
+        {% set p_th = states('sensor.aquarea_ww_leistung_thermisch_1h_mittel') | float(0) %}
+        {% set p_el = states('sensor.aquarea_ww_leistung_elektrisch_1h_mittel') | float(0) %}
+        {% set q_th_tot = states('sensor.aquarea_dhw_power_produced_total') | float(180.0) %}
+        {% set w_el_tot = states('sensor.aquarea_dhw_power_consumed_total') | float(60.0) %}
+        {% set jaz_fallback = (q_th_tot / w_el_tot) if w_el_tot > 1.0 else 3.0 %}
+        {% set prev = this.state | float(jaz_fallback) if this is defined and this.state not in ['unknown', 'unavailable', ''] else jaz_fallback %}
+        {# Aktualisierung nur während/nach echter WW-Bereitung (>= 150 W el. & >= 400 W th. im 1h-Mittel) #}
+        {% if p_el >= 150.0 and p_th >= 400.0 %}
+          {% set cop_raw = p_th / p_el %}
+          {{ [[1.2, cop_raw] | max, 5.5] | min | round(2) }}
+        {% else %}
+          {{ prev | round(2) }}
+        {% endif %}
+      attributes:
+        jaz_warmwasser_gesamt: >
+          {% set q_th = states('sensor.aquarea_dhw_power_produced_total') | float(0) %}
+          {% set w_el = states('sensor.aquarea_dhw_power_consumed_total') | float(0) %}
+          {{ (q_th / w_el) | round(2) if w_el > 1.0 else 0.0 }}
+        p_th_1h_w: "{{ states('sensor.aquarea_ww_leistung_thermisch_1h_mittel') | float(0) | round(0) }}"
+        p_el_1h_w: "{{ states('sensor.aquarea_ww_leistung_elektrisch_1h_mittel') | float(0) | round(0) }}"
+
+# ============================================================================
+# 5b. TAGESZÄHLER FÜR STARTS & ENTEISUNGEN (Reset täglich um 00:00 Uhr)
+# ============================================================================
+- trigger:
+    - platform: time
+      at: "00:00:00"
+      id: reset
+    - platform: homeassistant
+      event: start
+      id: init
+    - platform: event
+      event_type: event_template_reloaded
+      id: init
+    - platform: state
+      entity_id: sensor.panasonic_heat_pump_main_operations_counter
+      id: counter_change
+  sensor:
+    # 11. Anzahl der Verdichter-Starts heute (Differenz zum Zählerstand um 00:00 Uhr)
+    - name: "Aquarea Starts Heute"
+      unique_id: aquarea_starts_heute
+      state_class: total_increasing
+      icon: mdi:counter
+      state: >
+        {% set cur = states('sensor.panasonic_heat_pump_main_operations_counter') | int(-1) %}
+        {% set base = this.attributes.get('stand_00_uhr', -1) | int(-1) if this is defined and this.attributes is defined else -1 %}
+        {% if trigger.id == 'reset' %}
+          0
+        {% elif cur >= 0 and base >= 0 and cur >= base %}
+          {{ cur - base }}
+        {% else %}
+          {{ this.state | int(0) if this is defined else 0 }}
+        {% endif %}
+      attributes:
+        stand_00_uhr: >
+          {% set cur = states('sensor.panasonic_heat_pump_main_operations_counter') | int(-1) %}
+          {% set base = this.attributes.get('stand_00_uhr', -1) | int(-1) if this is defined and this.attributes is defined else -1 %}
+          {% if trigger.id == 'reset' and cur >= 0 %}
+            {{ cur }}
+          {% elif base < 0 and cur >= 0 %}
+            {{ cur }}
+          {% else %}
+            {{ base }}
+          {% endif %}
+        starts_gesamt: "{{ states('sensor.panasonic_heat_pump_main_operations_counter') | int(0) }}"
+
+- trigger:
+    - platform: time
+      at: "00:00:00"
+      id: reset
+    - platform: homeassistant
+      event: start
+      id: init
+    - platform: event
+      event_type: event_template_reloaded
+      id: init
+    - platform: state
+      entity_id: switch.panasonic_heat_pump_main_defrosting_state
+      from: "off"
+      to: "on"
+      id: defrost_start
+  sensor:
+    # 12. Anzahl der Enteisungen (Abtauvorgänge) heute (filtert MQTT-Reconnects durch from: "off" -> to: "on")
+    - name: "Aquarea Enteisungen Heute"
+      unique_id: aquarea_enteisungen_heute
+      state_class: total_increasing
+      icon: mdi:snowflake-melt
+      state: >
+        {% if trigger.id == 'reset' %}
+          0
+        {% elif trigger.id == 'defrost_start' %}
+          {{ (this.state | int(0) if this is defined else 0) + 1 }}
+        {% else %}
+          {{ this.state | int(0) if this is defined else 0 }}
+        {% endif %}
+      attributes:
+        letzte_enteisung: >
+          {% if trigger.id == 'defrost_start' %}
+            {{ now().strftime('%H:%M:%S') }}
+          {% else %}
+            {{ this.attributes.get('letzte_enteisung', '-') if this is defined and this.attributes is defined else '-' }}
+          {% endif %}
+
 
 
 

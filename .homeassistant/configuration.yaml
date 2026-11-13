@@ -134,7 +134,7 @@ input_datetime:
     name: "Raumregelung Nachtabsenkung Ende"
     has_date: false
     has_time: true
-    initial: "04:30:00"
+    initial: "03:30:00"
     icon: mdi:clock-end
 
 timer:
@@ -187,13 +187,23 @@ input_number:
   # AQUAREA
   raumregelung_nachtabsenkung_delta_t:
     name: "Raumregelung Nachtabsenkung Delta T"
-    # Mit Kp = 2.2 K/K bewirken 2.5 K Absenkung (-5.5 K Stellgröße) den vollen WP-Shift von -5 K
+    # Mit Kp = 3.5 K/K bewirken 2.0-2.5 K Absenkung sicher den vollen WP-Shift von -5 K
     min: 0.0
     max: 3.0
     step: 0.1
     initial: 2.5
     unit_of_measurement: "K"
     icon: mdi:weather-night
+  # AQUAREA
+  raumregelung_tag_sinus_amplitude:
+    name: "Raumregelung Tag-Sinus Amplitude"
+    # Scheitelwert der sinusförmigen Tag-Überhöhung zur Estrich-Vorladung am Mittag (0.0 K = flach)
+    min: 0.0
+    max: 1.5
+    step: 0.1
+    initial: 0.6
+    unit_of_measurement: "K"
+    icon: mdi:sine-wave
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -605,7 +615,47 @@ sensor:
       hours: 4
     sampling_size: 500
     precision: 1
-
+  # AQUAREA
+  - platform: statistics
+    name: "Aquarea Heizleistung Thermisch 1h Mittel"
+    unique_id: aquarea_heizleistung_thermisch_1h_mittel
+    entity_id: sensor.panasonic_heat_pump_main_heat_power_production
+    state_characteristic: average_linear
+    max_age:
+      hours: 1
+    sampling_size: 500
+    precision: 1
+  # AQUAREA
+  - platform: statistics
+    name: "Aquarea Heizleistung Elektrisch 1h Mittel"
+    unique_id: aquarea_heizleistung_elektrisch_1h_mittel
+    entity_id: sensor.panasonic_heat_pump_main_heat_power_consumption
+    state_characteristic: average_linear
+    max_age:
+      hours: 1
+    sampling_size: 500
+    precision: 1
+  # AQUAREA
+  - platform: statistics
+    name: "Aquarea WW Leistung Thermisch 1h Mittel"
+    unique_id: aquarea_ww_leistung_thermisch_1h_mittel
+    entity_id: sensor.panasonic_heat_pump_main_dhw_power_production
+    state_characteristic: average_linear
+    max_age:
+      hours: 1
+    sampling_size: 500
+    precision: 1
+  # AQUAREA
+  - platform: statistics
+    name: "Aquarea WW Leistung Elektrisch 1h Mittel"
+    unique_id: aquarea_ww_leistung_elektrisch_1h_mittel
+    entity_id: sensor.panasonic_heat_pump_main_dhw_power_consumption
+    state_characteristic: average_linear
+    max_age:
+      hours: 1
+    sampling_size: 500
+    precision: 1
+    
 # Add "Lovelace Mini Graph Card"
 # https://github.com/kalkih/mini-graph-card
 #resources:
